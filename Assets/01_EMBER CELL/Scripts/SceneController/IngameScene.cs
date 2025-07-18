@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace KBS
+namespace TEC
 {
     public class IngameScene : SceneBase
     {

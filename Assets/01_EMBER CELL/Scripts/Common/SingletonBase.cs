@@ -6,7 +6,7 @@ using UnityEditor;
 using UnityEditorInternal;
 using UnityEngine;
 
-namespace KBS
+namespace TEC
 {
     public class SingletonBase<T> : MonoBehaviour where T : class
     {

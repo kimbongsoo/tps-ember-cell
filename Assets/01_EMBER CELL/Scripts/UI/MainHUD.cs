@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-namespace KBS
+namespace TEC
 {
     public class MainHUD : UIBase
     {

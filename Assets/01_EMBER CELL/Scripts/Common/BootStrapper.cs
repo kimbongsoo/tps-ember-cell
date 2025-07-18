@@ -3,7 +3,7 @@ using UnityEditor.SceneManagement;
 using UnityEngine.SceneManagement;
 using UnityEngine;
 
-namespace KBS
+namespace TEC
 {
     public class BootStrapper
     {

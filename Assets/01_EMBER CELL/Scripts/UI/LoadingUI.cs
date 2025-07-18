@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace KBS
+namespace TEC
 {
     public class LoadingUI : UIBase
     {

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
-namespace KBS
+namespace TEC
 {
     public class ScoreManager : SingletonBase<ScoreManager>
     {

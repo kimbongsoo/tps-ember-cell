@@ -7,7 +7,7 @@
 //   그렇지 않은 경우에는 Panel로 구분한다
 //===============================
 
-namespace KBS
+namespace TEC
 {
     public enum UIList
     {
