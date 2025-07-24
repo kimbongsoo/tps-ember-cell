@@ -532,7 +532,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eea8d180b123c4b41aad1f92a1d73c49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraPivot: {fileID: 0}
+  cameraPivot: {fileID: 177741594}
   bottomClampLimit: -80
   topClampLimit: 80
   crosshairSpreadSpeed: 0.1
@@ -540,6 +540,73 @@ MonoBehaviour:
   crosshairSpreadMax: 1
   crosshairSpreadMin: 0.1
   recoilRecoverySpeed: 2
+--- !u!114 &505127806
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 505127802}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d180760cde05b455f944a31f9afdc451, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHP: 1000
+  maxSP: 100
+  moveSpeed: 3.5
+  noneStrafeRotationSpeed: 1
+  strafeRotationSpeed: 180
+  aimingTargetPoint: {fileID: 0}
+  weaponHolsterPlace: {fileID: 0}
+  weaponEquipPlace: {fileID: 0}
+  characterAnimator: {fileID: 0}
+  unityCharacterController: {fileID: 0}
+  groundCheckRadius: 0.05
+  groundOffset: 0.1
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  isGrounded: 0
+  verticalVelocity: 0
+  terminalVelocity: 50
+  gravity: -15
+  jumpHeight: 1.2
+  jumpTimeout: 0.3
+  fallTimeout: 0.15
+  rollingSpeed: 5
+  rollingCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!143 &505127807
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 505127802}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Height: 2
+  m_Radius: 0.5
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &928096446
 GameObject:
   m_ObjectHideFlags: 0
@@ -812,6 +879,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5121898628445967699, guid: 7d3e6d8efa79d491a9bab7f32fe6f118, type: 3}
       insertIndex: -1
       addedObject: {fileID: 505127805}
+    - targetCorrespondingSourceObject: {fileID: 5121898628445967699, guid: 7d3e6d8efa79d491a9bab7f32fe6f118, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 505127807}
+    - targetCorrespondingSourceObject: {fileID: 5121898628445967699, guid: 7d3e6d8efa79d491a9bab7f32fe6f118, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 505127806}
   m_SourcePrefab: {fileID: 100100000, guid: 7d3e6d8efa79d491a9bab7f32fe6f118, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
