@@ -87,7 +87,6 @@ namespace TEC
             }
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                // OnJump?.Invoke();
                 if (isSpaceTab && Time.time - spaceLastTabTime <= spaceDoubleTabThreshold)
                 {
                     OnRoll?.Invoke();
@@ -95,7 +94,6 @@ namespace TEC
                 }
                 else
                 {
-                    // OnJump?.Invoke();
                     isSpaceTab = true;
                     spaceLastTabTime = Time.time;
                 }

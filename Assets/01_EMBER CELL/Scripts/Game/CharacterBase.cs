@@ -160,31 +160,6 @@ namespace TEC
 
         private void OnTriggerEnter(Collider collider)
         {
-            if (collider.gameObject.CompareTag("Blue Cube"))
-            {
-                // currentHP -= 100f;
-                // currentHP -= 1000f;
-                currentHP = Mathf.Clamp(currentHP, 0f, maxHP);
-                OnchangedHP?.Invoke(currentHP, maxHP);
-                Destroy(collider.gameObject);
-
-                if (currentHP <= 0f)
-                {
-                    Main.Singleton.ChangeScene(SceneType.Title);
-                }
-            }
-
-            if (collider.gameObject.CompareTag("Red Cube"))
-            {
-                if (currentHP < maxHP)
-                {
-                    currentHP += 100f;
-                    currentHP = Mathf.Clamp(currentHP, 0f, maxHP);
-                    OnchangedHP?.Invoke(currentHP, maxHP);
-                }
-                Destroy(collider.gameObject);
-
-            }
 
         }
 
