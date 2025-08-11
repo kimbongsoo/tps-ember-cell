@@ -50,8 +50,8 @@ namespace TEC
 
         [Header("IK Setting")]
         public Transform aimingTargetPoint;
-        // public TwoBoneIKConstraint leftHandIk;
-        // public Rig aimingRig;
+        public TwoBoneIKConstraint leftHandIk;
+        public Rig aimingRig;
         private float targetRotation;
         private float targetHorizontal;
         private float targetVertical;
@@ -140,12 +140,13 @@ namespace TEC
             blendCrouch = Mathf.Lerp(blendCrouch, targetBlendCrouch, Time.deltaTime * 10f);
             characterAnimator.SetFloat("Crouch", blendCrouch);
 
-            characterAnimator.SetFloat("Aiming", isAiming ? 1f : 0f);
+            characterAnimator.SetFloat("Aiming", isAiming ? 1f : 1f); //뒤에가 0임
             characterAnimator.SetFloat("Horizontal", targetHorizontal);
             characterAnimator.SetFloat("Vertical", targetVertical);
-
+        
             // aimingRig.weight = IsArmed && isAiming ? 1f : 0f;
             // leftHandIk.weight = IsArmed && IsReloading ? 0f : 1f;
+            
 
             if (isRolling)
             {

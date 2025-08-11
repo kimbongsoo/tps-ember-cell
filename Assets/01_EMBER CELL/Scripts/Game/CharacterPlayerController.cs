@@ -45,6 +45,7 @@ namespace TEC
 
             GameObject sensorObject = new GameObject("Interaction Sensor");
             sensorObject.transform.SetParent(transform);
+            
             // interactionSensor = sensorObject.AddComponent<InteractionSensor>();
         }
 
@@ -119,9 +120,9 @@ namespace TEC
             // }
 
             characterBase.Move(InputManager.Singleton.InputMove, Camera.main.transform.eulerAngles.y);
-            // characterBase.Rotate(CameraSystem.Instance.AimingPoint);
+            characterBase.Rotate(CameraSystem.Instance.AimingPoint);
 
-            // characterBase.AimingPoint = CameraSystem.Instance.AimingPoint;
+            characterBase.AimingPoint = CameraSystem.Instance.AimingPoint;
 
             //크로스헤어 줄어들기
             crosshairCurrentSpread = Mathf.Clamp(
