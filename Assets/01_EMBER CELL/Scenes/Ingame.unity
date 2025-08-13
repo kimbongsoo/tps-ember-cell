@@ -827,6 +827,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxHP: 1000
   maxSP: 100
+  primaryWeapon: {fileID: 0}
   moveSpeed: 3.5
   noneStrafeRotationSpeed: 1
   strafeRotationSpeed: 180
@@ -1655,6 +1656,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 665572699599775917, guid: 7d3e6d8efa79d491a9bab7f32fe6f118, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1743612593665271925, guid: 7d3e6d8efa79d491a9bab7f32fe6f118, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1763883193738048442, guid: 7d3e6d8efa79d491a9bab7f32fe6f118, type: 3}
       propertyPath: m_Controller
       value: 
@@ -1727,9 +1736,25 @@ PrefabInstance:
       propertyPath: m_LocalRotation.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2739832886979824657, guid: 7d3e6d8efa79d491a9bab7f32fe6f118, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5121898628445967699, guid: 7d3e6d8efa79d491a9bab7f32fe6f118, type: 3}
       propertyPath: m_Name
       value: Character.Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 6458789207692878433, guid: 7d3e6d8efa79d491a9bab7f32fe6f118, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6654701995391091643, guid: 7d3e6d8efa79d491a9bab7f32fe6f118, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7721462600661025361, guid: 7d3e6d8efa79d491a9bab7f32fe6f118, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

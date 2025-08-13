@@ -39,7 +39,7 @@ namespace TEC
         private float currentSP = 100f;
 
         [Header("Weapon Setting")]
-        // public WeaponBase primaryWeapon;
+        public WeaponBase primaryWeapon;
 
         [Header("Character Setting")]
         public float moveSpeed = 3.0f;
@@ -100,6 +100,11 @@ namespace TEC
         {
             characterAnimator = GetComponent<Animator>();
             unityCharacterController = GetComponent<UnityEngine.CharacterController>();
+            // RollingStateMachineBehaviour rollingStateMachine = characterAnimator.GetBehaviour<RollingStateMachineBehaviour>();
+            // rollingStateMachine.Initialize(this);
+
+            // UnarmedStateMachineBehaviour unarmedStateMachine = characterAnimator.GetBehaviour<UnarmedStateMachineBehaviour>();
+            // unarmedStateMachine.Initialize(this);
         }
 
         private void Start()
@@ -113,6 +118,9 @@ namespace TEC
 
         private void Update()
         {
+            FreeFall();
+            JumpAndGravity();
+            CheckGround();
 
             if (IsRunning && currentSP > 0f)
             {
@@ -143,10 +151,9 @@ namespace TEC
             characterAnimator.SetFloat("Aiming", isAiming ? 1f : 0f);
             characterAnimator.SetFloat("Horizontal", targetHorizontal);
             characterAnimator.SetFloat("Vertical", targetVertical);
-        
-            // aimingRig.weight = IsArmed && isAiming ? 1f : 0f;
-            // leftHandIk.weight = IsArmed && IsReloading ? 0f : 1f;
-            
+
+            aimingRig.weight = IsArmed && isAiming ? 1f : 0f;
+            leftHandIk.weight = IsArmed && IsReloading ? 0f : 1f;
 
             if (isRolling)
             {
@@ -159,10 +166,6 @@ namespace TEC
 
         }
 
-        private void OnTriggerEnter(Collider collider)
-        {
-
-        }
 
         public void Rotate(Vector3 targetPoint)
         {
@@ -212,6 +215,161 @@ namespace TEC
             // transform.position += movement;
             unityCharacterController.Move(movement + new Vector3(0, verticalVelocity, 0));
         }
- 
+        public void Fire()
+        {
+            if (IsReloading || !IsArmed)
+                return;
+
+            if (isAiming)
+            {
+                if (primaryWeapon.Shoot(out int remain, out int max))
+                {
+                    onFireEvent?.Invoke(remain, max);
+                }
+            //     else
+            //     {
+            //         if (primaryWeapon.IsEmpty())
+            //         {
+            //             Reload();
+            //         }
+            //     }
+            }
+        }
+
+        public void Reload()
+        {
+            // if (IsReloading || !IsArmed || isRolling)
+            //     return;
+            IsReloading = true;
+            characterAnimator.SetTrigger("Reload Trigger");
+            leftHandIk.weight = 0f;
+            // characterAnimator.SetLayerWeight(2, 0);
+        }
+
+        public void ReloadComplete()
+        {
+            IsReloading = false;
+            // int fullAmmo = primaryWeapon.SetFullAmmo();
+            // onReloadCompleteEvent?.Invoke(fullAmmo, fullAmmo);
+            characterAnimator.SetLayerWeight(2, 1);
+        }
+
+
+        public void EquipWeapon()
+        {
+            characterAnimator.SetTrigger("Equip Trigger");
+            characterAnimator.SetFloat("IsEquip", 1f);
+            IsArmed = true;
+            characterAnimator.SetLayerWeight(2, 1f);
+        }
+
+        public void HolsterWeapon()
+        {
+            characterAnimator.SetTrigger("Holster Trigger");
+            characterAnimator.SetFloat("IsEquip", 0f);
+            IsArmed = false;
+            // characterAnimator.SetLayerWeight(2, 0f);
+        }
+
+        // public void OnWeaponToEquipPlace()
+        // {
+        //     primaryWeapon.transform.SetParent(weaponEquipPlace);
+        //     primaryWeapon.transform.localPosition = Vector3.zero;
+        //     primaryWeapon.transform.localRotation = Quaternion.Euler(0, -90f, 0);
+        // }
+
+        // public void OnWeaponToHolsterPlace()
+        // {
+        //     primaryWeapon.transform.SetParent(weaponHolsterPlace);
+        //     primaryWeapon.transform.localPosition = Vector3.zero;
+        //     primaryWeapon.transform.localRotation = Quaternion.identity;
+        // }
+
+
+        public void CheckGround()
+        {
+            Vector3 spherePosition = new Vector3(transform.position.x, transform.position.y - groundOffset, transform.position.z);
+            isGrounded = Physics.CheckSphere(spherePosition, groundCheckRadius, groundLayer, QueryTriggerInteraction.Ignore);
+            characterAnimator.SetBool("IsGrounded", isGrounded);
+        }
+
+        public void JumpAndGravity()
+        {
+            if (isGrounded)
+            {
+                if (verticalVelocity < 0f)
+                    verticalVelocity = -2f;
+
+                if (jumpTimeoutDelta >= 0f)
+                {
+                    jumpTimeoutDelta -= Time.deltaTime;
+                }
+                else
+                {
+                    if (verticalVelocity < terminalVelocity)
+                    {
+                        verticalVelocity += gravity * Time.deltaTime;
+                    }
+                }
+            }
+        }
+
+        public void FreeFall()
+        {
+            if (isGrounded)
+            {
+                fallTimeoutDelta = fallTimeout;
+                characterAnimator.SetBool("IsFalling", false);
+            }
+            else
+            {
+                if (fallTimeoutDelta >= 0f)
+                {
+                    fallTimeoutDelta -= Time.deltaTime;
+                }
+                else
+                {
+                    if (false == characterAnimator.GetBool("IsFalling"))
+                    {
+                        characterAnimator.SetBool("IsFalling", true);
+                    }
+                }
+            }
+        }
+
+        public void Jump()
+        {
+            if (isGrounded)
+            {
+                isGrounded = false;
+                verticalVelocity = Mathf.Sqrt(jumpHeight * -2f * gravity);
+                jumpTimeoutDelta = jumpTimeout;
+                characterAnimator.SetTrigger("Jump Trigger");
+            }
+        }
+
+        public void Roll()
+        {
+            if (isRolling)
+                return;
+
+            isRolling = true;
+            rollingTime = 0f;
+            characterAnimator.SetTrigger("Roll Trigger");
+            characterAnimator.SetLayerWeight(1, 0);
+            characterAnimator.SetLayerWeight(2, 0);
+        }
+
+        public void RollingComplete()
+        {
+            isRolling = false;
+            characterAnimator.SetLayerWeight(1, 1);
+            characterAnimator.SetLayerWeight(2, 1);
+        }
+
+        public Transform GetAvatarBoneTransform(HumanBodyBones bone)
+        {
+            return characterAnimator.GetBoneTransform(bone);
+        }
     }
 }

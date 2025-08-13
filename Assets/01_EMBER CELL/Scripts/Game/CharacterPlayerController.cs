@@ -45,19 +45,18 @@ namespace TEC
 
             GameObject sensorObject = new GameObject("Interaction Sensor");
             sensorObject.transform.SetParent(transform);
-            
             // interactionSensor = sensorObject.AddComponent<InteractionSensor>();
         }
 
         private void Start()
         {
-            // InputManager.Singleton.OnTab += CameraTab;
-            // InputManager.Singleton.OnCrouch += ToggleCrouch;
-            // InputManager.Singleton.OnReload += ExecuteReload;
-            // InputManager.Singleton.OnHolster += ExecuteHolster;
-            // InputManager.Singleton.OnPrimaryWeapon += ExecuteEquipPrimaryWeapon;
-            // InputManager.Singleton.OnJump += ExecuteJump;
-            // InputManager.Singleton.OnRoll += ExecuteRoll;
+            InputManager.Singleton.OnTab += CameraTab;
+            InputManager.Singleton.OnCrouch += ToggleCrouch;
+            InputManager.Singleton.OnReload += ExecuteReload;
+            InputManager.Singleton.OnHolster += ExecuteHolster;
+            InputManager.Singleton.OnPrimaryWeapon += ExecuteEquipPrimaryWeapon;
+            InputManager.Singleton.OnJump += ExecuteJump;
+            InputManager.Singleton.OnRoll += ExecuteRoll;
 
             // InputManager.Singleton.OnInteract += ExecuteInteract;
 
@@ -66,13 +65,13 @@ namespace TEC
 
         private void OnDestroy()
         {
-            // InputManager.Singleton.OnTab -= CameraTab;
-            // InputManager.Singleton.OnCrouch -= ToggleCrouch;
-            // InputManager.Singleton.OnReload -= ExecuteReload;
-            // InputManager.Singleton.OnHolster -= ExecuteHolster;
-            // InputManager.Singleton.OnPrimaryWeapon -= ExecuteEquipPrimaryWeapon;
-            // InputManager.Singleton.OnJump -= ExecuteJump;
-            // InputManager.Singleton.OnRoll -= ExecuteRoll;
+            InputManager.Singleton.OnTab -= CameraTab;
+            InputManager.Singleton.OnCrouch -= ToggleCrouch;
+            InputManager.Singleton.OnReload -= ExecuteReload;
+            InputManager.Singleton.OnHolster -= ExecuteHolster;
+            InputManager.Singleton.OnPrimaryWeapon -= ExecuteEquipPrimaryWeapon;
+            InputManager.Singleton.OnJump -= ExecuteJump;
+            InputManager.Singleton.OnRoll -= ExecuteRoll;
 
             // InputManager.Singleton.OnInteract -= ExecuteInteract;
         }
@@ -114,10 +113,10 @@ namespace TEC
             bool isAimingInput = InputManager.Singleton.InputAim;
             characterBase.IsAiming = isAimingInput;
 
-            // if (InputManager.Singleton.InputFire)
-            // {
-            //     characterBase.Fire();
-            // }
+            if (InputManager.Singleton.InputFire)
+            {
+                characterBase.Fire();
+            }
 
             characterBase.Move(InputManager.Singleton.InputMove, Camera.main.transform.eulerAngles.y);
             characterBase.Rotate(CameraSystem.Instance.AimingPoint);
@@ -187,11 +186,48 @@ namespace TEC
             return Mathf.Clamp(angle, min, max);
         }
 
+        void CameraTab()
+        {
+            CameraSystem.Instance.SetChangeCameraSide();
+        }
 
         void ToggleCrouch()
         {
             characterBase.IsCrouch = !characterBase.IsCrouch;
         }
+
+        void ExecuteReload()
+        {
+            characterBase.Reload();
+        }
+
+
+        void ExecuteHolster()
+        {
+            characterBase.HolsterWeapon();
+        }
+
+        void ExecuteEquipPrimaryWeapon()
+        {
+            characterBase.EquipWeapon();
+        }
+
+        void ExecuteJump()
+        {
+            characterBase.Jump();
+        }
+
+        void ExecuteRoll()
+        {
+            characterBase.Roll();
+        }
+
+        // void ExecuteInteract()
+        // {
+        //     var interactionUI = UIManager.Singleton.GetUI<InteractionUI>(UIList.InteractionUI);
+        //     interactionUI.TryInteract();
+            
+        // }
 
 
     }
