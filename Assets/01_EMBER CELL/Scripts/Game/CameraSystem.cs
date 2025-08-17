@@ -60,13 +60,15 @@ namespace TEC
         public void SetChangeCameraSide(bool isRight)
         {
             isCameraSideRight = isRight;
-            cameraSideBlend = isCameraSideRight ? 1 : 0;
+            // cameraSideBlend = isCameraSideRight ? 1 : 0;
+            cameraSideBlend = isCameraSideRight ? 1f : -1f;
         }
 
         public void SetChangeCameraSide()
         {
             isCameraSideRight = !isCameraSideRight;
-            cameraSideBlend = isCameraSideRight ? 1 : 0;
+            // cameraSideBlend = isCameraSideRight ? 1 : 0;
+            cameraSideBlend = isCameraSideRight ? 1f : -1f;
 
         }
     }

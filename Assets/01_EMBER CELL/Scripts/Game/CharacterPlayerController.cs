@@ -107,6 +107,10 @@ namespace TEC
 
         private void Update()
         {
+            if (Input.GetKeyDown(KeyCode.Tab))
+            {
+                Debug.Log("Tab pressed!");
+            }
             bool isInputRunning = InputManager.Singleton.InputSprint;
             characterBase.IsRunning = isInputRunning;
 
