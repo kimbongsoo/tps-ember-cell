@@ -26,13 +26,14 @@ namespace TEC
         {
             Instance = this;
             tpsCamera3rdFollow = TpsCamera.GetCinemachineComponent<Cinemachine.Cinemachine3rdPersonFollow>();
+            Debug.Log("TPS Camera follow: " + tpsCamera3rdFollow); //디버깅용
             cameraSideBlend = isCameraSideRight ? 1 : 0;
         }
 
         private void Update()
         {
             Ray ray = MainCamera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0));
-            if (Physics.Raycast(ray, out RaycastHit hitInfo, 1000f, LayerMask , QueryTriggerInteraction.Ignore))
+            if (Physics.Raycast(ray, out RaycastHit hitInfo, 1000f, LayerMask, QueryTriggerInteraction.Ignore))
             {
                 cameraAimingPoint = hitInfo.point;
                 //추가
@@ -49,6 +50,7 @@ namespace TEC
             }
 
             tpsCamera3rdFollow.CameraSide = Mathf.Lerp(tpsCamera3rdFollow.CameraSide, cameraSideBlend, Time.deltaTime * 10f);
+
         }
 
         private void OnDrawGizmos()
@@ -60,15 +62,13 @@ namespace TEC
         public void SetChangeCameraSide(bool isRight)
         {
             isCameraSideRight = isRight;
-            // cameraSideBlend = isCameraSideRight ? 1 : 0;
-            cameraSideBlend = isCameraSideRight ? 1f : -1f;
+            cameraSideBlend = isCameraSideRight ? 1 : 0;
         }
 
         public void SetChangeCameraSide()
         {
             isCameraSideRight = !isCameraSideRight;
-            // cameraSideBlend = isCameraSideRight ? 1 : 0;
-            cameraSideBlend = isCameraSideRight ? 1f : -1f;
+            cameraSideBlend = isCameraSideRight ? 1 : 0;
 
         }
     }
