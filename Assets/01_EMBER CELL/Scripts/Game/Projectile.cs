@@ -23,7 +23,7 @@ namespace TEC
         private void OnCollisionEnter(Collision collision)
         {
 
-            Debug.Log(collision.gameObject.name);
+            // Debug.Log(collision.gameObject.name);
             //총알 충돌처리에 대한 구현
             //TODO 1. Effect를 출력.
             //TODO 2. Damage 처리하기 -> 캐릭터, 배경에 맞았는지

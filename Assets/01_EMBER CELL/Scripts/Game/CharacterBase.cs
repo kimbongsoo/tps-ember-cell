@@ -217,8 +217,8 @@ namespace TEC
         }
         public void Fire()
         {
-            // if (IsReloading || !IsArmed)
-            //     return;
+            if (IsReloading || !IsArmed)
+                return;
 
             if (isAiming)
             {
@@ -226,13 +226,13 @@ namespace TEC
                 {
                     onFireEvent?.Invoke(remain, max);
                 }
-            //     else
-            //     {
-            //         if (primaryWeapon.IsEmpty())
-            //         {
-            //             Reload();
-            //         }
-            //     }
+                else
+                {
+                    if (primaryWeapon.IsEmpty())
+                    {
+                        Reload();
+                    }
+                }
             }
         }
 
@@ -243,7 +243,7 @@ namespace TEC
             IsReloading = true;
             characterAnimator.SetTrigger("Reload Trigger");
             leftHandIk.weight = 0f;
-            // characterAnimator.SetLayerWeight(2, 0);
+            characterAnimator.SetLayerWeight(2, 0);
         }
 
         public void ReloadComplete()
@@ -268,22 +268,24 @@ namespace TEC
             characterAnimator.SetTrigger("Holster Trigger");
             characterAnimator.SetFloat("IsEquip", 0f);
             IsArmed = false;
-            // characterAnimator.SetLayerWeight(2, 0f);
+            characterAnimator.SetLayerWeight(2, 0f);
         }
 
-        // public void OnWeaponToEquipPlace()
-        // {
-        //     primaryWeapon.transform.SetParent(weaponEquipPlace);
-        //     primaryWeapon.transform.localPosition = Vector3.zero;
-        //     primaryWeapon.transform.localRotation = Quaternion.Euler(0, -90f, 0);
-        // }
+        public void OnWeaponToEquipPlace()
+        {
+            primaryWeapon.transform.SetParent(weaponEquipPlace);
+            primaryWeapon.transform.localPosition = Vector3.zero;
+            primaryWeapon.transform.localRotation = Quaternion.identity;
+            // primaryWeapon.transform.localRotation = Quaternion.Euler(0, -90f, 0);
 
-        // public void OnWeaponToHolsterPlace()
-        // {
-        //     primaryWeapon.transform.SetParent(weaponHolsterPlace);
-        //     primaryWeapon.transform.localPosition = Vector3.zero;
-        //     primaryWeapon.transform.localRotation = Quaternion.identity;
-        // }
+        }
+
+        public void OnWeaponToHolsterPlace()
+        {
+            primaryWeapon.transform.SetParent(weaponHolsterPlace);
+            primaryWeapon.transform.localPosition = Vector3.zero;
+            primaryWeapon.transform.localRotation = Quaternion.identity;
+        }
 
 
         public void CheckGround()
