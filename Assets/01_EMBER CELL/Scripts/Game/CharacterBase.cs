@@ -249,8 +249,8 @@ namespace TEC
         public void ReloadComplete()
         {
             IsReloading = false;
-            // int fullAmmo = primaryWeapon.SetFullAmmo();
-            // onReloadCompleteEvent?.Invoke(fullAmmo, fullAmmo);
+            int fullAmmo = primaryWeapon.SetFullAmmo();
+            onReloadCompleteEvent?.Invoke(fullAmmo, fullAmmo);
             characterAnimator.SetLayerWeight(2, 1);
         }
 
