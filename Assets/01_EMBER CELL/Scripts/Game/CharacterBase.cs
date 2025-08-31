@@ -238,8 +238,8 @@ namespace TEC
 
         public void Reload()
         {
-            // if (IsReloading || !IsArmed || isRolling)
-            //     return;
+            if (IsReloading || !IsArmed || isRolling)
+                return;
             IsReloading = true;
             characterAnimator.SetTrigger("Reload Trigger");
             leftHandIk.weight = 0f;
@@ -275,8 +275,9 @@ namespace TEC
         {
             primaryWeapon.transform.SetParent(weaponEquipPlace);
             primaryWeapon.transform.localPosition = Vector3.zero;
-            primaryWeapon.transform.localRotation = Quaternion.identity;
+            // primaryWeapon.transform.localRotation = Quaternion.identity;
             // primaryWeapon.transform.localRotation = Quaternion.Euler(0, -90f, 0);
+            primaryWeapon.transform.localRotation = Quaternion.Euler(-6, -162f, -191f);
 
         }
 
