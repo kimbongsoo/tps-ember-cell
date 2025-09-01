@@ -268,16 +268,16 @@ namespace TEC
             characterAnimator.SetTrigger("Holster Trigger");
             characterAnimator.SetFloat("IsEquip", 0f);
             IsArmed = false;
-            characterAnimator.SetLayerWeight(2, 0f);
+        
         }
 
         public void OnWeaponToEquipPlace()
         {
             primaryWeapon.transform.SetParent(weaponEquipPlace);
             primaryWeapon.transform.localPosition = Vector3.zero;
-            // primaryWeapon.transform.localRotation = Quaternion.identity;
+            primaryWeapon.transform.localRotation = Quaternion.identity;
             // primaryWeapon.transform.localRotation = Quaternion.Euler(0, -90f, 0);
-            primaryWeapon.transform.localRotation = Quaternion.Euler(-6, -162f, -191f);
+            // primaryWeapon.transform.localRotation = Quaternion.Euler(-6, -162f, -191f);
 
         }
 
