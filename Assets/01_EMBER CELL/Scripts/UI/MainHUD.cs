@@ -23,6 +23,22 @@ namespace TEC
 
         [SerializeField] private TextMeshProUGUI scoreText;
 
+        public override void Show()
+        {
+            base.Show();
+
+            StartCoroutine(DelayedApplyCamera());
+        }
+
+        IEnumerator DelayedApplyCamera()
+        {
+            yield return new WaitUntil(() => Camera.main != null);
+
+            Canvas canvas = GetComponent<Canvas>();
+            canvas.worldCamera = Camera.main;
+            canvas.planeDistance = 1;
+        }
+
         public void SetWeaponData(Sprite weaponImage, string weaponName)
         {
             weaponIcon.sprite = weaponImage;

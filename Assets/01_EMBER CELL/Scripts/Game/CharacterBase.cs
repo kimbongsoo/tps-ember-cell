@@ -31,6 +31,7 @@ namespace TEC
 
         public bool IsArmed { get; private set; } = false;
         private bool isArmed = false;
+        public WeaponBase PrimaryWeapon => primaryWeapon;
 
         [Header("Character Stat")]
         public float maxHP = 1000f;
@@ -39,7 +40,8 @@ namespace TEC
         private float currentSP = 100f;
 
         [Header("Weapon Setting")]
-        public WeaponBase primaryWeapon;
+        public WeaponBase primaryWeaponPrefab;
+        private WeaponBase primaryWeapon;
 
         [Header("Character Setting")]
         public float moveSpeed = 3.0f;
@@ -114,6 +116,8 @@ namespace TEC
 
             OnchangedHP?.Invoke(currentHP, maxHP);
             OnChangedSP?.Invoke(currentSP, maxSP);
+
+            primaryWeapon = Instantiate(primaryWeaponPrefab, weaponHolsterPlace);
         }
 
         private void Update()
@@ -222,13 +226,13 @@ namespace TEC
 
             if (isAiming)
             {
-                if (primaryWeapon.Shoot(out int remain, out int max))
+                if (PrimaryWeapon.Shoot(out int remain, out int max))
                 {
                     onFireEvent?.Invoke(remain, max);
                 }
                 else
                 {
-                    if (primaryWeapon.IsEmpty())
+                    if (PrimaryWeapon.IsEmpty())
                     {
                         Reload();
                     }
@@ -249,7 +253,7 @@ namespace TEC
         public void ReloadComplete()
         {
             IsReloading = false;
-            int fullAmmo = primaryWeapon.SetFullAmmo();
+            int fullAmmo = PrimaryWeapon.SetFullAmmo();
             onReloadCompleteEvent?.Invoke(fullAmmo, fullAmmo);
             characterAnimator.SetLayerWeight(2, 1);
         }
@@ -273,9 +277,9 @@ namespace TEC
 
         public void OnWeaponToEquipPlace()
         {
-            primaryWeapon.transform.SetParent(weaponEquipPlace);
-            primaryWeapon.transform.localPosition = Vector3.zero;
-            primaryWeapon.transform.localRotation = Quaternion.identity;
+            PrimaryWeapon.transform.SetParent(weaponEquipPlace);
+            PrimaryWeapon.transform.localPosition = Vector3.zero;
+            PrimaryWeapon.transform.localRotation = Quaternion.identity;
             // primaryWeapon.transform.localRotation = Quaternion.Euler(0, -90f, 0);
             // primaryWeapon.transform.localRotation = Quaternion.Euler(-6, -162f, -191f);
 
@@ -283,9 +287,9 @@ namespace TEC
 
         public void OnWeaponToHolsterPlace()
         {
-            primaryWeapon.transform.SetParent(weaponHolsterPlace);
-            primaryWeapon.transform.localPosition = Vector3.zero;
-            primaryWeapon.transform.localRotation = Quaternion.identity;
+            PrimaryWeapon.transform.SetParent(weaponHolsterPlace);
+            PrimaryWeapon.transform.localPosition = Vector3.zero;
+            PrimaryWeapon.transform.localRotation = Quaternion.identity;
         }
 
 

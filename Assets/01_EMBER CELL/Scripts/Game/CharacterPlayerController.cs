@@ -60,7 +60,7 @@ namespace TEC
 
             // InputManager.Singleton.OnInteract += ExecuteInteract;
 
-            OnFired(characterBase.primaryWeapon.RemainAmmo, characterBase.primaryWeapon.MaxAmmo);
+            OnFired(characterBase.PrimaryWeapon.RemainAmmo, characterBase.PrimaryWeapon.MaxAmmo);
         }
 
         private void OnDestroy()
