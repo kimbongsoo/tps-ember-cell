@@ -105,8 +105,9 @@ namespace TEC
             // RollingStateMachineBehaviour rollingStateMachine = characterAnimator.GetBehaviour<RollingStateMachineBehaviour>();
             // rollingStateMachine.Initialize(this);
 
-            // UnarmedStateMachineBehaviour unarmedStateMachine = characterAnimator.GetBehaviour<UnarmedStateMachineBehaviour>();
-            // unarmedStateMachine.Initialize(this);
+            //수정
+            UnarmedStateMachineBehaviour unarmedStateMachine = characterAnimator.GetBehaviour<UnarmedStateMachineBehaviour>();
+            unarmedStateMachine.Initialize(this);
         }
 
         private void Start()
