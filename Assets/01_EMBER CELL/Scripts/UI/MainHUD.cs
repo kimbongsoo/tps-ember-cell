@@ -21,7 +21,7 @@ namespace TEC
         [SerializeField] private TextMeshProUGUI weaponNameText;
         [SerializeField] private TextMeshProUGUI ammoText;
 
-        [SerializeField] private TextMeshProUGUI scoreText;
+        // [SerializeField] private TextMeshProUGUI scoreText;
 
         public override void Show()
         {
@@ -63,10 +63,10 @@ namespace TEC
             spText.text = $"{current:00}/{max:00}";
         }
 
-        public void SetScore(int score)
-        {
-            scoreText.text = $"Score:{score}";
-        }
+        // public void SetScore(int score)
+        // {
+        //     scoreText.text = $"Score:{score}";
+        // }
 
 
         
