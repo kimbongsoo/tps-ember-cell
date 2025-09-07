@@ -45,7 +45,6 @@ namespace TEC
 
         [Header("Character Setting")]
         public float moveSpeed = 3.0f;
-        public float noneStrafeRotationSpeed = 1f;
         public float strafeRotationSpeed = 180f;
         private float blendCrouch = 0f;
         private float blendRunning = 0f;
@@ -188,28 +187,18 @@ namespace TEC
         {
             if (isRolling)
                 return;
+
             characterAnimator.SetFloat("Magnitude", input.magnitude);
+
             Vector3 movement = Vector3.zero;
+
             if (input.magnitude > 0f)
             {
-                if (!isAiming)
-                {
-                    Vector3 inputDirection = new Vector3(input.x, 0f, input.y);
-                    targetRotation = Mathf.Atan2(inputDirection.x, inputDirection.z) * Mathf.Rad2Deg + yAxisAngle;
-                    transform.rotation = Quaternion.Euler(0f, targetRotation, 0f);
-                }
+                targetHorizontal = input.x;
+                targetVertical = input.y;
 
-                if (isAiming)
-                {
-                    targetHorizontal = input.x;
-                    targetVertical = input.y;
-                    movement = (transform.forward * input.y + transform.right * input.x) * moveSpeed * Time.deltaTime;
-                }
-                else
-                {
-                    targetVertical = 1f;
-                    movement = transform.forward * moveSpeed * Time.deltaTime;
-                }
+                movement = (transform.forward * input.y + transform.right * input.x) 
+                            * moveSpeed * Time.deltaTime;
             }
             else
             {
@@ -217,9 +206,9 @@ namespace TEC
                 targetVertical = 0f;
             }
 
-            // transform.position += movement;
             unityCharacterController.Move(movement + new Vector3(0, verticalVelocity, 0));
         }
+
         public void Fire()
         {
             if (IsReloading || !IsArmed)
