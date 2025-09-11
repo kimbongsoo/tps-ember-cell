@@ -275,9 +275,6 @@ namespace TEC
             PrimaryWeapon.transform.SetParent(weaponEquipPlace);
             PrimaryWeapon.transform.localPosition = Vector3.zero;
             PrimaryWeapon.transform.localRotation = Quaternion.identity;
-            // primaryWeapon.transform.localRotation = Quaternion.Euler(0, -90f, 0);
-            // primaryWeapon.transform.localRotation = Quaternion.Euler(-6, -162f, -191f);
-
         }
 
         public void OnWeaponToHolsterPlace()
