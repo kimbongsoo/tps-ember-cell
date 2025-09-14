@@ -162,6 +162,7 @@ namespace TEC
             if (isRolling)
             {
                 rollingTime = Time.deltaTime;
+                //rollingTime += Time.deltaTime;
                 float t = rollingTime / rollingDuration;
                 float speedRate = rollingCurve.Evaluate(t);
                 unityCharacterController.Move(transform.forward * rollingSpeed * speedRate * Time.deltaTime);
@@ -202,8 +203,11 @@ namespace TEC
                 targetHorizontal = input.x;
                 targetVertical = input.y;
 
-                movement = (transform.forward * input.y + transform.right * input.x) 
-                            * moveSpeed * Time.deltaTime;
+                // movement = (transform.forward * input.y + transform.right * input.x) 
+                //             * moveSpeed * Time.deltaTime;
+                Vector3 dir = transform.forward * input.y + transform.right * input.x;
+                if (dir.sqrMagnitude > 1f) dir.Normalize();   // 대각 속도 보정
+                movement = dir * moveSpeed * Time.deltaTime;
             }
             else
             {
