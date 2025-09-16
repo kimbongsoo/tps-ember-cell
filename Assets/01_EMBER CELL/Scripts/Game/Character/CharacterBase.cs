@@ -152,7 +152,8 @@ namespace TEC
             blendCrouch = Mathf.Lerp(blendCrouch, targetBlendCrouch, Time.deltaTime * 10f);
             characterAnimator.SetFloat("Crouch", blendCrouch);
 
-            characterAnimator.SetFloat("Aiming", isAiming ? 1f : 0f);
+            // characterAnimator.SetFloat("Aiming", isAiming ? 1f : 0f);
+            characterAnimator.SetFloat("Aiming", isAiming ? 1f : 1f);
             characterAnimator.SetFloat("Horizontal", targetHorizontal);
             characterAnimator.SetFloat("Vertical", targetVertical);
 
