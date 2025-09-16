@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: ea41042abdf364893b48e6f7deeec25c
-timeCreated: 1552446878
+guid: 60a5c6a6278ed4c26a4ddd58490948a3
+timeCreated: 1552444452
 licenseType: Store
 ModelImporter:
   serializedVersion: 21
@@ -156,7 +156,7 @@ ModelImporter:
     400146: Spine2
     400148: //RootNode
     4300000: MotusMan_v55
-    7400000: W2_Crouch_To_CrouchWalk_L135_Fwd_IPC
+    7400000: W2_Walk_F_Loop_IPC
     9500000: //RootNode
     13700000: MotusMan_v55
   materials:
@@ -175,7 +175,7 @@ ModelImporter:
     animationImportWarnings: 
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
-    animationCompression: 0
+    animationCompression: 1
     animationRotationError: 0.5
     animationPositionError: 0.5
     animationScaleError: 0.5
@@ -184,17 +184,17 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: W2_Crouch_To_CrouchWalk_L135_Fwd_IPC
-      takeName: W2_Crouch_To_CrouchWalk_L135_Fwd_IPC
+      name: W2_Walk_F_Loop_IPC
+      takeName: W2_Walk_F_Loop_IPC
       firstFrame: 0
-      lastFrame: 60
+      lastFrame: 36
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 0
+      loopTime: 1
       loopBlend: 0
       loopBlendOrientation: 1
       loopBlendPositionY: 1
@@ -1079,9 +1079,9 @@ ModelImporter:
     rootMotionBoneName: 
     rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
     hasTranslationDoF: 0
-    hasExtraRoot: 1
+    hasExtraRoot: 0
     skeletonHasParents: 1
-  lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: eadb4ba512015ea45a1b15fb9eec5ef1,
+  lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: dfbdfb8c0b82fa0409e9d8d3476d0ed0,
     type: 3}
   animationType: 3
   humanoidOversampling: 1
