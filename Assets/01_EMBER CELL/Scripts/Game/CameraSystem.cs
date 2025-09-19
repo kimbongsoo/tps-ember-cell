@@ -37,12 +37,12 @@ namespace TEC
             {
                 cameraAimingPoint = hitInfo.point;
                 //추가
-                if (Input.GetMouseButtonDown(0) && hitInfo.collider.CompareTag("Capsule"))
-                {
-                    Debug.Log("hitInfo :" + hitInfo);
-                    Transform capsule = hitInfo.collider.transform;
-                    capsule.localScale *= 1.1f;
-                }
+                // if (Input.GetMouseButtonDown(0) && hitInfo.collider.CompareTag("Capsule"))
+                // {
+                //     Debug.Log("hitInfo :" + hitInfo);
+                //     Transform capsule = hitInfo.collider.transform;
+                //     capsule.localScale *= 1.1f;
+                // }
             }
             else
             {

@@ -9,7 +9,7 @@ using UnityEngine.XR;
 
 namespace TEC
 {
-    public class CharacterBase : MonoBehaviour
+    public class CharacterBase : MonoBehaviour, IDamageReceiver
     {
         public float CurrentHP => currentHP;
         public float CurrentSP => currentSP;
@@ -32,6 +32,18 @@ namespace TEC
         public bool IsArmed { get; private set; } = false;
         private bool isArmed = false;
         public WeaponBase PrimaryWeapon => primaryWeapon;
+
+        public void ReceiveDamage(IDamageData damageData)
+        {
+            if (damageData == null || currentHP <= 0f) return;
+
+            currentHP -= damageData.Amount;
+            currentHP = Mathf.Clamp(currentHP, 0f, maxHP);
+            OnchangedHP?.Invoke(currentHP, maxHP);
+
+            // TODO: 사망 처리
+            // if (currentHP <= 0) 
+        }
 
         [Header("Character Stat")]
         public float maxHP = 1000f;
@@ -89,7 +101,6 @@ namespace TEC
         public AnimationCurve rollingCurve;
         private float rollingTime = 0f;
         private float rollingDuration = 1.5f;
-
 
         public System.Action<int, int> onFireEvent;
         public System.Action<int, int> onReloadCompleteEvent;
@@ -152,8 +163,7 @@ namespace TEC
             blendCrouch = Mathf.Lerp(blendCrouch, targetBlendCrouch, Time.deltaTime * 10f);
             characterAnimator.SetFloat("Crouch", blendCrouch);
 
-            // characterAnimator.SetFloat("Aiming", isAiming ? 1f : 0f);
-            characterAnimator.SetFloat("Aiming", isAiming ? 1f : 1f);
+            characterAnimator.SetFloat("Aiming", isAiming ? 1f : 0f);
             characterAnimator.SetFloat("Horizontal", targetHorizontal);
             characterAnimator.SetFloat("Vertical", targetVertical);
 
