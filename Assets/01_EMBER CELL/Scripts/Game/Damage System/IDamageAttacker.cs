@@ -6,6 +6,6 @@ namespace TEC
 {
     public interface IDamageAttacker
     {
-        void AttackDamage(IDamageReceiver target);
+        IDamageData CreateDamageData(float baseDamage, GameObject attacker);
     }
 }

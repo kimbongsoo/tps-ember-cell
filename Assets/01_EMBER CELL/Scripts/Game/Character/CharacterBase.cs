@@ -35,14 +35,16 @@ namespace TEC
 
         public void ReceiveDamage(IDamageData damageData)
         {
-            if (damageData == null || currentHP <= 0f) return;
+        if (damageData == null || currentHP <= 0f) return;
 
-            currentHP -= damageData.Amount;
-            currentHP = Mathf.Clamp(currentHP, 0f, maxHP);
-            OnchangedHP?.Invoke(currentHP, maxHP);
+        currentHP -= damageData.Amount;
+        currentHP = Mathf.Clamp(currentHP, 0f, maxHP);
+        OnchangedHP?.Invoke(currentHP, maxHP);
 
-            // TODO: 사망 처리
-            // if (currentHP <= 0) 
+        if (currentHP <= 0f)
+        {
+            // TODO: 사망 처리 로직 (애니메이션, 리스폰 등)
+        }
         }
 
         [Header("Character Stat")]
