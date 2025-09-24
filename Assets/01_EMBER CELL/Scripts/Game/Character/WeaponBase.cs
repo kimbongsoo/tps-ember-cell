@@ -26,11 +26,10 @@ namespace TEC
 
         [SerializeField] private float damage = 30f;
 
-        private CharacterBase owner;
-
+        private WeaponRecoil weaponRecoil;
         private void Awake()
         {
-            owner = GetComponentInParent<CharacterBase>();
+            weaponRecoil = GetComponent<WeaponRecoil>();
         }
 
         public bool Shoot(out int remain, out int max)
@@ -47,6 +46,9 @@ namespace TEC
                 {
                     proj.Initialize(CharacterPlayerController.Instance.gameObject, damage); 
                 }
+
+                //반동
+                weaponRecoil?.GenerateRecoil();
 
                 clipSize--;
 
