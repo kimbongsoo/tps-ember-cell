@@ -40,7 +40,7 @@ namespace TEC
             if (attacker && collision.transform.IsChildOf(attacker.transform))
                 return;
 
-            // 임팩트 이펙트
+            // 임팩트 이펙트 -> 이펙트매니저로 책임전가
             // string material = null;
             // var physMat = collision.collider ? collision.collider.sharedMaterial : null;
             // if (physMat != null)
@@ -55,6 +55,7 @@ namespace TEC
             // }
 
             //데미지 전달
+            collision.transform.root.GetComponent<IDamageReceiver>();
             var receiver = collision.collider.GetComponentInParent<IDamageReceiver>();
             if (receiver != null)
             {

@@ -5,14 +5,13 @@ using UnityEngine.Animations.Rigging;
 
 namespace TEC
 {
-    public class WeaponBase : MonoBehaviour, IDamageAttacker
+    public class WeaponBase : MonoBehaviour
     {
         public int RemainAmmo => clipSize;
         public int MaxAmmo => maxAmmo;
-        public IDamageData CreateDamageData(float baseDamage, GameObject attacker)
-        {
-            return new DamageData(baseDamage, attacker);
-        }
+
+        public CharacterBase Owner {get;set;}
+
 
         [Header("Fire Setting")]
         [SerializeField] private Transform fireStartPoint;
@@ -47,7 +46,7 @@ namespace TEC
                 var projectile = bullet.GetComponent<Projectile>();
                 if (projectile != null)
                 {
-                    projectile.Initialize(CharacterPlayerController.Instance.gameObject, damage); 
+                    projectile.Initialize(Owner.gameObject, damage); 
                 }
 
                 //반동

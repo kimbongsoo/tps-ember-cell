@@ -131,6 +131,7 @@ namespace TEC
             OnChangedSP?.Invoke(currentSP, maxSP);
 
             primaryWeapon = Instantiate(primaryWeaponPrefab, weaponHolsterPlace);
+            primaryWeapon.Owner = this;
         }
 
         private void Update()

@@ -125,7 +125,6 @@ MonoBehaviour:
   maxSP: 100
   primaryWeaponPrefab: {fileID: 874575554678661767, guid: 369718354edb7447faa781f7b196c84b, type: 3}
   moveSpeed: 3.5
-  noneStrafeRotationSpeed: 1
   strafeRotationSpeed: 180
   aimingTargetPoint: {fileID: 4972738611850955355}
   leftHandIk: {fileID: 4258826645963956}
@@ -1972,7 +1971,7 @@ MonoBehaviour:
     m_Offset: {x: 45, y: 0, z: 0}
     m_MinLimit: -90
     m_MaxLimit: 90
-    m_AimAxis: 5
+    m_AimAxis: 3
     m_UpAxis: 1
     m_WorldUpType: 0
     m_WorldUpObject: {fileID: 0}
