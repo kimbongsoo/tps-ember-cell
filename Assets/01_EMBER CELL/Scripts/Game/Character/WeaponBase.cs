@@ -27,6 +27,9 @@ namespace TEC
         [SerializeField] private float damage = 30f;
 
         private WeaponRecoil weaponRecoil;
+        private float recoilRate = 2f;
+        private float recoilVertical = 2f;
+        private float recoilHorizontal = 1f;
         private void Awake()
         {
             weaponRecoil = GetComponent<WeaponRecoil>();
@@ -41,10 +44,10 @@ namespace TEC
                 bullet.SetActive(true);
 
 
-                var proj = bullet.GetComponent<Projectile>();
-                if (proj != null)
+                var projectile = bullet.GetComponent<Projectile>();
+                if (projectile != null)
                 {
-                    proj.Initialize(CharacterPlayerController.Instance.gameObject, damage); 
+                    projectile.Initialize(CharacterPlayerController.Instance.gameObject, damage); 
                 }
 
                 //반동
@@ -59,10 +62,7 @@ namespace TEC
                     Destroy(muzzleEffect.gameObject, 1f);
                 }
 
-                float recoil = 2f;
-                float vertical = 2f;
-                float horizontal = 1f;
-                CharacterPlayerController.Instance.CameraRecoil(recoil, vertical, horizontal);
+                CharacterPlayerController.Instance.CameraRecoil(recoilRate, recoilVertical, recoilHorizontal);
 
                 lastFireTime = Time.time;
             }

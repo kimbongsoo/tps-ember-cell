@@ -360,7 +360,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &172312752670319355
 RectTransform:
   m_ObjectHideFlags: 0
@@ -663,7 +663,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &3687041479501970792
 RectTransform:
   m_ObjectHideFlags: 0
@@ -912,7 +912,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &3038807624953191739
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1131,7 +1131,6 @@ MonoBehaviour:
   weaponIcon: {fileID: 6836438027377281615}
   weaponNameText: {fileID: 2493046794301588107}
   ammoText: {fileID: 4559548209521718117}
-  scoreText: {fileID: 2225996406905556609}
 --- !u!1 &7853563393890300136
 GameObject:
   m_ObjectHideFlags: 0
