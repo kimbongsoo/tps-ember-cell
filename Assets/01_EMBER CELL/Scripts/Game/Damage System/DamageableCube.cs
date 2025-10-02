@@ -18,8 +18,8 @@ namespace TEC
 
         public void ReceiveDamage(IDamageData damageData)
         {
-            currentHP -= damageData.Amount;
-            Debug.Log($"[CubeTarget] Hit by {damageData.Attacker.name}, Damage: {damageData.Amount}, HP: {currentHP}/{maxHP}");
+            currentHP -= damageData.DamageAmount;
+            Debug.Log($"[CubeTarget] Hit by {damageData.Attacker.name}, Damage: {damageData.DamageAmount}, HP: {currentHP}/{maxHP}");
 
             if (currentHP <= 0)
             {

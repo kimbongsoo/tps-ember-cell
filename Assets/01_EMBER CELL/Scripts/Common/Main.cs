@@ -95,8 +95,8 @@ namespace TEC
             yield return new WaitForSeconds(0.3f);
             loadingUI.LoadingPercentage = 1f;
             yield return new WaitForSeconds(0.3f);
-            UIManager.Hide<LoadingUI>(UIList.LoadingUI);  
-
+            UIManager.Hide<LoadingUI>(UIList.LoadingUI);
+            
             currentSceneType = sceneType;               
         }
 

@@ -50,7 +50,10 @@ namespace TEC
                 }
 
                 //반동
-                weaponRecoil?.GenerateRecoil();
+                if (weaponRecoil != null)
+                {
+                    weaponRecoil.GenerateRecoil();
+                }
 
                 clipSize--;
 
@@ -61,7 +64,7 @@ namespace TEC
                     Destroy(muzzleEffect.gameObject, 1f);
                 }
 
-                CharacterPlayerController.Instance.CameraRecoil(recoilRate, recoilVertical, recoilHorizontal);
+                // CharacterPlayerController.Instance.CameraRecoil(recoilRate, recoilVertical, recoilHorizontal);
 
                 lastFireTime = Time.time;
             }

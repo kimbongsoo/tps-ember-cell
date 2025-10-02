@@ -37,7 +37,7 @@ namespace TEC
         {
         if (damageData == null || currentHP <= 0f) return;
 
-        currentHP -= damageData.Amount;
+        currentHP -= damageData.DamageAmount;
         currentHP = Mathf.Clamp(currentHP, 0f, maxHP);
         OnchangedHP?.Invoke(currentHP, maxHP);
 

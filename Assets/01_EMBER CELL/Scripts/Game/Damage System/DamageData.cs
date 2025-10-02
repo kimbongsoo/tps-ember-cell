@@ -4,12 +4,12 @@ namespace TEC
 {
     public class DamageData : IDamageData
     {
-        public float Amount { get; private set; }
+        public float DamageAmount { get; private set; }
         public GameObject Attacker { get; private set; }
 
-        public DamageData(float amount, GameObject attacker)
+        public DamageData(float damageAmount, GameObject attacker)
         {
-            Amount = amount;
+            DamageAmount = damageAmount;
             Attacker = attacker;
         }
     }

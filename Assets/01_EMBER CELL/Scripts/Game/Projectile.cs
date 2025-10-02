@@ -15,7 +15,6 @@ namespace TEC
         private float damage = 0f;
         private GameObject attacker;
  
-        //추가
         public void Initialize(GameObject attacker, float damage)
         {
             this.attacker = attacker;
@@ -55,7 +54,7 @@ namespace TEC
             // }
 
             //데미지 전달
-            collision.transform.root.GetComponent<IDamageReceiver>();
+            // collision.transform.root.GetComponent<IDamageReceiver>();
             var receiver = collision.collider.GetComponentInParent<IDamageReceiver>();
             if (receiver != null)
             {

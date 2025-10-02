@@ -600,6 +600,38 @@ MonoBehaviour:
     m_FrequencyGain: 2
     m_Duration: 0.25
     m_NoiseOffsets: {x: 0, y: 0, z: 0}
+--- !u!114 &540605545 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2406281455438601696, guid: b7b8af1fa52c04741801fd53282110dd, type: 3}
+  m_PrefabInstance: {fileID: 3601444622153021736}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70b342d8ce5c2fd48b8fa3147d48d1d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &551922793 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7801336479580936900, guid: b7b8af1fa52c04741801fd53282110dd, type: 3}
+  m_PrefabInstance: {fileID: 3601444622153021736}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &758354669 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4258826645963956, guid: b7b8af1fa52c04741801fd53282110dd, type: 3}
+  m_PrefabInstance: {fileID: 3601444622153021736}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aeda7bfbf984f2a4da5ab4b8967b115d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!4 &910665086 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4972738611850955355, guid: b7b8af1fa52c04741801fd53282110dd, type: 3}
+  m_PrefabInstance: {fileID: 3601444622153021736}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &928096446
 GameObject:
   m_ObjectHideFlags: 0
@@ -871,6 +903,11 @@ MonoBehaviour:
   effectDatas:
   - id: Muzzle
     prefab: {fileID: 124018, guid: 1f389bb139e76154582cf3c5e4f9214b, type: 3}
+--- !u!4 &1929024800 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6351626535605567615, guid: b7b8af1fa52c04741801fd53282110dd, type: 3}
+  m_PrefabInstance: {fileID: 3601444622153021736}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1942128837
 GameObject:
   m_ObjectHideFlags: 0
@@ -1264,6 +1301,30 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 284616531973143997, guid: b7b8af1fa52c04741801fd53282110dd, type: 3}
+      propertyPath: aimingRig
+      value: 
+      objectReference: {fileID: 540605545}
+    - target: {fileID: 284616531973143997, guid: b7b8af1fa52c04741801fd53282110dd, type: 3}
+      propertyPath: leftHandIk
+      value: 
+      objectReference: {fileID: 758354669}
+    - target: {fileID: 284616531973143997, guid: b7b8af1fa52c04741801fd53282110dd, type: 3}
+      propertyPath: weaponEquipPlace
+      value: 
+      objectReference: {fileID: 551922793}
+    - target: {fileID: 284616531973143997, guid: b7b8af1fa52c04741801fd53282110dd, type: 3}
+      propertyPath: aimingTargetPoint
+      value: 
+      objectReference: {fileID: 910665086}
+    - target: {fileID: 284616531973143997, guid: b7b8af1fa52c04741801fd53282110dd, type: 3}
+      propertyPath: weaponHolsterPlace
+      value: 
+      objectReference: {fileID: 1929024800}
+    - target: {fileID: 284616531973143997, guid: b7b8af1fa52c04741801fd53282110dd, type: 3}
+      propertyPath: primaryWeaponPrefab
+      value: 
+      objectReference: {fileID: 874575554678661767, guid: 369718354edb7447faa781f7b196c84b, type: 3}
     - target: {fileID: 2840622918316273996, guid: b7b8af1fa52c04741801fd53282110dd, type: 3}
       propertyPath: m_Data.m_AimAxis
       value: 3

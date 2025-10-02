@@ -6,7 +6,7 @@ namespace TEC
 {
     public interface IDamageData
     {
-        float Amount { get; }
+        float DamageAmount { get; }
         GameObject Attacker { get; }
     }
 }
