@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System;
 
 namespace TEC
 {
@@ -22,6 +23,7 @@ namespace TEC
         [SerializeField] private TextMeshProUGUI ammoText;
 
         // [SerializeField] private TextMeshProUGUI scoreText;
+
 
         public override void Show()
         {
@@ -63,12 +65,18 @@ namespace TEC
             spText.text = $"{current:00}/{max:00}";
         }
 
+        public void SetAmmoVisible(bool visible)
+        {
+            if (ammoText != null)
+                ammoText.gameObject.SetActive(visible);
+        }
+
         // public void SetScore(int score)
         // {
         //     scoreText.text = $"Score:{score}";
         // }
 
 
-        
+
     }
 }

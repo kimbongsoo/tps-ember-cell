@@ -106,8 +106,10 @@ namespace TEC
 
         public System.Action<int, int> onFireEvent;
         public System.Action<int, int> onReloadCompleteEvent;
-        public System.Action<float, float> OnchangedHP; //체력이 바뀔 떄 호출되는 Event
-        public System.Action<float, float> OnChangedSP; //스태미너가 바뀔 때 호출되는 Event
+        public System.Action<float, float> OnchangedHP; 
+        public System.Action<float, float> OnChangedSP; 
+        //추가
+        public System.Action<bool> OnArmedStateChanged; 
 
 
         private void Awake()
@@ -278,6 +280,9 @@ namespace TEC
             characterAnimator.SetFloat("IsEquip", 1f);
             IsArmed = true;
             characterAnimator.SetLayerWeight(2, 1f);
+
+            OnArmedStateChanged?.Invoke(true);
+
         }
 
         public void HolsterWeapon()
@@ -285,7 +290,9 @@ namespace TEC
             characterAnimator.SetTrigger("Holster Trigger");
             characterAnimator.SetFloat("IsEquip", 0f);
             IsArmed = false;
-        
+
+            OnArmedStateChanged?.Invoke(false);
+
         }
 
         public void OnWeaponToEquipPlace()

@@ -26,9 +26,9 @@ namespace TEC
         [SerializeField] private float damage = 30f;
 
         private WeaponRecoil weaponRecoil;
-        private float recoilRate = 2f;
-        private float recoilVertical = 2f;
-        private float recoilHorizontal = 1f;
+        // private float recoilRate = 2f;
+        // private float recoilVertical = 2f;
+        // private float recoilHorizontal = 1f;
         private void Awake()
         {
             weaponRecoil = GetComponent<WeaponRecoil>();

@@ -17,6 +17,7 @@ namespace TEC
         private CharacterBase characterBase;
         // private InteractionSensor interactionSensor;
 
+
         [Header("Camera Setting")]
         public Transform cameraPivot;
         public float bottomClampLimit = -80f;
@@ -82,6 +83,20 @@ namespace TEC
             characterBase.onReloadCompleteEvent += OnReloadCompleted;
             characterBase.OnchangedHP += OnChangedHP;
             characterBase.OnChangedSP += OnChangedSP;
+
+            characterBase.OnArmedStateChanged += OnArmedStateChanged;
+        }
+
+        private void OnDisable()
+        {
+            if (characterBase == null) return;
+
+            characterBase.onFireEvent -= OnFired;
+            characterBase.onReloadCompleteEvent -= OnReloadCompleted;
+            characterBase.OnchangedHP -= OnChangedHP;
+            characterBase.OnChangedSP -= OnChangedSP;
+
+            characterBase.OnArmedStateChanged -= OnArmedStateChanged;
         }
 
         private void OnReloadCompleted(int current, int max)
@@ -184,6 +199,34 @@ namespace TEC
             }
 
             return Mathf.Clamp(angle, min, max);
+        }
+
+        private void OnArmedStateChanged(bool armed)
+        {
+            var cross = CrossHairUI.Instance;
+            if (cross != null)
+            {
+                cross.gameObject.SetActive(armed);
+
+                if (!armed)
+                {
+                    // 무기 해제 시 크로스헤어 초기화
+                    crosshairCurrentSpread = crosshairSpreadMin;
+                    cross.SetCrosshairSpread(0f);
+                }
+            }
+
+            var hud = MainHUD.Instance;
+            if (hud != null)
+            {
+                hud.SetAmmoVisible(armed);
+
+                // 무기 장착 탄약 갱신
+                if (armed && characterBase != null && characterBase.PrimaryWeapon != null)
+                {
+                    hud.SetAmmoText(characterBase.PrimaryWeapon.RemainAmmo, characterBase.PrimaryWeapon.MaxAmmo);
+                }
+            }
         }
 
         void CameraTab()
