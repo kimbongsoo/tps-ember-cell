@@ -90,12 +90,7 @@ namespace TEC
 
                 clipSize--;
 
-                if (EffectManager.Instance.GetEffect("Muzzle", out GameObject muzzleEffect))
-                {
-                    muzzleEffect.transform.position = fireStartPoint.position;
-                    muzzleEffect.transform.rotation = fireStartPoint.rotation;
-                    Destroy(muzzleEffect.gameObject, 1f);
-                }
+                EffectManager.Instance.SpawnMuzzleEffect(fireStartPoint);
 
                 // CharacterPlayerController.Instance.CameraRecoil(recoilRate, recoilVertical, recoilHorizontal);
 

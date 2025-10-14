@@ -900,9 +900,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b5b3f1a3296f46b9bcc718bc4f8d7a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectDatas:
-  - id: Muzzle
-    prefab: {fileID: 124018, guid: 1f389bb139e76154582cf3c5e4f9214b, type: 3}
+  woodImpactPrefab: {fileID: 138412, guid: c75e5a4fa5c842546a553399e24eb22d, type: 3}
+  metalImpactPrefab: {fileID: 180772, guid: 697d9a1e52bb99d468a5d727e5a4b435, type: 3}
+  rockImpactPrefab: {fileID: 142740, guid: ce4fb833f44504e48b46c3474bc747fc, type: 3}
+  dirtImpactPrefab: {fileID: 186004, guid: df6885b13dec8be4582be8c2c2219da2, type: 3}
+  defaultImpactPrefab: {fileID: 0}
+  muzzleEffectPrefab: {fileID: 1182406914585020, guid: fdac2b543efe1164abc20e40e85905c2, type: 3}
 --- !u!4 &1929024800 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6351626535605567615, guid: b7b8af1fa52c04741801fd53282110dd, type: 3}

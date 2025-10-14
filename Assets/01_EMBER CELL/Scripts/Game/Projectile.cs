@@ -56,6 +56,9 @@ namespace TEC
                 receiver.ReceiveDamage(data);
             }
 
+            var physMat = collision.collider.sharedMaterial;
+            EffectManager.Instance.SpawnImpactEffect(collision.contacts[0], physMat);
+
             ReleaseToPool();
         }
 
