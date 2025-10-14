@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Xml.Serialization;
 using UnityEngine;
 using UnityEngine.Animations.Rigging;
+using UnityEngine.Pool;
 
 namespace TEC
 {
@@ -29,31 +31,62 @@ namespace TEC
         // private float recoilRate = 2f;
         // private float recoilVertical = 2f;
         // private float recoilHorizontal = 1f;
+
+        private IObjectPool<Projectile> projectilePool;
         private void Awake()
         {
             weaponRecoil = GetComponent<WeaponRecoil>();
+
+            projectilePool = new ObjectPool<Projectile>(
+                CreateProjectile,
+                OnGetFromPool,
+                OnReleaseToPool,
+                OnDestroyPooledObject,
+                true,
+                10,
+                50
+            );
         }
+
+        //생성
+        private Projectile CreateProjectile()
+        {
+            var bulletObj = Instantiate(originalBullet);
+            var proj = bulletObj.GetComponent<Projectile>();
+            proj.SetPool(projectilePool);
+            return proj;
+        }
+
+        private void OnGetFromPool(Projectile projectile)
+        {
+            projectile.gameObject.SetActive(true);
+            projectile.transform.SetPositionAndRotation(fireStartPoint.position, fireStartPoint.rotation);
+        }
+
+        private void OnReleaseToPool(Projectile projectile)
+        {
+            projectile.gameObject.SetActive(false);
+        }
+
+        private void OnDestroyPooledObject(Projectile projectile)
+        {
+            Destroy(projectile.gameObject);
+        }
+
+
 
         public bool Shoot(out int remain, out int max)
         {
             bool isShootable = clipSize > 0 && Time.time >= lastFireTime + fireRate;
             if (isShootable)
             {
-                GameObject bullet = Instantiate(originalBullet, fireStartPoint.position, fireStartPoint.rotation);
-                bullet.SetActive(true);
+                var projectile = projectilePool.Get();
 
+                projectile.Initialize(Owner.gameObject, damage);
 
-                var projectile = bullet.GetComponent<Projectile>();
-                if (projectile != null)
-                {
-                    projectile.Initialize(Owner.gameObject, damage); 
-                }
+                weaponRecoil?.GenerateRecoil();
 
-                //반동
-                if (weaponRecoil != null)
-                {
-                    weaponRecoil.GenerateRecoil();
-                }
+                
 
                 clipSize--;
 
