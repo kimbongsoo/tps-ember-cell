@@ -904,7 +904,7 @@ MonoBehaviour:
   metalImpactPrefab: {fileID: 180772, guid: 697d9a1e52bb99d468a5d727e5a4b435, type: 3}
   rockImpactPrefab: {fileID: 142740, guid: ce4fb833f44504e48b46c3474bc747fc, type: 3}
   dirtImpactPrefab: {fileID: 186004, guid: df6885b13dec8be4582be8c2c2219da2, type: 3}
-  defaultImpactPrefab: {fileID: 0}
+  defaultImpactPrefab: {fileID: 151174, guid: e3c9439885f011549a6460a1f4da82dc, type: 3}
   muzzleEffectPrefab: {fileID: 1182406914585020, guid: fdac2b543efe1164abc20e40e85905c2, type: 3}
 --- !u!4 &1929024800 stripped
 Transform:
