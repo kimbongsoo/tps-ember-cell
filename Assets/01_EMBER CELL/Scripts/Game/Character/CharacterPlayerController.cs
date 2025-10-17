@@ -122,6 +122,9 @@ namespace TEC
 
         private void Update()
         {
+            //추가
+            if (characterBase.IsDead) return;
+
             bool isInputRunning = InputManager.Singleton.InputSprint;
             characterBase.IsRunning = isInputRunning;
 

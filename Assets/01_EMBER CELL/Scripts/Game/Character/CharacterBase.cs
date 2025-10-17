@@ -131,9 +131,9 @@ namespace TEC
             if (isDead)
                 return;
 
-            FreeFall();
-            JumpAndGravity();
-            CheckGround();
+            // FreeFall();
+            // JumpAndGravity();
+            // CheckGround();
 
             if (IsRunning && currentSP > 0f)
             {
@@ -404,54 +404,24 @@ namespace TEC
             }
         }
 
-        // public void Dead()
-        // {
-        //     if (isDead) return;
-        //     isDead = true;     
-
-        //     Debug.Log($" Dead.");
-
-
-        //     unityCharacterController.enabled = false;
-
-
-        //     if (characterAnimator != null)
-        //     {
-        //         characterAnimator.SetBool("IsDead", true);
-        //     }
-
-
-        //     if (PrimaryWeapon != null)
-        //         PrimaryWeapon.gameObject.SetActive(false);
-
-        //     // ✅ 필요 시 이벤트 추가 (예: UI, RespawnManager 등)
-        //     // OnDead?.Invoke();
-        // }
-        
         public void Dead()
         {
             if (isDead) return;
             isDead = true;
 
-            Debug.Log($"{name} Dead.");
-
-            // ✅ 이동 즉시 멈춤
             unityCharacterController.enabled = false;
-            verticalVelocity = 0f;
 
-            // ✅ 애니메이터 정지 상태로 초기화
-            characterAnimator.SetFloat("Horizontal", 0f);
-            characterAnimator.SetFloat("Vertical", 0f);
-            characterAnimator.SetFloat("Magnitude", 0f);
-            characterAnimator.SetFloat("Running", 0f);
-            characterAnimator.SetBool("IsDead", true);
+            if (characterAnimator != null)
+            {
+                characterAnimator.SetTrigger("Dead Trigger");
+                characterAnimator.SetBool("IsDead", true);
+                characterAnimator.SetLayerWeight(1, 0f);
+                characterAnimator.SetLayerWeight(2, 0f);
+            }
 
-            // ✅ 무기 비활성화
             if (PrimaryWeapon != null)
                 PrimaryWeapon.gameObject.SetActive(false);
         }
-
-
 
     }
 }
