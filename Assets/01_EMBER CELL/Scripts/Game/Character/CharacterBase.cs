@@ -31,26 +31,16 @@ namespace TEC
 
         public bool IsArmed { get; private set; } = false;
         private bool isArmed = false;
+
+        //추가
+        public bool IsDead => isDead;
+        private bool isDead = false;
         public WeaponBase PrimaryWeapon => primaryWeapon;
 
-        public void ReceiveDamage(IDamageData damageData)
-        {
-        if (damageData == null || currentHP <= 0f) return;
-
-        currentHP -= damageData.DamageAmount;
-        currentHP = Mathf.Clamp(currentHP, 0f, maxHP);
-        OnchangedHP?.Invoke(currentHP, maxHP);
-
-        if (currentHP <= 0f)
-        {
-            // TODO: 사망 처리 로직 (애니메이션, 리스폰 등)
-        }
-        }
-
         [Header("Character Stat")]
-        public float maxHP = 1000f;
+        public float maxHP = 100f;
         public float maxSP = 100f;
-        private float currentHP = 1000f;
+        private float currentHP = 100f;
         private float currentSP = 100f;
 
         [Header("Weapon Setting")]
@@ -106,10 +96,10 @@ namespace TEC
 
         public System.Action<int, int> onFireEvent;
         public System.Action<int, int> onReloadCompleteEvent;
-        public System.Action<float, float> OnchangedHP; 
-        public System.Action<float, float> OnChangedSP; 
+        public System.Action<float, float> OnchangedHP;
+        public System.Action<float, float> OnChangedSP;
         //추가
-        public System.Action<bool> OnArmedStateChanged; 
+        public System.Action<bool> OnArmedStateChanged;
 
 
         private void Awake()
@@ -138,6 +128,9 @@ namespace TEC
 
         private void Update()
         {
+            if (isDead)
+                return;
+
             FreeFall();
             JumpAndGravity();
             CheckGround();
@@ -395,5 +388,70 @@ namespace TEC
         {
             return characterAnimator.GetBoneTransform(bone);
         }
+
+        public void ReceiveDamage(IDamageData damageData)
+        {
+            if (damageData == null || currentHP <= 0f || isDead) return;
+
+            currentHP -= damageData.DamageAmount;
+            currentHP = Mathf.Clamp(currentHP, 0f, maxHP);
+            OnchangedHP?.Invoke(currentHP, maxHP);
+
+            if (currentHP <= 0f)
+            {
+                // TODO: 사망 처리 로직 (애니메이션, 리스폰 등)
+                Dead();
+            }
+        }
+
+        // public void Dead()
+        // {
+        //     if (isDead) return;
+        //     isDead = true;     
+
+        //     Debug.Log($" Dead.");
+
+
+        //     unityCharacterController.enabled = false;
+
+
+        //     if (characterAnimator != null)
+        //     {
+        //         characterAnimator.SetBool("IsDead", true);
+        //     }
+
+
+        //     if (PrimaryWeapon != null)
+        //         PrimaryWeapon.gameObject.SetActive(false);
+
+        //     // ✅ 필요 시 이벤트 추가 (예: UI, RespawnManager 등)
+        //     // OnDead?.Invoke();
+        // }
+        
+        public void Dead()
+        {
+            if (isDead) return;
+            isDead = true;
+
+            Debug.Log($"{name} Dead.");
+
+            // ✅ 이동 즉시 멈춤
+            unityCharacterController.enabled = false;
+            verticalVelocity = 0f;
+
+            // ✅ 애니메이터 정지 상태로 초기화
+            characterAnimator.SetFloat("Horizontal", 0f);
+            characterAnimator.SetFloat("Vertical", 0f);
+            characterAnimator.SetFloat("Magnitude", 0f);
+            characterAnimator.SetFloat("Running", 0f);
+            characterAnimator.SetBool("IsDead", true);
+
+            // ✅ 무기 비활성화
+            if (PrimaryWeapon != null)
+                PrimaryWeapon.gameObject.SetActive(false);
+        }
+
+
+
     }
 }
