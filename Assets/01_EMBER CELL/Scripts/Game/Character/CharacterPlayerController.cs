@@ -234,7 +234,6 @@ namespace TEC
 
         void CameraTab()
         {
-             Debug.Log("CameraTab called!");
             CameraSystem.Instance.SetChangeCameraSide();
         }
 
