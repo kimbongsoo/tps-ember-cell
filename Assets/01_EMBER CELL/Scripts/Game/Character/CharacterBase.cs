@@ -100,6 +100,8 @@ namespace TEC
         public System.Action<float, float> OnChangedSP;
         //추가
         public System.Action<bool> OnArmedStateChanged;
+        public System.Action<bool> OnDeadStateChanged;
+
 
 
         private void Awake()
@@ -124,6 +126,13 @@ namespace TEC
 
             primaryWeapon = Instantiate(primaryWeaponPrefab, weaponHolsterPlace);
             primaryWeapon.Owner = this;
+
+            if (primaryWeapon != null)
+            {
+                // 탄약 초기 상태 전달
+                onReloadCompleteEvent?.Invoke(primaryWeapon.RemainAmmo, primaryWeapon.MaxAmmo);
+            }
+
         }
 
         private void Update()
@@ -421,6 +430,8 @@ namespace TEC
 
             if (PrimaryWeapon != null)
                 PrimaryWeapon.gameObject.SetActive(false);
+
+            OnDeadStateChanged?.Invoke(true);
         }
 
     }

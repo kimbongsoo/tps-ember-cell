@@ -22,7 +22,7 @@ namespace TEC
         public event System.Action OnCombat;
         public event System.Action OnHolster;
         public event System.Action OnPrimaryWeapon;
-        public event System.Action OnJump;
+        // public event System.Action OnJump;
         public event System.Action OnRoll;
 
 
