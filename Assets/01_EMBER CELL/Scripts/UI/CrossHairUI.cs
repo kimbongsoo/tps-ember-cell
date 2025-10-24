@@ -34,7 +34,6 @@ namespace TEC
 
             if (character == null)
             {
-                Debug.LogWarning("[CrossHairUI] CharacterBase not found. (Crosshair hidden)");
                 SetVisible(false);
                 yield break;
             }
