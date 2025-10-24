@@ -418,6 +418,8 @@ namespace TEC
             if (isDead) return;
             isDead = true;
 
+            StartCoroutine(PlayerDeathSlowMotion());
+
             unityCharacterController.enabled = false;
 
             if (characterAnimator != null)
@@ -459,6 +461,31 @@ namespace TEC
             OnDeadStateChanged?.Invoke(false);
 
             Debug.Log(" 부활이다 ");
+        }
+
+        private IEnumerator PlayerDeathSlowMotion()
+        {
+            float originalTimeScale = Time.timeScale;
+            float targetTimeScale = 0.2f;    
+            float slowDuration = 2f;     
+            float restoreSpeed = 2f;      
+
+            Time.timeScale = targetTimeScale;
+            Time.fixedDeltaTime = 0.02f * Time.timeScale; 
+
+            yield return new WaitForSecondsRealtime(slowDuration);
+
+            float t = 0f;
+            while (t < 1f)
+            {
+                t += Time.unscaledDeltaTime * restoreSpeed;
+                Time.timeScale = Mathf.Lerp(targetTimeScale, originalTimeScale, t);
+                Time.fixedDeltaTime = 0.02f * Time.timeScale;
+                yield return null;
+            }
+
+            Time.timeScale = originalTimeScale;
+            Time.fixedDeltaTime = 0.02f;
         }
 
     }
