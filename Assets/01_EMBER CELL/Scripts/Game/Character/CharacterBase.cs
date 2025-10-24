@@ -102,6 +102,10 @@ namespace TEC
         public System.Action<bool> OnArmedStateChanged;
         public System.Action<bool> OnDeadStateChanged;
 
+        private float _blendAiming = 0;
+
+
+
 
 
         private void Awake()
