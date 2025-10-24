@@ -466,12 +466,12 @@ namespace TEC
         private IEnumerator PlayerDeathSlowMotion()
         {
             float originalTimeScale = Time.timeScale;
-            float targetTimeScale = 0.2f;    
-            float slowDuration = 2f;     
-            float restoreSpeed = 2f;      
+            float targetTimeScale = 0.2f;
+            float slowDuration = 2f;
+            float restoreSpeed = 2f;
 
             Time.timeScale = targetTimeScale;
-            Time.fixedDeltaTime = 0.02f * Time.timeScale; 
+            Time.fixedDeltaTime = 0.02f * Time.timeScale;
 
             yield return new WaitForSecondsRealtime(slowDuration);
 
@@ -487,6 +487,7 @@ namespace TEC
             Time.timeScale = originalTimeScale;
             Time.fixedDeltaTime = 0.02f;
         }
+        
 
     }
 }

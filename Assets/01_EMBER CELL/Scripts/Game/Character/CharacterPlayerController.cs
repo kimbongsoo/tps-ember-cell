@@ -59,7 +59,7 @@ namespace TEC
             // InputManager.Singleton.OnJump += ExecuteJump;
             InputManager.Singleton.OnRoll += ExecuteRoll;
 
-            // InputManager.Singleton.OnInteract += ExecuteInteract;
+            InputManager.Singleton.OnInteract += ExecuteInteract;
 
             // OnFired(characterBase.PrimaryWeapon.RemainAmmo, characterBase.PrimaryWeapon.MaxAmmo);
         }
@@ -74,7 +74,7 @@ namespace TEC
             // InputManager.Singleton.OnJump -= ExecuteJump;
             InputManager.Singleton.OnRoll -= ExecuteRoll;
 
-            // InputManager.Singleton.OnInteract -= ExecuteInteract;
+            InputManager.Singleton.OnInteract -= ExecuteInteract;
         }
 
         // private void OnEnable()
@@ -254,6 +254,11 @@ namespace TEC
         //     interactionUI.TryInteract();
             
         // }
+        void ExecuteInteract()
+        {
+            var ui = UIManager.Singleton.GetUI<InteractionUI>(UIList.InteractionUI);
+            ui.TryInteract();
+        }
 
 
     }

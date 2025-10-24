@@ -112,5 +112,12 @@ namespace TEC
         {
             return clipSize == 0;
         }
+
+        public void AddAmmo(int amount, out int current, out int max)
+        {
+            clipSize = Mathf.Clamp(clipSize + amount, 0, maxAmmo);
+            current  = clipSize;
+            max      = maxAmmo;
+        }
     }
 }
