@@ -123,7 +123,14 @@ namespace TEC
         private void Update()
         {
             //추가
-            if (characterBase.IsDead) return;
+            // if (characterBase.IsDead) return;
+            //부활 임시코드
+            if (characterBase.IsDead)
+            {
+                if (Input.GetKeyDown(KeyCode.P))
+                    characterBase.Revive();
+                return;
+            }
 
             bool isInputRunning = InputManager.Singleton.InputSprint;
             characterBase.IsRunning = isInputRunning;

@@ -434,5 +434,32 @@ namespace TEC
             OnDeadStateChanged?.Invoke(true);
         }
 
+        //테스트용 부활 임시코드
+        public void Revive()
+        {
+            isDead = false;
+            currentHP = maxHP;
+            currentSP = maxSP;
+
+            unityCharacterController.enabled = true;
+
+            if (characterAnimator != null)
+            {
+                characterAnimator.SetTrigger("Revive Trigger");
+                characterAnimator.SetBool("IsDead", false);
+                characterAnimator.SetLayerWeight(1, 1f);
+                characterAnimator.SetLayerWeight(2, 1f);
+            }
+
+            if (PrimaryWeapon != null)
+                PrimaryWeapon.gameObject.SetActive(true);
+
+            OnchangedHP?.Invoke(currentHP, maxHP);
+            OnChangedSP?.Invoke(currentSP, maxSP);
+            OnDeadStateChanged?.Invoke(false);
+
+            Debug.Log(" 부활이다 ");
+        }
+
     }
 }
