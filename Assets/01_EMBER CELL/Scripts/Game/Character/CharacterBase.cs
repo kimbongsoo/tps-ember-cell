@@ -102,7 +102,7 @@ namespace TEC
         public System.Action<bool> OnArmedStateChanged;
         public System.Action<bool> OnDeadStateChanged;
 
-        private float _blendAiming = 0;
+        private float _blendAiming = 0f;
 
 
 
@@ -172,6 +172,10 @@ namespace TEC
 
             float targetBlendCrouch = isCrouch ? 1f : 0f;
             blendCrouch = Mathf.Lerp(blendCrouch, targetBlendCrouch, Time.deltaTime * 10f);
+
+            float targetAiming = isAiming ? 1f : 0f;
+            _blendAiming = Mathf.Lerp(_blendAiming, targetAiming, Time.deltaTime * 5f);
+
             characterAnimator.SetFloat("Crouch", blendCrouch);
 
             characterAnimator.SetFloat("Aiming", isAiming ? 1f : 0f);
