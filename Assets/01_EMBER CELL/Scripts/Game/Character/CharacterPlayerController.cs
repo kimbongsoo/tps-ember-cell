@@ -26,12 +26,12 @@ namespace TEC
         private float targetYaw = 0f;
         private float targetPitch = 0f;
 
-        // [Header("Corsshair Setting")]
-        // public float crosshairSpreadSpeed = 0.1f;
-        // public float crosshairRecoverySpeed = 0.2f;
-        // public float crosshairSpreadMax = 1f;
-        // public float crosshairSpreadMin = 0.1f;
-        // private float crosshairCurrentSpread = 0f;
+        [Header("Corsshair Setting")]
+        public float crosshairSpreadSpeed = 0.1f;
+        public float crosshairRecoverySpeed = 0.2f;
+        public float crosshairSpreadMax = 1f;
+        public float crosshairSpreadMin = 0.1f;
+        private float crosshairCurrentSpread = 0f;
 
         [Header("Camera Recoil Setting")]
         public float recoilRecoverySpeed = 2f;
@@ -64,6 +64,24 @@ namespace TEC
             // OnFired(characterBase.PrimaryWeapon.RemainAmmo, characterBase.PrimaryWeapon.MaxAmmo);
         }
 
+        void OnLinkedCharacterArmedChanged(bool isArmed)
+        {
+            var crossHairUI = UIManager.Singleton.GetUI<CrossHairUI>(UIList.CrossHairUI);
+            var mainHudUI = UIManager.Singleton.GetUI<MainHUD>(UIList.MainHUD);
+
+            crossHairUI.ToggleCrosshairByArmedState(isArmed);
+            mainHudUI.ToggleAmmoTextByArmedState(isArmed);
+        }
+
+        void OnLinkedCharacterDeadState(bool isDead)
+        {
+            var crossHairUI = UIManager.Singleton.GetUI<CrossHairUI>(UIList.CrossHairUI);
+            var mainHudUI = UIManager.Singleton.GetUI<MainHUD>(UIList.MainHUD);
+
+            crossHairUI.ToggleCrosshairByDeadState(isDead);
+            mainHudUI.ToggleAmmoTextByDeadState(isDead);
+        }
+
         private void OnDestroy()
         {
             InputManager.Singleton.OnTab -= CameraTab;
@@ -75,50 +93,55 @@ namespace TEC
             InputManager.Singleton.OnRoll -= ExecuteRoll;
 
             InputManager.Singleton.OnInteract -= ExecuteInteract;
+
         }
 
-        // private void OnEnable()
-        // {
-        //     characterBase.onFireEvent += OnFired;
-        //     characterBase.onReloadCompleteEvent += OnReloadCompleted;
-        //     characterBase.OnchangedHP += OnChangedHP;
-        //     characterBase.OnChangedSP += OnChangedSP;
+        private void OnEnable()
+        {
+            characterBase.onFireEvent += OnFired;
+            characterBase.onReloadCompleteEvent += OnReloadCompleted;
+            characterBase.OnchangedHP += OnChangedHP;
+            characterBase.OnChangedSP += OnChangedSP;
+            characterBase.OnArmedStateChanged += OnLinkedCharacterArmedChanged;
+            characterBase.OnDeadStateChanged += OnLinkedCharacterDeadState;
 
-        //     // characterBase.OnArmedStateChanged += OnArmedStateChanged;
-        // }
+            // characterBase.OnArmedStateChanged += OnArmedStateChanged;
+        }
 
-        // private void OnDisable()
-        // {
-        //     if (characterBase == null) return;
+        private void OnDisable()
+        {
+            if (characterBase == null) return;
 
-        //     characterBase.onFireEvent -= OnFired;
-        //     characterBase.onReloadCompleteEvent -= OnReloadCompleted;
-        //     characterBase.OnchangedHP -= OnChangedHP;
-        //     characterBase.OnChangedSP -= OnChangedSP;
+            characterBase.onFireEvent -= OnFired;
+            characterBase.onReloadCompleteEvent -= OnReloadCompleted;
+            characterBase.OnchangedHP -= OnChangedHP;
+            characterBase.OnChangedSP -= OnChangedSP;
+            characterBase.OnArmedStateChanged -= OnLinkedCharacterArmedChanged;
+            characterBase.OnDeadStateChanged -= OnLinkedCharacterDeadState;
 
-        //     // characterBase.OnArmedStateChanged -= OnArmedStateChanged;
-        // }
+            // characterBase.OnArmedStateChanged -= OnArmedStateChanged;
+        }
 
-        // private void OnReloadCompleted(int current, int max)
-        // {
-        //     MainHUD.Instance.SetAmmoText(current, max);
-        // }
+        private void OnReloadCompleted(int current, int max)
+        {
+            MainHUD.Instance.SetAmmoText(current, max);
+        }
 
-        // private void OnChangedHP(float current, float max)
-        // {
-        //     MainHUD.Instance.SetHP(current, max);
-        // }
-        // private void OnChangedSP(float current, float max)
-        // {
-        //     MainHUD.Instance.SetSP(current, max);
-        // }
-        // private void OnFired(int current, int max)
-        // {
-        //     MainHUD.Instance.SetAmmoText(current, max);
+        private void OnChangedHP(float current, float max)
+        {
+            MainHUD.Instance.SetHP(current, max);
+        }
+        private void OnChangedSP(float current, float max)
+        {
+            MainHUD.Instance.SetSP(current, max);
+        }
+        private void OnFired(int current, int max)
+        {
+            MainHUD.Instance.SetAmmoText(current, max);
 
-        //     crosshairCurrentSpread = Mathf.Clamp(crosshairCurrentSpread + crosshairSpreadSpeed, crosshairSpreadMin, crosshairSpreadMax);
-        //     CrossHairUI.Instance.SetCrosshairSpread(crosshairCurrentSpread / crosshairSpreadMax);
-        // }
+            crosshairCurrentSpread = Mathf.Clamp(crosshairCurrentSpread + crosshairSpreadSpeed, crosshairSpreadMin, crosshairSpreadMax);
+            CrossHairUI.Instance.SetCrosshairSpread(crosshairCurrentSpread / crosshairSpreadMax);
+        }
 
         private void Update()
         {
@@ -150,12 +173,12 @@ namespace TEC
 
             //크로스헤어 줄어들기
             
-            // crosshairCurrentSpread = Mathf.Clamp(
-            //     crosshairCurrentSpread - (crosshairRecoverySpeed * Time.deltaTime)
-            //     , crosshairSpreadMin
-            //     , crosshairSpreadMax);
+            crosshairCurrentSpread = Mathf.Clamp(
+                crosshairCurrentSpread - (crosshairRecoverySpeed * Time.deltaTime)
+                , crosshairSpreadMin
+                , crosshairSpreadMax);
 
-            // CrossHairUI.Instance.SetCrosshairSpread(crosshairCurrentSpread / crosshairSpreadMax);
+            CrossHairUI.Instance.SetCrosshairSpread(crosshairCurrentSpread / crosshairSpreadMax);
         }
 
 

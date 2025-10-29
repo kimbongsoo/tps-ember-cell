@@ -1,117 +1,87 @@
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System;
 
 namespace TEC
 {
     public class MainHUD : UIBase
     {
+
         public static MainHUD Instance => UIManager.Singleton.GetUI<MainHUD>(UIList.MainHUD);
 
-        [Header("Stat UI")]
+
         [SerializeField] private Image hpForeground;
         [SerializeField] private Image spForeground;
         [SerializeField] private TextMeshProUGUI hpText;
         [SerializeField] private TextMeshProUGUI spText;
 
-        [Header("Weapon UI")]
         [SerializeField] private Image weaponIcon;
         [SerializeField] private TextMeshProUGUI weaponNameText;
         [SerializeField] private TextMeshProUGUI ammoText;
 
-        private CharacterBase character;
+        // [SerializeField] private TextMeshProUGUI scoreText;
 
-        private void OnEnable()
+
+        public override void Show()
         {
-            StartCoroutine(WaitForCharacter());
+            base.Show();
+
+            StartCoroutine(DelayedApplyCamera());
         }
 
-        private IEnumerator WaitForCharacter()
+        IEnumerator DelayedApplyCamera()
         {
-            yield return null;
+            yield return new WaitUntil(() => Camera.main != null);
 
-            character = FindObjectOfType<CharacterBase>();
-            if (character == null)
-            {
-                Debug.LogWarning("[MainHUD] CharacterBase not found. HUD will remain hidden.");
-                yield break;
-            }
-
-            character.OnchangedHP += SetHP;
-            character.OnChangedSP += SetSP;
-            character.onFireEvent += UpdateAmmo;
-            character.onReloadCompleteEvent += UpdateAmmo;
-            character.OnArmedStateChanged += HandleArmedState;
-            character.OnDeadStateChanged += HandleDeadState;
-
-            SetHP(character.CurrentHP, character.MaxHP);
-            SetSP(character.CurrentSP, character.MaxSP);
-            UpdateAmmo(character.PrimaryWeapon?.RemainAmmo ?? 0, character.PrimaryWeapon?.MaxAmmo ?? 0);
-            HandleArmedState(character.IsArmed);
-            HandleDeadState(character.IsDead);
+            Canvas canvas = GetComponent<Canvas>();
+            canvas.worldCamera = Camera.main;
+            canvas.planeDistance = 1;
         }
 
-        private void OnDisable()
+        public void SetWeaponData(Sprite weaponImage, string weaponName)
         {
-            if (character == null) return;
-
-            character.OnchangedHP -= SetHP;
-            character.OnChangedSP -= SetSP;
-            character.onFireEvent -= UpdateAmmo;
-            character.onReloadCompleteEvent -= UpdateAmmo;
-            character.OnArmedStateChanged -= HandleArmedState;
-            character.OnDeadStateChanged -= HandleDeadState;
+            weaponIcon.sprite = weaponImage;
+            weaponNameText.text = weaponName;
         }
 
-        private void HandleArmedState(bool armed)
+        public void SetAmmoText(int current, int max)
         {
-            SetAmmoVisible(armed);
-            if (armed && character.PrimaryWeapon != null)
-                UpdateAmmo(character.PrimaryWeapon.RemainAmmo, character.PrimaryWeapon.MaxAmmo);
-        }
-
-        private void HandleDeadState(bool dead)
-        {
-            if (dead)
-                SetAmmoVisible(false);
-        }
-
-        public void SetHP(float current, float max)
-        {
-            if (hpForeground != null)
-                hpForeground.fillAmount = current / max;
-
-            if (hpText != null)
-                hpText.text = $"{current:00}/{max:00}";
-        }
-
-        public void SetSP(float current, float max)
-        {
-            if (spForeground != null)
-                spForeground.fillAmount = current / max;
-
-            if (spText != null)
-                spText.text = $"{current:00}/{max:00}";
-        }
-
-        private void UpdateAmmo(int current, int max)
-        {
-            if (ammoText == null)
-                return;
-
             string currentColor = current == 0 ? "red" : "white";
             ammoText.text = $"<color={currentColor}>{current:00}</color> / {max:00}";
         }
 
-
-        public void SetWeaponData(Sprite weaponImage, string weaponName)
+        public void ToggleAmmoTextByArmedState(bool armed)
         {
-            if (weaponIcon != null)
-                weaponIcon.sprite = weaponImage;
+            ammoText.gameObject.SetActive(armed);
+        }
 
-            if (weaponNameText != null)
-                weaponNameText.text = weaponName;
+        public void ToggleAmmoTextByDeadState(bool dead)
+        {
+            if (dead)
+            {
+                ammoText.gameObject.SetActive(false);
+            }
+        }
+
+
+        // private void SetVisible(bool visible)
+        // {
+        //     if (ammoText) ammoText.gameObject.SetActive(visible);
+        // }
+
+        public void SetHP(float current, float max)
+        {
+            hpForeground.fillAmount = current / max;
+            hpText.text = $"{current:00}/{max:00}";
+        }
+
+        public void SetSP(float current, float max)
+        {
+            spForeground.fillAmount = current / max;
+            spText.text = $"{current:00}/{max:00}";
         }
 
         public void SetAmmoVisible(bool visible)
@@ -120,20 +90,12 @@ namespace TEC
                 ammoText.gameObject.SetActive(visible);
         }
 
+        // public void SetScore(int score)
+        // {
+        //     scoreText.text = $"Score:{score}";
+        // }
 
-        public override void Show()
-        {
-            base.Show();
-            StartCoroutine(DelayedApplyCamera());
-        }
 
-        private IEnumerator DelayedApplyCamera()
-        {
-            yield return new WaitUntil(() => Camera.main != null);
 
-            Canvas canvas = GetComponent<Canvas>();
-            canvas.worldCamera = Camera.main;
-            canvas.planeDistance = 1;
-        }
     }
 }
