@@ -23,6 +23,12 @@ namespace TEC
         [SerializeField] private TextMeshProUGUI ammoText;
 
         // [SerializeField] private TextMeshProUGUI scoreText;
+        [Header("Minimap Compass")]
+        [SerializeField] private RectTransform compassContainer;
+        [SerializeField] private RectTransform northText;
+        [SerializeField] private RectTransform southText;
+        [SerializeField] private RectTransform eastText;
+        [SerializeField] private RectTransform westText;
 
 
         public override void Show()
@@ -88,6 +94,29 @@ namespace TEC
         {
             if (ammoText != null)
                 ammoText.gameObject.SetActive(visible);
+        }
+
+        public void UpdateCompass(float playerYaw)
+        {
+            if (compassContainer == null)
+                return;
+
+            compassContainer.localRotation = Quaternion.Euler(0f, 0f, -playerYaw);
+
+            Quaternion inverse = Quaternion.Euler(0f, 0f, playerYaw);
+
+            // RectTransform 회전 보정
+            ApplyTextRotation(northText, inverse);
+            ApplyTextRotation(southText, inverse);
+            ApplyTextRotation(eastText, inverse);
+            ApplyTextRotation(westText, inverse);
+        }
+        
+        private void ApplyTextRotation(RectTransform text, Quaternion rotation)
+        {
+            if (text == null) return;
+
+            text.localRotation = rotation;
         }
 
         // public void SetScore(int score)

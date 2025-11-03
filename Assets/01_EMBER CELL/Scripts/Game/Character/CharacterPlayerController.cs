@@ -142,6 +142,11 @@ namespace TEC
             crosshairCurrentSpread = Mathf.Clamp(crosshairCurrentSpread + crosshairSpreadSpeed, crosshairSpreadMin, crosshairSpreadMax);
             CrossHairUI.Instance.SetCrosshairSpread(crosshairCurrentSpread / crosshairSpreadMax);
         }
+        private void MinimapRotation()
+        {
+            float platerYaw = characterBase.transform.eulerAngles.y;
+            MainHUD.Instance.UpdateCompass(platerYaw);
+        }
 
         private void Update()
         {
@@ -179,6 +184,7 @@ namespace TEC
                 , crosshairSpreadMax);
 
             CrossHairUI.Instance.SetCrosshairSpread(crosshairCurrentSpread / crosshairSpreadMax);
+
         }
 
 
@@ -186,6 +192,7 @@ namespace TEC
         {
             CameraRotation();
             CameraRecovery();
+            MinimapRotation();
         }
 
         public void CameraRotation()
