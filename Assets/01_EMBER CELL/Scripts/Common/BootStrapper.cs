@@ -2,6 +2,7 @@
 using UnityEditor.SceneManagement;
 using UnityEngine.SceneManagement;
 using UnityEngine;
+using Unity.VisualScripting.Dependencies.NCalc;
 
 namespace TEC
 {
@@ -44,6 +45,9 @@ namespace TEC
                 UIManager.Show<MainHUD>(UIList.MainHUD);
                 UIManager.Show<CrossHairUI>(UIList.CrossHairUI);
                 // UIManager.Show<InteractionUI>(UIList.InteractionUI);
+
+                UIManager.Show<RedDotUI>(UIList.RedDotUI);
+
             }
         }
 

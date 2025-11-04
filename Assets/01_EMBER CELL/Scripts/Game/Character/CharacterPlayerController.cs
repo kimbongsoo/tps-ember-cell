@@ -39,6 +39,8 @@ namespace TEC
         private Vector3 currentRotation;
 
 
+
+
         private void Awake()
         {
             characterBase = GetComponent<CharacterBase>();
@@ -60,6 +62,8 @@ namespace TEC
             InputManager.Singleton.OnRoll += ExecuteRoll;
 
             InputManager.Singleton.OnInteract += ExecuteInteract;
+            InputManager.Singleton.OnRightClickDouble += ToggleRedDotUI;
+
 
             // OnFired(characterBase.PrimaryWeapon.RemainAmmo, characterBase.PrimaryWeapon.MaxAmmo);
         }
@@ -75,11 +79,13 @@ namespace TEC
 
         void OnLinkedCharacterDeadState(bool isDead)
         {
-            var crossHairUI = UIManager.Singleton.GetUI<CrossHairUI>(UIList.CrossHairUI);
-            var mainHudUI = UIManager.Singleton.GetUI<MainHUD>(UIList.MainHUD);
+            // var crossHairUI = UIManager.Singleton.GetUI<CrossHairUI>(UIList.CrossHairUI);
+            // var mainHudUI = UIManager.Singleton.GetUI<MainHUD>(UIList.MainHUD);
 
-            crossHairUI.ToggleCrosshairByDeadState(isDead);
-            mainHudUI.ToggleAmmoTextByDeadState(isDead);
+            // crossHairUI.ToggleCrosshairByDeadState(isDead);
+            CrossHairUI.Instance.ToggleCrosshairByDeadState(isDead);
+            // mainHudUI.ToggleAmmoTextByDeadState(isDead);
+            MainHUD.Instance.ToggleAmmoTextByDeadState(isDead);
         }
 
         private void OnDestroy()
@@ -93,6 +99,8 @@ namespace TEC
             InputManager.Singleton.OnRoll -= ExecuteRoll;
 
             InputManager.Singleton.OnInteract -= ExecuteInteract;
+            InputManager.Singleton.OnRightClickDouble -= ToggleRedDotUI;
+
 
         }
 
@@ -146,6 +154,15 @@ namespace TEC
         {
             float platerYaw = characterBase.transform.eulerAngles.y;
             MainHUD.Instance.UpdateCompass(platerYaw);
+        }
+        private void ToggleRedDotUI()
+        {
+            // RedDotUI.instance
+            Debug.Log("🟢 ToggleRedDotUI Called"); // 확인용 로그
+            var redDot = UIManager.Singleton.GetUI<RedDotUI>(UIList.RedDotUI);
+            Debug.Log(redDot == null ? "❌ RedDotUI not found" : "✅ RedDotUI loaded");
+            if (redDot != null)
+                redDot.Toggle();
         }
 
         private void Update()

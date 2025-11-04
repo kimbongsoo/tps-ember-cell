@@ -29,6 +29,7 @@ namespace TEC
         TitleUI,
         MainHUD,
         InteractionUI,
+        RedDotUI,
 
         MAX_SCENE_PANEL,
         //===================

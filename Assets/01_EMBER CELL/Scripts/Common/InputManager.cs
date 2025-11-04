@@ -24,6 +24,7 @@ namespace TEC
         public event System.Action OnPrimaryWeapon;
         // public event System.Action OnJump;
         public event System.Action OnRoll;
+        public event System.Action OnRightClickDouble;
 
 
         public event System.Action OnInteract;
@@ -31,6 +32,10 @@ namespace TEC
         private bool isSpaceTab;
         private float spaceLastTabTime;
         private float spaceDoubleTabThreshold = 0.25f;
+
+        private bool isRightClickTab;
+        private float rightClickLastTime;
+        private float rightClickDoubleThreshold = 0.25f;
 
         private void Start()
         {
@@ -101,6 +106,27 @@ namespace TEC
             if (isSpaceTab && (Time.time - spaceLastTabTime) > spaceDoubleTabThreshold)
             {
                 isSpaceTab = false;
+            }
+
+            //우클릭 2번 체크
+            if (Input.GetMouseButtonDown(1))
+            {
+                if (isRightClickTab && Time.time - rightClickLastTime <= rightClickDoubleThreshold)
+                {
+                    Debug.Log("🟢 RightClick Double Detected"); // 추가
+                    OnRightClickDouble?.Invoke();
+                    isRightClickTab = false;
+                }
+                else
+                {
+                    isRightClickTab = true;
+                    rightClickLastTime = Time.time;
+                }
+            }
+
+            if (isRightClickTab && (Time.time - rightClickLastTime) > rightClickDoubleThreshold)
+            {
+                isRightClickTab = false;
             }
         }
         
