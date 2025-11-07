@@ -38,6 +38,9 @@ namespace TEC
         private Vector3 targetRotation;
         private Vector3 currentRotation;
 
+        // 1. 스코프 필드 추가
+        private bool isScoped = false;
+
 
 
 
@@ -62,7 +65,10 @@ namespace TEC
             InputManager.Singleton.OnRoll += ExecuteRoll;
 
             InputManager.Singleton.OnInteract += ExecuteInteract;
-            InputManager.Singleton.OnRightClickDouble += ToggleRedDotUI;
+
+            //스코프
+            // InputManager.Singleton.OnRightClickDouble += ToggleRedDotUI;
+            InputManager.Singleton.OnRightClickDouble += OnRightClickDouble;
 
 
             // OnFired(characterBase.PrimaryWeapon.RemainAmmo, characterBase.PrimaryWeapon.MaxAmmo);
@@ -70,11 +76,11 @@ namespace TEC
 
         void OnLinkedCharacterArmedChanged(bool isArmed)
         {
-            var crossHairUI = UIManager.Singleton.GetUI<CrossHairUI>(UIList.CrossHairUI);
-            var mainHudUI = UIManager.Singleton.GetUI<MainHUD>(UIList.MainHUD);
+            // var crossHairUI = UIManager.Singleton.GetUI<CrossHairUI>(UIList.CrossHairUI);
+            // var mainHudUI = UIManager.Singleton.GetUI<MainHUD>(UIList.MainHUD);
 
-            crossHairUI.ToggleCrosshairByArmedState(isArmed);
-            mainHudUI.ToggleAmmoTextByArmedState(isArmed);
+            CrossHairUI.Instance.ToggleCrosshairByArmedState(isArmed);
+            MainHUD.Instance.ToggleAmmoTextByArmedState(isArmed);
         }
 
         void OnLinkedCharacterDeadState(bool isDead)
@@ -99,7 +105,11 @@ namespace TEC
             InputManager.Singleton.OnRoll -= ExecuteRoll;
 
             InputManager.Singleton.OnInteract -= ExecuteInteract;
-            InputManager.Singleton.OnRightClickDouble -= ToggleRedDotUI;
+
+            //스코프
+            // InputManager.Singleton.OnRightClickDouble -= ToggleRedDotUI;
+            InputManager.Singleton.OnRightClickDouble -= OnRightClickDouble;
+
 
 
         }
@@ -155,15 +165,10 @@ namespace TEC
             float platerYaw = characterBase.transform.eulerAngles.y;
             MainHUD.Instance.UpdateCompass(platerYaw);
         }
-        private void ToggleRedDotUI()
-        {
-            // RedDotUI.instance
-            Debug.Log("🟢 ToggleRedDotUI Called"); // 확인용 로그
-            var redDot = UIManager.Singleton.GetUI<RedDotUI>(UIList.RedDotUI);
-            Debug.Log(redDot == null ? "❌ RedDotUI not found" : "✅ RedDotUI loaded");
-            if (redDot != null)
-                redDot.Toggle();
-        }
+        // private void ToggleRedDotUI()
+        // {
+        //     RedDotUI.Instance.Toggle();
+        // }
 
         private void Update()
         {
@@ -182,6 +187,11 @@ namespace TEC
 
             bool isAimingInput = InputManager.Singleton.InputAim;
             characterBase.IsAiming = isAimingInput;
+            // 스코프 해제 
+            if (!InputManager.Singleton.InputAim && isScoped)
+            {
+                ExitScopeMode();
+            }
 
             if (InputManager.Singleton.InputFire)
             {
@@ -201,6 +211,7 @@ namespace TEC
                 , crosshairSpreadMax);
 
             CrossHairUI.Instance.SetCrosshairSpread(crosshairCurrentSpread / crosshairSpreadMax);
+
 
         }
 
@@ -264,6 +275,7 @@ namespace TEC
             CameraSystem.Instance.SetChangeCameraSide();
         }
 
+
         void ToggleCrouch()
         {
             characterBase.IsCrouch = !characterBase.IsCrouch;
@@ -299,12 +311,50 @@ namespace TEC
         // {
         //     var interactionUI = UIManager.Singleton.GetUI<InteractionUI>(UIList.InteractionUI);
         //     interactionUI.TryInteract();
-            
+
         // }
         void ExecuteInteract()
         {
             var ui = UIManager.Singleton.GetUI<InteractionUI>(UIList.InteractionUI);
             ui.TryInteract();
+        }
+        
+        //스코프
+        private void OnRightClickDouble()
+        {
+            // 우클릭 더블탭 직후, 버튼이 눌린 상태면 스코프 진입
+            if (InputManager.Singleton.InputAim && !isScoped)
+            {
+                EnterScopeMode();
+            }
+        }
+
+        private void EnterScopeMode()
+        {
+            isScoped = true;
+
+            // 카메라 전환
+            CameraSystem.Instance.EnterScopeMode();
+
+            // UI 전환
+            CrossHairUI.Instance?.gameObject.SetActive(false);
+            RedDotUI.Instance?.gameObject.SetActive(true);
+
+            Debug.Log("🎯 EnterScopeMode()");
+        }
+
+        private void ExitScopeMode()
+        {
+            isScoped = false;
+
+            // 카메라 복귀
+            CameraSystem.Instance.ExitScopeMode();
+
+            // UI 복귀
+            CrossHairUI.Instance?.gameObject.SetActive(true);
+            RedDotUI.Instance?.gameObject.SetActive(false);
+
+            Debug.Log("⬅ ExitScopeMode()");
         }
 
 

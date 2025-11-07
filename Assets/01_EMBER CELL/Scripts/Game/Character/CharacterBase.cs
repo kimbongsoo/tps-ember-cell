@@ -187,8 +187,8 @@ namespace TEC
 
             if (isRolling)
             {
-                rollingTime = Time.deltaTime;
-                //rollingTime += Time.deltaTime;
+                // rollingTime = Time.deltaTime;
+                rollingTime += Time.deltaTime;
                 float t = rollingTime / rollingDuration;
                 float speedRate = rollingCurve.Evaluate(t);
                 unityCharacterController.Move(transform.forward * rollingSpeed * speedRate * Time.deltaTime);

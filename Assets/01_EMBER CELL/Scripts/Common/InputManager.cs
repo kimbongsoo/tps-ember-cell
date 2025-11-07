@@ -24,6 +24,7 @@ namespace TEC
         public event System.Action OnPrimaryWeapon;
         // public event System.Action OnJump;
         public event System.Action OnRoll;
+        //스코프
         public event System.Action OnRightClickDouble;
 
 
@@ -33,6 +34,7 @@ namespace TEC
         private float spaceLastTabTime;
         private float spaceDoubleTabThreshold = 0.25f;
 
+        //스코프
         private bool isRightClickTab;
         private float rightClickLastTime;
         private float rightClickDoubleThreshold = 0.25f;
@@ -108,13 +110,14 @@ namespace TEC
                 isSpaceTab = false;
             }
 
-            //우클릭 2번 체크
+            //스코프
+            // 우클릭 더블탭 감지 추가
             if (Input.GetMouseButtonDown(1))
             {
                 if (isRightClickTab && Time.time - rightClickLastTime <= rightClickDoubleThreshold)
                 {
-                    Debug.Log("🟢 RightClick Double Detected"); // 추가
                     OnRightClickDouble?.Invoke();
+                    Debug.Log("🟢 RightClick Double Detected");
                     isRightClickTab = false;
                 }
                 else
@@ -125,9 +128,8 @@ namespace TEC
             }
 
             if (isRightClickTab && (Time.time - rightClickLastTime) > rightClickDoubleThreshold)
-            {
                 isRightClickTab = false;
-            }
+
         }
         
         public void SetCursorVisible(bool isVisible)

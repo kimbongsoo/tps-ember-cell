@@ -8,13 +8,13 @@ namespace TEC
 {
     public class CameraSystem : MonoBehaviour
     {
-        public static CameraSystem Instance {get; private set;}
+        public static CameraSystem Instance { get; private set; }
         public Vector3 AimingPoint => cameraAimingPoint;
-        [field: SerializeField] public Camera MainCamera {get; private set;}
+        [field: SerializeField] public Camera MainCamera { get; private set; }
 
-        [field: SerializeField] public Cinemachine.CinemachineVirtualCamera TpsCamera {get; private set;}
+        [field: SerializeField] public Cinemachine.CinemachineVirtualCamera TpsCamera { get; private set; }
 
-        [field: SerializeField] public LayerMask LayerMask {get; private set;}
+        [field: SerializeField] public LayerMask LayerMask { get; private set; }
 
         private Cinemachine.Cinemachine3rdPersonFollow tpsCamera3rdFollow;
         private bool isCameraSideRight = true;
@@ -22,12 +22,24 @@ namespace TEC
 
         private Vector3 cameraAimingPoint;
 
+        //스코프
+        [SerializeField] private GameObject scopeCamera;
+        [SerializeField] private float tpsFov = 60f;
+        [SerializeField] private float scopeFov = 40f;
+        [SerializeField] private float fovBlendTime = 0.12f;
+        private Coroutine fovCoroutine;
+
+
         private void Awake()
         {
             Instance = this;
             tpsCamera3rdFollow = TpsCamera.GetCinemachineComponent<Cinemachine.Cinemachine3rdPersonFollow>();
             Debug.Log("TPS Camera follow: " + tpsCamera3rdFollow); //디버깅용
             cameraSideBlend = isCameraSideRight ? 1 : 0;
+
+            //스코프
+            if (scopeCamera != null)
+                scopeCamera.SetActive(false);
         }
 
         private void Update()
@@ -56,7 +68,7 @@ namespace TEC
         private void OnDrawGizmos()
         {
             Gizmos.color = Color.red;
-            Gizmos.DrawLine(MainCamera.transform.position, cameraAimingPoint);      
+            Gizmos.DrawLine(MainCamera.transform.position, cameraAimingPoint);
         }
 
         public void SetChangeCameraSide(bool isRight)
@@ -71,7 +83,40 @@ namespace TEC
             cameraSideBlend = isCameraSideRight ? 1 : 0;
 
         }
+
+        //스코프
+        public void EnterScopeMode()
+        {
+            if (scopeCamera != null) scopeCamera.SetActive(true);
+            StartFovLerp(Camera.main.fieldOfView, scopeFov, fovBlendTime);
+        }
+
+        public void ExitScopeMode()
+        {
+            if (scopeCamera != null) scopeCamera.SetActive(false);
+            StartFovLerp(Camera.main.fieldOfView, tpsFov, fovBlendTime);
+        }
+
+        private void StartFovLerp(float from, float to, float duration)
+        {
+            if (fovCoroutine != null) StopCoroutine(fovCoroutine);
+            fovCoroutine = StartCoroutine(FovLerp(from, to, duration));
+        }
+
+        private IEnumerator FovLerp(float from, float to, float duration)
+        {
+            float time = 0f;
+            while (time < duration)
+            {
+                time += Time.deltaTime;
+                Camera.main.fieldOfView = Mathf.Lerp(from, to, time / duration);
+                yield return null;
+            }
+            Camera.main.fieldOfView = to;
+        }
+
     }
+    
 
 }
 
