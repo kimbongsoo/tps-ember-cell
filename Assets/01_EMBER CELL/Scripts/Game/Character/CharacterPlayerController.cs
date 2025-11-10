@@ -307,17 +307,17 @@ namespace TEC
             characterBase.Roll();
         }
 
-        // void ExecuteInteract()
-        // {
-        //     var interactionUI = UIManager.Singleton.GetUI<InteractionUI>(UIList.InteractionUI);
-        //     interactionUI.TryInteract();
-
-        // }
         void ExecuteInteract()
         {
-            var ui = UIManager.Singleton.GetUI<InteractionUI>(UIList.InteractionUI);
-            ui.TryInteract();
+            var interactionUI = UIManager.Singleton.GetUI<InteractionUI>(UIList.InteractionUI);
+            interactionUI.TryInteract();
+
         }
+        // void ExecuteInteract()
+        // {
+        //     var ui = UIManager.Singleton.GetUI<InteractionUI>(UIList.InteractionUI);
+        //     ui.TryInteract();
+        // }
         
         //스코프
         private void OnRightClickDouble()
