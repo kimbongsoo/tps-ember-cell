@@ -144,9 +144,9 @@ namespace TEC
             if (isDead)
                 return;
 
-            // FreeFall();
-            // JumpAndGravity();
-            // CheckGround();
+            CheckGround();
+            JumpAndGravity();
+            FreeFall();
 
             if (IsRunning && currentSP > 0f)
             {
@@ -231,7 +231,9 @@ namespace TEC
                 targetVertical = 0f;
             }
 
-            unityCharacterController.Move(movement + new Vector3(0, verticalVelocity, 0));
+            // unityCharacterController.Move(movement + new Vector3(0, verticalVelocity, 0));
+            unityCharacterController.Move(movement + new Vector3(0, verticalVelocity * Time.deltaTime, 0));
+
         }
 
         public void Fire()
@@ -328,15 +330,36 @@ namespace TEC
                 {
                     jumpTimeoutDelta -= Time.deltaTime;
                 }
-                else
+            }
+            else
+            {
+                if (verticalVelocity > -terminalVelocity)
                 {
-                    if (verticalVelocity < terminalVelocity)
-                    {
-                        verticalVelocity += gravity * Time.deltaTime;
-                    }
+                    verticalVelocity += gravity * Time.deltaTime;
                 }
             }
         }
+
+        // public void JumpAndGravity()
+        // {
+        //     if (isGrounded)
+        //     {
+        //         if (verticalVelocity < 0f)
+        //             verticalVelocity = -2f;
+
+        //         if (jumpTimeoutDelta >= 0f)
+        //         {
+        //             jumpTimeoutDelta -= Time.deltaTime;
+        //         }
+        //         else
+        //         {
+        //             if (verticalVelocity < terminalVelocity)
+        //             {
+        //                 verticalVelocity += gravity * Time.deltaTime;
+        //             }
+        //         }
+        //     }
+        // }
 
         public void FreeFall()
         {
@@ -365,6 +388,7 @@ namespace TEC
         {
             if (isGrounded)
             {
+                Debug.Log("점프점프점프점프");
                 isGrounded = false;
                 verticalVelocity = Mathf.Sqrt(jumpHeight * -2f * gravity);
                 jumpTimeoutDelta = jumpTimeout;

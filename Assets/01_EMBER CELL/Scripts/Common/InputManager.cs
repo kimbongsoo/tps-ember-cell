@@ -22,7 +22,7 @@ namespace TEC
         public event System.Action OnCombat;
         public event System.Action OnHolster;
         public event System.Action OnPrimaryWeapon;
-        // public event System.Action OnJump;
+        public event System.Action OnJump;
         public event System.Action OnRoll;
         //스코프
         public event System.Action OnRightClickDouble;
@@ -92,23 +92,28 @@ namespace TEC
             {
                 OnPrimaryWeapon?.Invoke();
             }
+            
             if (Input.GetKeyDown(KeyCode.Space))
             {
-                if (isSpaceTab && Time.time - spaceLastTabTime <= spaceDoubleTabThreshold)
-                {
-                    OnRoll?.Invoke();
-                    isSpaceTab = false;
-                }
-                else
-                {
-                    isSpaceTab = true;
-                    spaceLastTabTime = Time.time;
-                }
+                OnJump?.Invoke();
             }
-            if (isSpaceTab && (Time.time - spaceLastTabTime) > spaceDoubleTabThreshold)
-            {
-                isSpaceTab = false;
-            }
+            // if (Input.GetKeyDown(KeyCode.Space))
+            // {
+            //     if (isSpaceTab && Time.time - spaceLastTabTime <= spaceDoubleTabThreshold)
+            //     {
+            //         OnRoll?.Invoke();
+            //         isSpaceTab = false;
+            //     }
+            //     else
+            //     {
+            //         isSpaceTab = true;
+            //         spaceLastTabTime = Time.time;
+            //     }
+            // }
+            // if (isSpaceTab && (Time.time - spaceLastTabTime) > spaceDoubleTabThreshold)
+            // {
+            //     isSpaceTab = false;
+            // }
 
             //스코프
             // 우클릭 더블탭 감지 추가

@@ -61,7 +61,7 @@ namespace TEC
             InputManager.Singleton.OnReload += ExecuteReload;
             InputManager.Singleton.OnHolster += ExecuteHolster;
             InputManager.Singleton.OnPrimaryWeapon += ExecuteEquipPrimaryWeapon;
-            // InputManager.Singleton.OnJump += ExecuteJump;
+            InputManager.Singleton.OnJump += ExecuteJump;
             InputManager.Singleton.OnRoll += ExecuteRoll;
 
             InputManager.Singleton.OnInteract += ExecuteInteract;
@@ -101,7 +101,7 @@ namespace TEC
             InputManager.Singleton.OnReload -= ExecuteReload;
             InputManager.Singleton.OnHolster -= ExecuteHolster;
             InputManager.Singleton.OnPrimaryWeapon -= ExecuteEquipPrimaryWeapon;
-            // InputManager.Singleton.OnJump -= ExecuteJump;
+            InputManager.Singleton.OnJump -= ExecuteJump;
             InputManager.Singleton.OnRoll -= ExecuteRoll;
 
             InputManager.Singleton.OnInteract -= ExecuteInteract;
