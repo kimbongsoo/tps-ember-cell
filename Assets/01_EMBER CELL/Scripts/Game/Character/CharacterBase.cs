@@ -198,21 +198,11 @@ namespace TEC
         }
         public void Rotate(Vector3 targetPoint)
         {
-            // if (isAiming)
-            // {
-            //     Vector3 target = targetPoint;
-            //     target.y = transform.position.y;
-            //     Vector3 viewForward = Camera.main.transform.forward;
-            //     viewForward.y = 0f;
-            //     transform.rotation = Quaternion.LookRotation(Vector3.Lerp(transform.forward, viewForward, Time.deltaTime * 10f));
-            // }
-
             Vector3 target = targetPoint;
             target.y = transform.position.y;
             Vector3 viewForward = Camera.main.transform.forward;
             viewForward.y = 0f;
             transform.rotation = Quaternion.LookRotation(Vector3.Lerp(transform.forward, viewForward, Time.deltaTime * 10f));
-
         }
 
         public void Move(Vector2 input, float yAxisAngle)
