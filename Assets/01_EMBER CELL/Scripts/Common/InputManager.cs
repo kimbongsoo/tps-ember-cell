@@ -69,9 +69,9 @@ namespace TEC
                 OnInteract?.Invoke();
             }
             if (Input.GetKeyDown(KeyCode.Tab))
-                {
-                    OnTab?.Invoke();
-                }
+            {
+                OnTab?.Invoke();
+            }
             if (Input.GetKeyDown(KeyCode.C))
             {
                 OnCrouch?.Invoke();

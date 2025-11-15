@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e02e912b25c5473386a3476fdd4b6ff, type: 3}
+  m_Name: InteractionItemBoxData
+  m_EditorClassIdentifier: 
+  boxId: BOX_01
+  boxIcon: {fileID: 21300000, guid: 6a521529954f10c42a0a76ea37a4cb57, type: 3}
+  boxName: Special Box
+  dropItems:
+  - {fileID: 11400000, guid: 89614a188f5a44040b32b76126b347a3, type: 2}
+  - {fileID: 11400000, guid: 898118765fbe3490b9390a94d9609ced, type: 2}
+  - {fileID: 11400000, guid: cd540b8ece4fd469597ed49355fbbaa0, type: 2}
+  - {fileID: 11400000, guid: 22ec10c3398b74660abc61dd1fa8e7ad, type: 2}
+  - {fileID: 11400000, guid: d30ca9e308f624f9b9d498a326fa4e59, type: 2}
+  - {fileID: 11400000, guid: ac9aa20e78738453899c9a762ddf8145, type: 2}

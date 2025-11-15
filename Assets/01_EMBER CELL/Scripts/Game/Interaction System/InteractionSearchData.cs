@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace TEC
 {
-    [CreateAssetMenu(fileName = "InteractionSearchData", menuName = "KBS/Interaction/Search Data")]
+    [CreateAssetMenu(fileName = "InteractionSearchData", menuName = "TEC/Interaction/Search Data")]
     public class InteractionSearchData : ScriptableObject, IInteractionData
     {
         public string ID => dataId;

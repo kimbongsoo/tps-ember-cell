@@ -1,32 +1,33 @@
-using TMPro;
+using System.Collections.Generic;
+using Gpm.Ui;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 namespace TEC
 {
-    /// <summary>
-    /// UI 리스트의 개별 아이템 (아이콘 + 텍스트)
-    /// </summary>
-    [System.Serializable]
-    public class InteractionUI_ListItemData
+    public class InteractionUI_ListItemData : InfiniteScrollData
     {
         public string id;
         public Sprite icon;
         public string message;
+        public int stackCount;
         public bool isSelected;
-    }
 
-    public class InteractionUI_ListItem : MonoBehaviour
+    }
+    public class InteractionUI_ListItem : InfiniteScrollItem
     {
         [SerializeField] private Image iconImage;
         [SerializeField] private TextMeshProUGUI messageText;
         [SerializeField] private GameObject selection;
-
-        public void SetData(InteractionUI_ListItemData data)
+        public override void UpdateData(InfiniteScrollData scrollData)
         {
-            if (iconImage != null) iconImage.sprite = data.icon;
-            if (messageText != null) messageText.text = data.message;
-            if (selection != null) selection.SetActive(data.isSelected);
+            var listData = scrollData as InteractionUI_ListItemData;
+            iconImage.sprite = listData.icon;
+            messageText.text = listData.message;
+
+            selection.SetActive(listData.isSelected);
         }
+
     }
 }

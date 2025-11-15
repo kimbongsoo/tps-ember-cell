@@ -322,8 +322,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1961540671067747865}
-  - component: {fileID: 6345062532826043304}
   - component: {fileID: 6273485888575150955}
+  - component: {fileID: 2766497092542413419}
   m_Layer: 0
   m_Name: Interaction Item Box
   m_TagString: Untagged
@@ -349,22 +349,6 @@ Transform:
   - {fileID: 630732222902622485}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6345062532826043304
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7537329497610246192}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0f7b7485a013f40969d3a226aae31769, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  searchData: {fileID: 11400000, guid: 5956dca56735a4b5a878590c3a4ff246, type: 2}
-  boxData: {fileID: 11400000, guid: dfb07ae5ec6604af09d882da6fbb625c, type: 2}
-  spawnLocation: {fileID: 8118231427879397362}
-  searchCamera: {fileID: 1245858865710164841}
 --- !u!135 &6273485888575150955
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -386,3 +370,19 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 1.5
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2766497092542413419
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7537329497610246192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a1f0d30bc52241709b1641a7fc1cc0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  searchData: {fileID: 11400000, guid: 4fa51f54f510e4389935537034d3d118, type: 2}
+  boxData: {fileID: 11400000, guid: cdff632d3c7b24768abc6074cc58e6eb, type: 2}
+  spawnLocation: {fileID: 8118231427879397362}
+  searchCamera: {fileID: 1245858865710164841}

@@ -8,7 +8,7 @@ namespace TEC
 {
     public class BootStrapper
     {
-        private const string BootStrapperMenuPath = "PROJECT KBS/BootStrapper/Activate BootStrapper";
+        private const string BootStrapperMenuPath = "PROJECT TEC/BootStrapper/Activate BootStrapper";
 
         private static bool IsActiveBootStrapper
         {
@@ -44,7 +44,7 @@ namespace TEC
             {
                 UIManager.Show<MainHUD>(UIList.MainHUD);
                 UIManager.Show<CrossHairUI>(UIList.CrossHairUI);
-                // UIManager.Show<InteractionUI>(UIList.InteractionUI);
+                UIManager.Show<InteractionUI>(UIList.InteractionUI);
 
                 UIManager.Show<RedDotUI>(UIList.RedDotUI);
 

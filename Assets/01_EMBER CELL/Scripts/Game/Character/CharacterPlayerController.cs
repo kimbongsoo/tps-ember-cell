@@ -51,7 +51,7 @@ namespace TEC
 
             GameObject sensorObject = new GameObject("Interaction Sensor");
             sensorObject.transform.SetParent(transform);
-            interactionSensor = sensorObject.AddComponent<InteractionSensor>();
+            // interactionSensor = sensorObject.AddComponent<InteractionSensor>();
         }
 
         private void Start()
@@ -311,13 +311,7 @@ namespace TEC
         {
             var interactionUI = UIManager.Singleton.GetUI<InteractionUI>(UIList.InteractionUI);
             interactionUI.TryInteract();
-
         }
-        // void ExecuteInteract()
-        // {
-        //     var ui = UIManager.Singleton.GetUI<InteractionUI>(UIList.InteractionUI);
-        //     ui.TryInteract();
-        // }
         
         //스코프
         private void OnRightClickDouble()
