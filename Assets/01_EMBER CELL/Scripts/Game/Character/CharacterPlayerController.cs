@@ -13,9 +13,9 @@ namespace TEC
     {
         public static CharacterPlayerController Instance { get; private set; } = null;
 
-        // public InteractionSensor InteractionSensor => interactionSensor;
+        public InteractionSensor InteractionSensor => interactionSensor;
         private CharacterBase characterBase;
-        // private InteractionSensor interactionSensor;
+        private InteractionSensor interactionSensor;
 
 
         [Header("Camera Setting")]
@@ -51,7 +51,7 @@ namespace TEC
 
             GameObject sensorObject = new GameObject("Interaction Sensor");
             sensorObject.transform.SetParent(transform);
-            // interactionSensor = sensorObject.AddComponent<InteractionSensor>();
+            interactionSensor = sensorObject.AddComponent<InteractionSensor>();
         }
 
         private void Start()

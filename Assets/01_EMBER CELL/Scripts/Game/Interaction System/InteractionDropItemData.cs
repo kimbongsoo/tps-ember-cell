@@ -1,8 +1,10 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace TEC
 {
-    [CreateAssetMenu(fileName = "InteractionDropItemData", menuName = "TEC/Interaction/Drop Item Data")]
+    [CreateAssetMenu(fileName = "InteractionDropItemData", menuName = "KBS/Interaction/Drop Item Data")]
     public class InteractionDropItemData : ScriptableObject, IInteractionData
     {
         public string ID => itemId;
