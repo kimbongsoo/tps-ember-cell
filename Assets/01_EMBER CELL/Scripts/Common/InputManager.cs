@@ -92,10 +92,14 @@ namespace TEC
             {
                 OnPrimaryWeapon?.Invoke();
             }
-            
+
             if (Input.GetKeyDown(KeyCode.Space))
             {
                 OnJump?.Invoke();
+            }
+            if (Input.GetKeyDown(KeyCode.Z))
+            {
+                OnRoll?.Invoke();
             }
             // if (Input.GetKeyDown(KeyCode.Space))
             // {

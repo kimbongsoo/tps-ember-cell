@@ -112,8 +112,8 @@ namespace TEC
         {
             characterAnimator = GetComponent<Animator>();
             unityCharacterController = GetComponent<UnityEngine.CharacterController>();
-            // RollingStateMachineBehaviour rollingStateMachine = characterAnimator.GetBehaviour<RollingStateMachineBehaviour>();
-            // rollingStateMachine.Initialize(this);
+            RollingStateMachineBehaviour rollingStateMachine = characterAnimator.GetBehaviour<RollingStateMachineBehaviour>();
+            rollingStateMachine.Initialize(this);
 
             //수정
             UnarmedStateMachineBehaviour unarmedStateMachine = characterAnimator.GetBehaviour<UnarmedStateMachineBehaviour>();
@@ -187,8 +187,8 @@ namespace TEC
 
             if (isRolling)
             {
-                // rollingTime = Time.deltaTime;
-                rollingTime += Time.deltaTime;
+                rollingTime = Time.deltaTime;
+                // rollingTime += Time.deltaTime;
                 float t = rollingTime / rollingDuration;
                 float speedRate = rollingCurve.Evaluate(t);
                 unityCharacterController.Move(transform.forward * rollingSpeed * speedRate * Time.deltaTime);
