@@ -24,7 +24,7 @@ namespace TEC
             if (data is InteractionItemBoxData)
             {
                 //TODO : Drop Item을 드롭한다.
-                // var itemBoxData = data as InteractionItemBoxData;
+                var itemBoxData = data as InteractionItemBoxData;
                 var dropItemPrefab = Resources.Load<InteractionDropItem>("Interaction Prefabs/Interaction Drop Item");
                 boxData.DropItems.ForEach(dropData =>
                 {

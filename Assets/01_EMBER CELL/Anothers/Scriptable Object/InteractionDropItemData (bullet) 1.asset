@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db1a333c3ecfa4b5fad98c98bbdcc9c5, type: 3}
   m_Name: InteractionDropItemData (bullet) 1
   m_EditorClassIdentifier: 
-  itemId: 
+  itemId: bullet1
   itemIcon: {fileID: 21300006, guid: 5163ae49a0de665458bba61cd20c99b1, type: 3}
   itemName: Bullet
+  itemGrade: 2

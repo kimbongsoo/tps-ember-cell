@@ -340,27 +340,6 @@ namespace TEC
             }
         }
 
-        // public void JumpAndGravity()
-        // {
-        //     if (isGrounded)
-        //     {
-        //         if (verticalVelocity < 0f)
-        //             verticalVelocity = -2f;
-
-        //         if (jumpTimeoutDelta >= 0f)
-        //         {
-        //             jumpTimeoutDelta -= Time.deltaTime;
-        //         }
-        //         else
-        //         {
-        //             if (verticalVelocity < terminalVelocity)
-        //             {
-        //                 verticalVelocity += gravity * Time.deltaTime;
-        //             }
-        //         }
-        //     }
-        // }
-
         public void FreeFall()
         {
             if (isGrounded)

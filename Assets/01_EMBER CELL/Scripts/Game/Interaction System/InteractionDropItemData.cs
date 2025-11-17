@@ -10,11 +10,11 @@ namespace TEC
         public string ID => itemId;
         public Sprite ActionIcon => itemIcon;
         public string ActionMessage => itemName;
-        // public int ItemGrade => itemGrade;
+        public int ItemGrade => itemGrade;
 
         [SerializeField] private string itemId;
         [SerializeField] private Sprite itemIcon;
         [SerializeField] private string itemName;
-        // [SerializeField] private int itemGrade;
+        [SerializeField] private int itemGrade;
     }
 }

@@ -51,7 +51,7 @@ namespace TEC
 
             GameObject sensorObject = new GameObject("Interaction Sensor");
             sensorObject.transform.SetParent(transform);
-            // interactionSensor = sensorObject.AddComponent<InteractionSensor>();
+            interactionSensor = sensorObject.AddComponent<InteractionSensor>();
         }
 
         private void Start()
