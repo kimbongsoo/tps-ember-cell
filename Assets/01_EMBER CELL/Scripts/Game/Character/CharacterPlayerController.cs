@@ -85,12 +85,7 @@ namespace TEC
 
         void OnLinkedCharacterDeadState(bool isDead)
         {
-            // var crossHairUI = UIManager.Singleton.GetUI<CrossHairUI>(UIList.CrossHairUI);
-            // var mainHudUI = UIManager.Singleton.GetUI<MainHUD>(UIList.MainHUD);
-
-            // crossHairUI.ToggleCrosshairByDeadState(isDead);
             CrossHairUI.Instance.ToggleCrosshairByDeadState(isDead);
-            // mainHudUI.ToggleAmmoTextByDeadState(isDead);
             MainHUD.Instance.ToggleAmmoTextByDeadState(isDead);
         }
 
