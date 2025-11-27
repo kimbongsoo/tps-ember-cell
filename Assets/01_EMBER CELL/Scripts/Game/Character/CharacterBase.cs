@@ -68,6 +68,7 @@ namespace TEC
         [Header("Components")]
         public Animator characterAnimator;
         public UnityEngine.CharacterController unityCharacterController;
+        public RigBuilder rigBuilder;
 
         [Header("GroundCheck")]
         public float groundCheckRadius = 0.05f;
@@ -112,6 +113,9 @@ namespace TEC
         {
             characterAnimator = GetComponent<Animator>();
             unityCharacterController = GetComponent<UnityEngine.CharacterController>();
+            rigBuilder = GetComponent<RigBuilder>();
+
+
             RollingStateMachineBehaviour rollingStateMachine = characterAnimator.GetBehaviour<RollingStateMachineBehaviour>();
             rollingStateMachine.Initialize(this);
 
@@ -421,15 +425,22 @@ namespace TEC
 
             StartCoroutine(PlayerDeathSlowMotion());
 
-            unityCharacterController.enabled = false;
-
+            if (rigBuilder != null)
+                rigBuilder.enabled = false;
+            
             if (characterAnimator != null)
-            {
-                characterAnimator.SetTrigger("Dead Trigger");
-                characterAnimator.SetBool("IsDead", true);
-                characterAnimator.SetLayerWeight(1, 0f);
-                characterAnimator.SetLayerWeight(2, 0f);
-            }
+                characterAnimator.enabled = false;
+
+            if (unityCharacterController != null)
+                unityCharacterController.enabled = false;
+
+            // if (characterAnimator != null)
+            // {
+            //     characterAnimator.SetTrigger("Dead Trigger");
+            //     characterAnimator.SetBool("IsDead", true);
+            //     characterAnimator.SetLayerWeight(1, 0f);
+            //     characterAnimator.SetLayerWeight(2, 0f);
+            // }
 
             if (PrimaryWeapon != null)
                 PrimaryWeapon.gameObject.SetActive(false);
@@ -444,10 +455,20 @@ namespace TEC
             currentHP = maxHP;
             currentSP = maxSP;
 
-            unityCharacterController.enabled = true;
+            if (unityCharacterController != null)
+                unityCharacterController.enabled = true;
+
+            if (rigBuilder != null)
+                rigBuilder.enabled = true;
+
 
             if (characterAnimator != null)
             {
+                characterAnimator.enabled = true;
+
+                characterAnimator.Rebind();
+                characterAnimator.Update(0f);
+
                 characterAnimator.SetTrigger("Revive Trigger");
                 characterAnimator.SetBool("IsDead", false);
                 characterAnimator.SetLayerWeight(1, 1f);
