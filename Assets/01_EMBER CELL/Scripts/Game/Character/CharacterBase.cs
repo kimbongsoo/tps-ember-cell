@@ -467,7 +467,7 @@ namespace TEC
                 characterAnimator.enabled = true;
 
                 characterAnimator.Rebind();
-                characterAnimator.Update(0f);
+                // characterAnimator.Update(0f);
 
                 characterAnimator.SetTrigger("Revive Trigger");
                 characterAnimator.SetBool("IsDead", false);
