@@ -2164,6 +2164,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 95179373965868486, guid: 1f98a0b68f1591a48a507169b6d232ad, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 23614fad3fde545e9ba3803d24340ecf, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 1386440140441806, guid: 1f98a0b68f1591a48a507169b6d232ad, type: 3}
@@ -2203,6 +2207,12 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1341386074302550, guid: 1f98a0b68f1591a48a507169b6d232ad, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1823603026}
+    - targetCorrespondingSourceObject: {fileID: 1341386074302550, guid: 1f98a0b68f1591a48a507169b6d232ad, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1823603028}
+    - targetCorrespondingSourceObject: {fileID: 1341386074302550, guid: 1f98a0b68f1591a48a507169b6d232ad, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1823603027}
     - targetCorrespondingSourceObject: {fileID: 1077316511037098, guid: 1f98a0b68f1591a48a507169b6d232ad, type: 3}
       insertIndex: -1
       addedObject: {fileID: 283117702}
@@ -2533,6 +2543,35 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0.9, z: 0}
+--- !u!114 &1823603027
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1823603023}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 387d09d8968b748eea3535967a5709fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHP: 100
+--- !u!114 &1823603028
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1823603023}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fff0960ef4ea6e04eac66b4a7fd2189d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_RigLayers:
+  - m_Rig: {fileID: 0}
+    m_Active: 1
+  m_Effectors: []
 --- !u!1 &1942128837
 GameObject:
   m_ObjectHideFlags: 0
