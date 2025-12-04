@@ -9,8 +9,10 @@ namespace TEC
 {
     public class WeaponBase : MonoBehaviour
     {
-        public int RemainAmmo => clipSize;
-        public int MaxAmmo => maxAmmo;
+        // public int RemainAmmo => clipSize;
+        // public int MaxAmmo => maxAmmo;
+        public int RemainAmmo => clipAmmo;
+        public int MaxAmmo => reserveAmmo;
 
         public CharacterBase Owner {get;set;}
 
@@ -20,8 +22,11 @@ namespace TEC
         [SerializeField] private GameObject originalBullet;
         [SerializeField] private float fireRate = 0.2f;
         [SerializeField] private float lastFireTime = 0f;
-        [SerializeField] private int maxAmmo = 30;
-        [SerializeField] private int clipSize = 30;
+        // [SerializeField] private int maxAmmo = 30;
+        // [SerializeField] private int clipSize = 30;
+        [SerializeField] private int reserveAmmo = 90;
+        [SerializeField] private int maxClipAmmo = 30; //탄창 용량
+        [SerializeField] private int clipAmmo = 30; //현재 탄창 수
 
         [Header("Fire Setting")]
 
@@ -77,7 +82,9 @@ namespace TEC
 
         public bool Shoot(out int remain, out int max)
         {
-            bool isShootable = clipSize > 0 && Time.time >= lastFireTime + fireRate;
+            // bool isShootable = clipSize > 0 && Time.time >= lastFireTime + fireRate;
+            bool isShootable = clipAmmo > 0 && Time.time >= lastFireTime + fireRate;
+
             if (isShootable)
             {
                 var projectile = projectilePool.Get();
@@ -87,8 +94,8 @@ namespace TEC
                 weaponRecoil?.GenerateRecoil();
 
                 
-
-                clipSize--;
+                // clipSize--;
+                clipAmmo--;
 
                 EffectManager.Instance.SpawnMuzzleEffect(fireStartPoint);
 
@@ -96,28 +103,47 @@ namespace TEC
 
                 lastFireTime = Time.time;
             }
-            remain = clipSize;
-            max = maxAmmo;
+            
+            // remain = clipSize;
+            // max = maxAmmo;
+            remain = clipAmmo;
+            max = reserveAmmo;
 
             return isShootable;
         }
 
         public int SetFullAmmo()
         {
-            clipSize = maxAmmo;
-            return maxAmmo;
+            if (clipAmmo >= maxClipAmmo || reserveAmmo <= 0)
+                return clipAmmo;
+
+            int need = maxClipAmmo - clipAmmo;
+            int toLoad = Mathf.Min(need, reserveAmmo);
+
+            clipAmmo   += toLoad;
+            reserveAmmo -= toLoad;
+
+            return clipAmmo;
+
+            // clipSize = maxAmmo;
+            // return maxAmmo;
         }
 
         public bool IsEmpty()
         {
-            return clipSize == 0;
+            return clipAmmo <= 0 && reserveAmmo <= 0;
+            // return clipSize == 0;
         }
 
         public void AddAmmo(int amount, out int current, out int max)
         {
-            clipSize = Mathf.Clamp(clipSize + amount, 0, maxAmmo);
-            current  = clipSize;
-            max      = maxAmmo;
+            reserveAmmo = Mathf.Max(0, reserveAmmo + amount);
+
+            current = clipAmmo;
+            max     = reserveAmmo;
+            // clipSize = Mathf.Clamp(clipSize + amount, 0, maxAmmo);
+            // current  = clipSize;
+            // max      = maxAmmo;
         }
     }
 }

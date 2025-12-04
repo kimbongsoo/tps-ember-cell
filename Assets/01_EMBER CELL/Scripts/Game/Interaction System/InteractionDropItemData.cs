@@ -11,10 +11,14 @@ namespace TEC
         public Sprite ActionIcon => itemIcon;
         public string ActionMessage => itemName;
         public int ItemGrade => itemGrade;
+        public int AmmoAmount => ammoAmount;
 
         [SerializeField] private string itemId;
         [SerializeField] private Sprite itemIcon;
         [SerializeField] private string itemName;
         [SerializeField] private int itemGrade;
+
+        [Header("Ammo Setting")]
+        [SerializeField] private int ammoAmount = 30;
     }
 }

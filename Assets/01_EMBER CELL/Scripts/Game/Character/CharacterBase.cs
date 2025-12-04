@@ -265,6 +265,7 @@ namespace TEC
         {
             if (IsReloading || !isArmed || isRolling)
                 return;
+            
             IsReloading = true;
             characterAnimator.SetTrigger("Reload Trigger");
             leftHandIk.weight = 0f;
@@ -274,8 +275,12 @@ namespace TEC
         public void ReloadComplete()
         {
             IsReloading = false;
-            int fullAmmo = PrimaryWeapon.SetFullAmmo();
-            onReloadCompleteEvent?.Invoke(fullAmmo, fullAmmo);
+            // int fullAmmo = PrimaryWeapon.SetFullAmmo();
+            // onReloadCompleteEvent?.Invoke(fullAmmo, fullAmmo);
+            PrimaryWeapon.SetFullAmmo();
+            // 🔹 현재 탄창 / 예비탄을 이벤트로 전달
+            onReloadCompleteEvent?.Invoke(PrimaryWeapon.RemainAmmo, PrimaryWeapon.MaxAmmo);
+            
             characterAnimator.SetLayerWeight(2, 1);
         }
 
