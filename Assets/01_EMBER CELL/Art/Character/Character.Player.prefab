@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 5389989113011864481}
   - component: {fileID: 2784416617056531416}
   - component: {fileID: 288873449264289141}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Character.Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -80,6 +80,10 @@ MonoBehaviour:
   cameraPivot: {fileID: 3380885755747651666}
   bottomClampLimit: -80
   topClampLimit: 80
+  crosshairSpreadSpeed: 0.1
+  crosshairRecoverySpeed: 0.2
+  crosshairSpreadMax: 1
+  crosshairSpreadMin: 0.1
   recoilRecoverySpeed: 2
 --- !u!143 &5389989113011864481
 CharacterController:
@@ -131,11 +135,12 @@ MonoBehaviour:
   weaponEquipPlace: {fileID: 7801336479580936900}
   characterAnimator: {fileID: 0}
   unityCharacterController: {fileID: 0}
+  rigBuilder: {fileID: 0}
   groundCheckRadius: 0.05
   groundOffset: 0.1
   groundLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1
   isGrounded: 0
   verticalVelocity: 0
   terminalVelocity: 50
@@ -146,7 +151,52 @@ MonoBehaviour:
   rollingSpeed: 5
   rollingCurve:
     serializedVersion: 2
-    m_Curve: []
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.5
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.6
+      value: 0.1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.9066641
+      value: 0.027508266
+      inSlope: -0.32583433
+      outSlope: -0.32583433
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: -0.29472324
+      outSlope: -0.29472324
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4

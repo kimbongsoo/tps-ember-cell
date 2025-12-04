@@ -177,16 +177,16 @@ namespace TEC
             float targetBlendCrouch = isCrouch ? 1f : 0f;
             blendCrouch = Mathf.Lerp(blendCrouch, targetBlendCrouch, Time.deltaTime * 10f);
 
-            float targetAiming = isAiming ? 1f : 0f;
+            float targetAiming = isAiming && !IsReloading ? 1f : 0f;
             _blendAiming = Mathf.Lerp(_blendAiming, targetAiming, Time.deltaTime * 2f);
 
             characterAnimator.SetFloat("Crouch", blendCrouch);
 
-            characterAnimator.SetFloat("Aiming", isAiming ? 1f : 0f);
+            characterAnimator.SetFloat("Aiming", !IsReloading && isAiming ? 1f : 0f);
             characterAnimator.SetFloat("Horizontal", targetHorizontal);
             characterAnimator.SetFloat("Vertical", targetVertical);
 
-            aimingRig.weight = isArmed && isAiming ? 1f : 0f;
+            aimingRig.weight = isArmed && !IsReloading && isAiming ? 1f : 0f;
             leftHandIk.weight = isArmed && IsReloading ? 0f : 1f;
 
             if (isRolling)
@@ -280,7 +280,7 @@ namespace TEC
             PrimaryWeapon.SetFullAmmo();
             // 🔹 현재 탄창 / 예비탄을 이벤트로 전달
             onReloadCompleteEvent?.Invoke(PrimaryWeapon.RemainAmmo, PrimaryWeapon.MaxAmmo);
-            
+
             characterAnimator.SetLayerWeight(2, 1);
         }
 

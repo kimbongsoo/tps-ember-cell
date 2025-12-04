@@ -83,8 +83,9 @@ MonoBehaviour:
   originalBullet: {fileID: 1479500175642930211, guid: 66aa9f9ea9d7e46389dddbd9e5a9b2d1, type: 3}
   fireRate: 0.2
   lastFireTime: 0
-  maxAmmo: 30
-  clipSize: 30
+  reserveAmmo: 90
+  maxClipAmmo: 30
+  clipAmmo: 30
   damage: 30
 --- !u!114 &8904938652490510742
 MonoBehaviour:
