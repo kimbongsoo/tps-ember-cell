@@ -14,6 +14,8 @@ namespace TEC
         private GameObject attacker;
         private float damage;
 
+        private bool isReleasedToPool = false;
+
         private void Awake()
         {
             rb = GetComponent<Rigidbody>();
@@ -26,6 +28,8 @@ namespace TEC
             lifeTimer = lifetime;
             initialized = true;
 
+            isReleasedToPool = false;
+
             rb.velocity = transform.forward * 100f;
         }
 
@@ -36,7 +40,8 @@ namespace TEC
 
         private void Update()
         {
-            if (!initialized) return;
+            if (!initialized || isReleasedToPool) 
+                return;
 
             lifeTimer -= Time.deltaTime;
             if (lifeTimer <= 0f)
@@ -47,6 +52,9 @@ namespace TEC
 
         private void OnCollisionEnter(Collision collision)
         {
+            if (!initialized || isReleasedToPool)
+                return;
+
             if (collision.transform.gameObject == attacker)
                 return;
             //
@@ -70,6 +78,12 @@ namespace TEC
 
         private void ReleaseToPool()
         {
+            if (isReleasedToPool)
+                return;
+
+            isReleasedToPool = true;
+            initialized = false;
+
             if (pool != null)
             {
                 pool.Release(this); 

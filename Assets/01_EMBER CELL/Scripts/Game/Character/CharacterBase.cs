@@ -186,8 +186,8 @@ namespace TEC
             characterAnimator.SetFloat("Horizontal", targetHorizontal);
             characterAnimator.SetFloat("Vertical", targetVertical);
 
-            aimingRig.weight = IsArmed && isAiming ? 1f : 0f;
-            leftHandIk.weight = IsArmed && IsReloading ? 0f : 1f;
+            aimingRig.weight = isArmed && isAiming ? 1f : 0f;
+            leftHandIk.weight = isArmed && IsReloading ? 0f : 1f;
 
             if (isRolling)
             {
@@ -242,7 +242,7 @@ namespace TEC
 
         public void Fire()
         {
-            if (IsReloading || !IsArmed)
+            if (IsReloading || !isArmed)
                 return;
 
             if (isAiming)
@@ -263,7 +263,7 @@ namespace TEC
 
         public void Reload()
         {
-            if (IsReloading || !IsArmed || isRolling)
+            if (IsReloading || !isArmed || isRolling)
                 return;
             IsReloading = true;
             characterAnimator.SetTrigger("Reload Trigger");
@@ -284,7 +284,7 @@ namespace TEC
         {
             characterAnimator.SetTrigger("Equip Trigger");
             characterAnimator.SetFloat("IsEquip", 1f);
-            IsArmed = true;
+            isArmed = true;
             characterAnimator.SetLayerWeight(2, 1f);
 
             OnArmedStateChanged?.Invoke(true);
@@ -295,7 +295,7 @@ namespace TEC
         {
             characterAnimator.SetTrigger("Holster Trigger");
             characterAnimator.SetFloat("IsEquip", 0f);
-            IsArmed = false;
+            isArmed = false;
 
             OnArmedStateChanged?.Invoke(false);
 

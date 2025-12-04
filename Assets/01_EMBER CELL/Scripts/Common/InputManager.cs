@@ -30,9 +30,9 @@ namespace TEC
 
         public event System.Action OnInteract;
 
-        private bool isSpaceTab;
-        private float spaceLastTabTime;
-        private float spaceDoubleTabThreshold = 0.25f;
+        // private bool isSpaceTab;
+        // private float spaceLastTabTime;
+        // private float spaceDoubleTabThreshold = 0.25f;
 
         //스코프
         private bool isRightClickTab;
@@ -126,7 +126,6 @@ namespace TEC
                 if (isRightClickTab && Time.time - rightClickLastTime <= rightClickDoubleThreshold)
                 {
                     OnRightClickDouble?.Invoke();
-                    Debug.Log("🟢 RightClick Double Detected");
                     isRightClickTab = false;
                 }
                 else
