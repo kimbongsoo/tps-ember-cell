@@ -57,7 +57,7 @@ namespace TEC
 
             if (collision.transform.gameObject == attacker)
                 return;
-            //
+            
             // if (collision.transform.TryGetComponent(out IDamageReceiver receiver))
             // {
             //     var data = new DamageData(damage, attacker);
@@ -66,6 +66,9 @@ namespace TEC
             var receiver = collision.transform.GetComponentInParent<IDamageReceiver>();
             if (receiver != null)
             {
+                if (receiver is Component comp && comp.gameObject == attacker)
+                return;
+                
                 var data = new DamageData(damage, attacker);
                 receiver.ReceiveDamage(data);
             }

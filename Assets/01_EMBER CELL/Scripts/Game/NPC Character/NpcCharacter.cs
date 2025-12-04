@@ -53,8 +53,7 @@ namespace TEC
             if (characterAnimator != null)
                 characterAnimator.enabled = false;
 
-            // Ragdoll이 Animator OFF로 자동 활성화되는 구조일 때
-            Debug.Log("NPC Dead → Animator OFF → Ragdoll 작동");
+            Debug.Log("NPC Dead");
         }
     }
 }
