@@ -515,6 +515,19 @@ namespace TEC
             Time.fixedDeltaTime = 0.02f;
         }
         
+        //인벤토리
+        public void HealHP(float amount)
+        {
+            if (isDead)
+                return;
+
+            if (amount <= 0f)
+                return;
+
+            currentHP = Mathf.Clamp(currentHP + amount, 0f, maxHP);
+            OnchangedHP?.Invoke(currentHP, maxHP);
+        }
+
 
     }
 }
