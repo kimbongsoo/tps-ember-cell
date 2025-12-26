@@ -31,6 +31,10 @@ namespace TEC
         InteractionUI,
         RedDotUI,
 
+        //인벤토리
+        InventoryUI,
+        InventoryContextMenu,
+
         MAX_SCENE_PANEL,
         //===================
 

@@ -16,3 +16,10 @@ MonoBehaviour:
   itemIcon: {fileID: 21300002, guid: 5163ae49a0de665458bba61cd20c99b1, type: 3}
   itemName: Bullet
   itemGrade: 5
+  guid: 8ff3cf1aeb334005a3b8d75b6884a8ac
+  itemType: 0
+  isStackable: 1
+  maxStack: 99
+  isQuickSlotAllowed: 1
+  ammoAmount: 30
+  healAmount: 25
