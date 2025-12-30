@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,46 +6,71 @@ namespace TEC
     public class InventoryUI : UIBase
     {
         public static InventoryUI Instance => UIManager.Singleton.GetUI<InventoryUI>(UIList.InventoryUI);
-        
-        Inventory inven;
 
-        public GameObject inventoryPanel;
-        bool activeInventory = false;
+        [Header("UI References")]
+        [SerializeField] private GameObject inventoryPanel;
+        [SerializeField] private Transform slotHolder;
 
-        public Slot[] slots;
-        public Transform slotHolder;
+        private Slot[] slots = null;
+        private bool isActiveInventory = false;
 
-        private void Start()
+        private void Awake()
         {
-            inven = Inventory.instance;
-            slots = slotHolder.GetComponentsInChildren<Slot>();
-            inven.onSlotCountChange += SlotChange;
-            inventoryPanel.SetActive(activeInventory);
+            if (slotHolder != null)
+                slots = slotHolder.GetComponentsInChildren<Slot>(true);
+
+            if (inventoryPanel != null)
+                inventoryPanel.SetActive(isActiveInventory);
         }
 
-        private void SlotChange(int val)
+        private void OnEnable()
         {
-            for (int i = 0; i < slots.Length; i++)
-            {
-                if(i < inven.SlotCnt)
-                    slots[i].GetComponent<Button>().interactable = true;
-                else
-                    slots[i].GetComponent<Button>().interactable = false;
-            }
+            Inventory.Singleton.OnSlotCountChanged += OnSlotCountChanged;
+            OnSlotCountChanged(Inventory.Singleton.SlotCount);
+        }
+
+        private void OnDisable()
+        {
+            if (Inventory.Singleton != null)
+                Inventory.Singleton.OnSlotCountChanged -= OnSlotCountChanged;
         }
 
         private void Update()
         {
-            if(Input.GetKeyDown(KeyCode.I))
+            if (Input.GetKeyDown(KeyCode.I))
             {
-                activeInventory = !activeInventory;
-                inventoryPanel.SetActive(activeInventory);
+                ToggleInventory();
             }
+        }
+
+        public void ToggleInventory()
+        {
+            isActiveInventory = !isActiveInventory;
+
+            if (inventoryPanel != null)
+                inventoryPanel.SetActive(isActiveInventory);
         }
 
         public void AddSlot()
         {
-            inven.SlotCnt++;
+            Inventory.Singleton.AddSlot(1);
+        }
+
+        private void OnSlotCountChanged(int slotCount)
+        {
+            if (slots == null || slots.Length == 0)
+                return;
+
+            for (int i = 0; i < slots.Length; i++)
+            {
+                bool interactable = i < slotCount;
+
+                // Slot에 SetInteractable이 없다면 아래 2줄을 주석 해제하고 사용하세요.
+                // var button = slots[i].GetComponent<Button>();
+                // if (button != null) button.interactable = interactable;
+
+                slots[i].SetInteractable(interactable);
+            }
         }
     }
 }
