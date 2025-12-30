@@ -1102,7 +1102,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventoryPanel: {fileID: 1694785789}
-  slots: []
   slotHolder: {fileID: 1965060042}
 --- !u!1 &444900792
 GameObject:
@@ -2063,6 +2062,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bfd4f36de94544dbda908c76a954d140, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  defaultSlotCount: 24
 --- !u!1 &1542037640
 GameObject:
   m_ObjectHideFlags: 0

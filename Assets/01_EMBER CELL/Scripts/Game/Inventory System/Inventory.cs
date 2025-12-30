@@ -21,7 +21,7 @@ namespace TEC
         public System.Action<int> OnSlotCountChanged;
 
         [Header("Inventory Setting")]
-        [SerializeField] private int defaultSlotCount = 4;
+        [SerializeField] private int defaultSlotCount = 24;
 
         private int slotCount = 0;
 
