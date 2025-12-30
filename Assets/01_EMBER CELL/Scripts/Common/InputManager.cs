@@ -29,6 +29,7 @@ namespace TEC
 
 
         public event System.Action OnInteract;
+        public event System.Action OnInventory;
 
         // private bool isSpaceTab;
         // private float spaceLastTabTime;
@@ -100,6 +101,10 @@ namespace TEC
             if (Input.GetKeyDown(KeyCode.Z))
             {
                 OnRoll?.Invoke();
+            }
+            if (Input.GetKeyDown(KeyCode.I))
+            {
+                OnInventory?.Invoke();
             }
             // if (Input.GetKeyDown(KeyCode.Space))
             // {

@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace TEC
 {
@@ -26,6 +25,8 @@ namespace TEC
         private void OnEnable()
         {
             Inventory.Singleton.OnSlotCountChanged += OnSlotCountChanged;
+            InputManager.Singleton.OnInventory += ToggleInventory;
+
             OnSlotCountChanged(Inventory.Singleton.SlotCount);
         }
 
@@ -33,14 +34,9 @@ namespace TEC
         {
             if (Inventory.Singleton != null)
                 Inventory.Singleton.OnSlotCountChanged -= OnSlotCountChanged;
-        }
 
-        private void Update()
-        {
-            if (Input.GetKeyDown(KeyCode.I))
-            {
-                ToggleInventory();
-            }
+            if (InputManager.Singleton != null)
+                InputManager.Singleton.OnInventory -= ToggleInventory;
         }
 
         public void ToggleInventory()
@@ -64,11 +60,6 @@ namespace TEC
             for (int i = 0; i < slots.Length; i++)
             {
                 bool interactable = i < slotCount;
-
-                // Slot에 SetInteractable이 없다면 아래 2줄을 주석 해제하고 사용하세요.
-                // var button = slots[i].GetComponent<Button>();
-                // if (button != null) button.interactable = interactable;
-
                 slots[i].SetInteractable(interactable);
             }
         }
