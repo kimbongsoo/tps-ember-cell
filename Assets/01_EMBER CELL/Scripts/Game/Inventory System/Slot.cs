@@ -1,21 +1,25 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace TEC
 {
     public class Slot : MonoBehaviour
     {
-        // Start is called before the first frame update
-        void Start()
+        [Header("UI")]
+        [SerializeField] private Button slotButton;
+
+        private void Awake()
         {
-        
+            if (slotButton == null)
+                slotButton = GetComponent<Button>();
         }
 
-        // Update is called once per frame
-        void Update()
+        public void SetInteractable(bool interactable)
         {
-        
+            if (slotButton == null)
+                return;
+
+            slotButton.interactable = interactable;
         }
     }
 }
