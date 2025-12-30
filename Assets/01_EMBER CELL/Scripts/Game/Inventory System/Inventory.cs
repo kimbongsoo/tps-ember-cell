@@ -1,48 +1,41 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace TEC
 {
-    public class Inventory : MonoBehaviour
+    public class Inventory : SingletonBase<Inventory>
     {
-        #region Singleton
-        public static Inventory instance;
-        private void Awake()
+        public int SlotCount
         {
-            if(instance != null)
+            get => slotCount;
+            set
             {
-                Destroy(gameObject);
-                return;
+                int clamped = Mathf.Max(0, value);
+                if (slotCount == clamped)
+                    return;
+
+                slotCount = clamped;
+                OnSlotCountChanged?.Invoke(slotCount);
             }
-            instance = this;
-        }
-        #endregion
-
-        public delegate void OnSlotCountChange(int val);
-        public OnSlotCountChange onSlotCountChange;
-
-        private int slotCnt;
-
-        public int SlotCnt
-        {
-            get => slotCnt;
-            set { 
-                    slotCnt = value;
-                    onSlotCountChange.Invoke(slotCnt);
-                }
         }
 
-        // Start is called before the first frame update
-        void Start()
+        public System.Action<int> OnSlotCountChanged;
+
+        [Header("Inventory Setting")]
+        [SerializeField] private int defaultSlotCount = 4;
+
+        private int slotCount = 0;
+
+        private void Start()
         {
-            SlotCnt = 4;
+            SlotCount = defaultSlotCount;
         }
 
-        // Update is called once per frame
-        void Update()
+        public void AddSlot(int amount = 1)
         {
-        
+            if (amount <= 0)
+                return;
+
+            SlotCount += amount;
         }
     }
 }
