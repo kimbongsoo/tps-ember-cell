@@ -43,7 +43,6 @@ namespace TEC
                 MoveSelection(mouseWheel);
             }
         }
-
         public void AddInteractionData(InteractionDataContext context)
         {
             dataContexts.Add(context);
@@ -51,7 +50,6 @@ namespace TEC
             string id = context.ID;
             if (stackedUIMap.TryGetValue(id, out var existing))
             {
-                //똑같은 ID를 가진 데이터가 이미 존재하는 경우 처리
                 existing.stackCount++;
                 infiniteScroll.UpdateData(existing);
             }
@@ -62,7 +60,7 @@ namespace TEC
                     id = id,
                     icon = context.Data.ActionIcon,
                     message = context.Data.ActionMessage,
-                    isSelected = dataContexts.Count == 1, //첫 번째 데이터는 선택 상태로 표시
+                    isSelected = dataContexts.Count == 1,
                 };
 
                 stackedUIMap[id] = listData;
@@ -71,6 +69,9 @@ namespace TEC
                 if (currentSelectionIndex < 0)
                     currentSelectionIndex = 0;
             }
+
+            // ✅ 데이터가 1개 이상이면 UI 켜기
+            RefreshVisibility();
         }
 
         public void RemoveInteractionData(InteractionDataContext context)
@@ -99,6 +100,8 @@ namespace TEC
                 }
             }
 
+            // ✅ 0개면 UI 끄기
+            RefreshVisibility();
         }
 
         public void ClearData()
@@ -108,7 +111,86 @@ namespace TEC
             infiniteScroll.ClearData(true);
             currentSelectionIndex = -1;
 
+            // ✅ 0개면 UI 끄기
+            RefreshVisibility();
         }
+
+        // ✅ 새 변수 만들지 않고, 현재 보유 데이터로만 판단
+        private void RefreshVisibility()
+        {
+            // stackedUIMap 기준(중복 스택 포함한 "표시 리스트")이 0이면 숨김
+            bool hasAny = stackedUIMap.Count > 0;
+
+            if (hasAny) Show();
+            else Hide();
+        }
+
+
+        // public void AddInteractionData(InteractionDataContext context)
+        // {
+        //     dataContexts.Add(context);
+
+        //     string id = context.ID;
+        //     if (stackedUIMap.TryGetValue(id, out var existing))
+        //     {
+        //         //똑같은 ID를 가진 데이터가 이미 존재하는 경우 처리
+        //         existing.stackCount++;
+        //         infiniteScroll.UpdateData(existing);
+        //     }
+        //     else
+        //     {
+        //         var listData = new InteractionUI_ListItemData
+        //         {
+        //             id = id,
+        //             icon = context.Data.ActionIcon,
+        //             message = context.Data.ActionMessage,
+        //             isSelected = dataContexts.Count == 1, //첫 번째 데이터는 선택 상태로 표시
+        //         };
+
+        //         stackedUIMap[id] = listData;
+        //         infiniteScroll.InsertData(listData);
+
+        //         if (currentSelectionIndex < 0)
+        //             currentSelectionIndex = 0;
+        //     }
+        // }
+
+        // public void RemoveInteractionData(InteractionDataContext context)
+        // {
+        //     dataContexts.Remove(context);
+
+        //     string id = context.ID;
+        //     if (stackedUIMap.TryGetValue(id, out var listData))
+        //     {
+        //         listData.stackCount--;
+
+        //         if (listData.stackCount <= 0)
+        //         {
+        //             stackedUIMap.Remove(id);
+        //             infiniteScroll.RemoveData(listData);
+
+        //             var list = infiniteScroll.GetDataList();
+        //             if (list.Count == 0)
+        //                 currentSelectionIndex = -1;
+        //             else if (currentSelectionIndex >= list.Count)
+        //                 currentSelectionIndex = list.Count - 1;
+        //         }
+        //         else
+        //         {
+        //             infiniteScroll.UpdateData(listData);
+        //         }
+        //     }
+
+        // }
+
+        // public void ClearData()
+        // {
+        //     dataContexts.Clear();
+        //     stackedUIMap.Clear();
+        //     infiniteScroll.ClearData(true);
+        //     currentSelectionIndex = -1;
+
+        // }
 
         public void MoveSelection(float direction)
         {

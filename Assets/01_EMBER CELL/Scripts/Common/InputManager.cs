@@ -42,21 +42,21 @@ namespace TEC
 
         private void Start()
         {
-            // SetCursorVisible(false);
+            SetCursorVisible(false);
         }
 
         private void OnApplicationFocus(bool focus)
         {
             if (focus)
             {
-                // SetCursorVisible(false);
+                SetCursorVisible(false);
             }
         }
 
         private void Update()
         {
             bool isForceCursorVisible = Input.GetKey(KeyCode.LeftAlt);
-            // SetCursorVisible(isForceCursorVisible);
+            SetCursorVisible(isForceCursorVisible);
 
             move = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
             look = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
@@ -145,11 +145,11 @@ namespace TEC
 
         }
         
-        // public void SetCursorVisible(bool isVisible)
-        // {
-        //     Cursor.visible = isVisible;
-        //     Cursor.lockState = isVisible ? CursorLockMode.None : CursorLockMode.Locked;
+        public void SetCursorVisible(bool isVisible)
+        {
+            Cursor.visible = isVisible;
+            Cursor.lockState = isVisible ? CursorLockMode.None : CursorLockMode.Locked;
             
-        // }
+        }
     }
 }

@@ -1,3 +1,26 @@
+// using UnityEngine;
+// using UnityEngine.UI;
+
+// namespace TEC
+// {
+//     public class Slot : MonoBehaviour
+//     {
+//         public InteractionDropItemData item;
+//         public Image itemIcon;
+
+//         public void UpdateSlotUI()
+//         {
+//             itemIcon.sprite = item.ActionIcon;
+//             itemIcon.gameObject.SetActive(true);
+//         }
+
+//         public void RemoveSlot()
+//         {
+//             item = null;
+//             itemIcon.gameObject.SetActive(false);
+//         }
+//     }
+// }
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -5,21 +28,27 @@ namespace TEC
 {
     public class Slot : MonoBehaviour
     {
-        [Header("UI")]
-        [SerializeField] private Button slotButton;
+        public InteractionDropItemData item;
+        public Image itemIcon;
 
-        private void Awake()
+        public void UpdateSlotUI()
         {
-            if (slotButton == null)
-                slotButton = GetComponent<Button>();
-        }
-
-        public void SetInteractable(bool interactable)
-        {
-            if (slotButton == null)
+            if (itemIcon == null || item == null)
                 return;
 
-            slotButton.interactable = interactable;
+            itemIcon.sprite = item.ActionIcon;
+            itemIcon.gameObject.SetActive(true);
+        }
+
+        public void RemoveSlot()
+        {
+            item = null;
+
+            if (itemIcon == null)
+                return;
+
+            itemIcon.sprite = null;
+            itemIcon.gameObject.SetActive(false);
         }
     }
 }

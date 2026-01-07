@@ -24,6 +24,21 @@ namespace TEC
             sensorCollider = gameObject.AddComponent<SphereCollider>();
             sensorCollider.radius = sensorRadius;
             sensorCollider.isTrigger = true;
+
+            //InteractionUI 숨김처리
+            UIManager.Singleton.GetUI<InteractionUI>(UIList.InteractionUI)?.Hide();
+        }
+
+        // - Destroy된 오브젝트가 씬에서 완전히 제거된 다음에 갱신
+        public void PulseManuallyNextFrame()
+        {
+            StartCoroutine(PulseManuallyNextFrameRoutine());
+        }
+
+        private IEnumerator PulseManuallyNextFrameRoutine()
+        {
+            yield return null; // 다음 프레임
+            PulseManually();
         }
 
         // 수동으로 센서 기능을 한번 실행해보는 함수

@@ -26,13 +26,21 @@ namespace TEC
                 //TODO : Drop Item을 드롭한다.
                 var itemBoxData = data as InteractionItemBoxData;
                 var dropItemPrefab = Resources.Load<InteractionDropItem>("Interaction Prefabs/Interaction Drop Item");
-                boxData.DropItems.ForEach(dropData =>
+
+                // Destroy 이후 spawnLocation 접근하면 MissingReferenceException이 날 수 있으니
+                // 파괴 전에 위치/회전/방향 캐싱
+                Vector3 cachedPos = spawnLocation.position;
+                Quaternion cachedRot = spawnLocation.rotation;
+                Vector3 cachedForward = spawnLocation.forward;
+                Vector3 cachedRight = spawnLocation.right;
+
+                itemBoxData.DropItems.ForEach(dropData =>
                 {
                     var newDropItem = Instantiate(dropItemPrefab);
                     newDropItem.Initialize(dropData);
-                    newDropItem.transform.SetPositionAndRotation(spawnLocation.position, spawnLocation.rotation);
+                    newDropItem.transform.SetPositionAndRotation(cachedPos, cachedRot);
 
-                    Vector3 forward = spawnLocation.forward;
+                    Vector3 forward = cachedForward;
 
                     // 중심축에서 좌우로 퍼지는 각도 설정
                     float anngleH = UnityEngine.Random.Range(-60f, 60f);
@@ -40,10 +48,12 @@ namespace TEC
 
                     // 각도를 방향 벡터로 변환
                     Quaternion rotationH = Quaternion.AngleAxis(anngleH, Vector3.up);
-                    Quaternion rotationV = Quaternion.AngleAxis(-anngleV, spawnLocation.right);
+                    Quaternion rotationV = Quaternion.AngleAxis(-anngleV, cachedRight);
                     Vector3 direction = rotationH * rotationV * forward;
 
-                    Vector3 spawnPos = spawnLocation.position + Vector3.up * 0.2f;
+                    Vector3 spawnPos = cachedPos + Vector3.up * 0.2f;
+                    newDropItem.transform.position = spawnPos;
+
                     if (newDropItem.TryGetComponent<Rigidbody>(out var rb))
                     {
                         float force = UnityEngine.Random.Range(30, 45f); //포물선 탄도에 적당 초기 속도
@@ -51,13 +61,11 @@ namespace TEC
                     }
                 });
 
-                //상자를 파괴한다.
-                DestroyImmediate(gameObject);
-
-                // 수동으로 Interaction Sensor를 1회 작동 시킨다.
-                CharacterPlayerController.Instance.InteractionSensor.PulseManually();
-
-
+                // TODO : Interaction UI를 갱신
+                //추가
+                CharacterPlayerController.Instance?.InteractionSensor?.PulseManuallyNextFrame();
+                Destroy(gameObject);
+                return;
             }
             else if (data is InteractionSearchData)
             {
@@ -66,8 +74,6 @@ namespace TEC
 
                 searchCamera.SetActive(true);
                 StartCoroutine(DelayedSearchCameraInactive());
-
-
             }
 
             IEnumerator DelayedSearchCameraInactive()
@@ -76,10 +82,7 @@ namespace TEC
                 searchCamera.SetActive(false);
             }
 
-
             // TODO : Interaction UI를 갱신
-
         }
-
     }
 }
