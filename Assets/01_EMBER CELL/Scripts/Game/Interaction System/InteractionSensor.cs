@@ -13,7 +13,6 @@ namespace TEC
 
         private Collider[] overlappedByPulse = new Collider[32];
 
-
         void Awake()
         {
             transform.SetLocalPositionAndRotation(Vector3.zero, Quaternion.identity);
@@ -29,7 +28,6 @@ namespace TEC
             UIManager.Singleton.GetUI<InteractionUI>(UIList.InteractionUI)?.Hide();
         }
 
-        // - Destroy된 오브젝트가 씬에서 완전히 제거된 다음에 갱신
         public void PulseManuallyNextFrame()
         {
             StartCoroutine(PulseManuallyNextFrameRoutine());
@@ -41,13 +39,14 @@ namespace TEC
             PulseManually();
         }
 
-        // 수동으로 센서 기능을 한번 실행해보는 함수
         public void PulseManually()
         {
             var interactionUI = UIManager.Singleton.GetUI<InteractionUI>(UIList.InteractionUI);
+
             interactionUI.ClearData();
 
             int overlappedCount = Physics.OverlapSphereNonAlloc(transform.position, sensorRadius, overlappedByPulse);
+
             for (int i = 0; i < overlappedCount; i++)
             {
                 if (overlappedByPulse[i].TryGetComponent<IInteractionProvider>(out var provider))
@@ -59,12 +58,11 @@ namespace TEC
                     }
                 }
             }
-
         }
 
         private void OnTriggerEnter(Collider other)
         {
-            IInteractionProvider interactionProvider = other.GetComponent<IInteractionProvider>();
+            var interactionProvider = other.GetComponent<IInteractionProvider>();
             if (interactionProvider != null)
             {
                 var interactionUI = UIManager.Singleton.GetUI<InteractionUI>(UIList.InteractionUI);
@@ -78,7 +76,7 @@ namespace TEC
 
         private void OnTriggerExit(Collider other)
         {
-            IInteractionProvider interactionProvider = other.GetComponent<IInteractionProvider>();
+            var interactionProvider = other.GetComponent<IInteractionProvider>();
             if (interactionProvider != null)
             {
                 var interactionUI = UIManager.Singleton.GetUI<InteractionUI>(UIList.InteractionUI);
@@ -87,7 +85,7 @@ namespace TEC
                     var context = new InteractionDataContext(data, interactionProvider);
                     interactionUI.RemoveInteractionData(context);
                 }
-            } 
+            }
         }
     }
 }

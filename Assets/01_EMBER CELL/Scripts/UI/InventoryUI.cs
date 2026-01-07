@@ -1,81 +1,3 @@
-// using UnityEngine;
-// using UnityEngine.UI;
-
-// namespace TEC
-// {
-//     public class InventoryUI : UIBase
-//     {
-//         Inventory inven;
-//         public GameObject inventoryPanel;
-//         bool activeInventory = false;
-
-//         public Slot[] slots;
-//         public Transform slotHolder;
-
-//         private void Start()
-//         {
-//             inven = Inventory.Singleton;
-//             slots = slotHolder.GetComponentsInChildren<Slot>();
-
-//             inven.onSlotCountChange += SlotChange;
-//             inven.onChangeItem += ReDrawSlotUI;
-
-//             inventoryPanel.SetActive(activeInventory);
-
-//             // 초기 상태 반영
-//             SlotChange(inven.SlotCnt);
-//             ReDrawSlotUI();
-//         }
-
-//         private void OnDestroy()
-//         {
-//             if (inven == null)
-//                 return;
-
-//             inven.onSlotCountChange -= SlotChange;
-//             inven.onChangeItem -= ReDrawSlotUI;
-//         }
-
-//         private void SlotChange(int val)
-//         {
-//             for (int i = 0; i < slots.Length; i++)
-//             {
-//                 if (i < inven.SlotCnt)
-//                     slots[i].GetComponent<Button>().interactable = true;
-//                 else
-//                     slots[i].GetComponent<Button>().interactable = false;
-//             }
-//         }
-
-//         private void Update()
-//         {
-//             if (Input.GetKeyDown(KeyCode.I))
-//             {
-//                 activeInventory = !activeInventory;
-//                 inventoryPanel.SetActive(activeInventory);
-//             }
-//         }
-
-//         public void AddSlot()
-//         {
-//             inven.SlotCnt++;
-//         }
-
-//         void ReDrawSlotUI()
-//         {
-//             for (int i = 0; i < slots.Length; i++)
-//             {
-//                 slots[i].RemoveSlot();
-//             }
-
-//             for (int i = 0; i < inven.items.Count; i++)
-//             {
-//                 slots[i].item = inven.items[i];
-//                 slots[i].UpdateSlotUI();
-//             }
-//         }
-//     }
-// }
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -90,6 +12,7 @@ namespace TEC
         public Slot[] slots;
         public Transform slotHolder;
 
+
         private void Start()
         {
             inven = Inventory.Singleton;
@@ -97,7 +20,6 @@ namespace TEC
 
             inven.onSlotCountChange += SlotChange;
             inven.onChangeItem += ReDrawSlotUI;
-
             inventoryPanel.SetActive(activeInventory);
 
             SlotChange(inven.SlotCnt);
@@ -147,6 +69,7 @@ namespace TEC
 
         void ReDrawSlotUI()
         {
+            Debug.Log($"[InventoryUI] ReDrawSlotUI ENTER items.Count={(inven == null ? -1 : inven.items.Count)}", this);
             if (slots == null)
                 return;
 
@@ -172,7 +95,8 @@ namespace TEC
                 if (slots[i] == null)
                     continue;
 
-                slots[i].item = inven.items[i];
+                var it = inven.items[i];
+                slots[i].item = it;
                 slots[i].UpdateSlotUI();
             }
         }

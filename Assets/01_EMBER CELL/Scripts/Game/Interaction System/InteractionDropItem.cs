@@ -20,11 +20,23 @@ namespace TEC
             visualRenderer.material = itemGradeMaterials[index];
         }
 
+        // public void Interact(IInteractionData data)
+        // {
+        //     CharacterPlayerController.Instance?.InteractionSensor?.PulseManuallyNextFrame();
+        //     Destroy(gameObject);
+        // }
         public void Interact(IInteractionData data)
-        {   
-            //TODO : 아이템 획득 처리
-            //TODO : 인벤토리 추가
-            // CharacterPlayerController.Instance?.InteractionSensor?.PulseManually();
+        {
+            Debug.Log($"[InteractionDropItem] Interact() data={(data == null ? "null" : data.GetType().Name)}", this);
+
+            if (data is InteractionDropItemData dropData)
+            {
+                Debug.Log($"[InteractionDropItem] Pick item={dropData.name} Icon={(dropData.ActionIcon == null ? "null" : dropData.ActionIcon.name)}", this);
+
+                bool added = Inventory.Singleton != null && Inventory.Singleton.AddItem(dropData);
+                Debug.Log($"[InteractionDropItem] Inventory.AddItem => {added}", this);
+            }
+
             CharacterPlayerController.Instance?.InteractionSensor?.PulseManuallyNextFrame();
             Destroy(gameObject);
         }
