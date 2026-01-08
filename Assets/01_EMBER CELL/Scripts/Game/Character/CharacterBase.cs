@@ -37,6 +37,8 @@ namespace TEC
         private bool isDead = false;
         public WeaponBase PrimaryWeapon => primaryWeapon;
 
+        public bool IsJammed { get; private set; } = false;
+
         [Header("Character Stat")]
         public float maxHP = 100f;
         public float maxSP = 100f;
@@ -94,6 +96,13 @@ namespace TEC
         public AnimationCurve rollingCurve;
         private float rollingTime = 0f;
         private float rollingDuration = 1.5f;
+
+        [Header("Weapon Jam Setting")]
+        [Range(0f, 1f)]
+        public float jamChance = 0.05f;   // 5% 기본
+        // public float jamChance = 0.50f;
+        public float jamCooldown = 0.2f;  // 연속 잼 방지(선택)
+        private float lastJamTime = -999f;
 
         public System.Action<int, int> onFireEvent;
         public System.Action<int, int> onReloadCompleteEvent;
@@ -242,7 +251,7 @@ namespace TEC
 
         public void Fire()
         {
-            if (IsReloading || !isArmed)
+            if (IsReloading || !isArmed || IsJammed)
                 return;
 
             if (isAiming)
@@ -250,6 +259,12 @@ namespace TEC
                 if (PrimaryWeapon.Shoot(out int remain, out int max))
                 {
                     onFireEvent?.Invoke(remain, max);
+
+                    // jam 기능 추가
+                    if (Time.time - lastJamTime >= jamCooldown && UnityEngine.Random.value < jamChance)
+                    {
+                        StartUnjam();
+                    }
                 }
                 else
                 {
@@ -526,6 +541,29 @@ namespace TEC
 
             currentHP = Mathf.Clamp(currentHP + amount, 0f, maxHP);
             OnchangedHP?.Invoke(currentHP, maxHP);
+        }
+
+        private void StartUnjam()
+        {
+            if (IsJammed || IsReloading || isRolling)
+                return;
+
+            IsJammed = true;
+            lastJamTime = Time.time;
+
+            characterAnimator.SetTrigger("Unjam Trigger");
+            characterAnimator.SetLayerWeight(2, 0);
+
+            // OnJamStateChanged?.Invoke(true);
+        }
+
+        public void UnjamComplete()
+        {
+            IsJammed = false;
+
+            characterAnimator.SetLayerWeight(2, 1);
+
+            // OnJamStateChanged?.Invoke(false);
         }
 
 
