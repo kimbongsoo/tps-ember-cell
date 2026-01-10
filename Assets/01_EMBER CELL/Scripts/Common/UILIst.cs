@@ -34,6 +34,7 @@ namespace TEC
         //인벤토리
         InventoryUI,
         InventoryContextMenu,
+        InventoryRenewalUI,
 
         MAX_SCENE_PANEL,
         //===================

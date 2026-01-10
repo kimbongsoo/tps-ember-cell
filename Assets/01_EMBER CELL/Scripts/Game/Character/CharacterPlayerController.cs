@@ -65,6 +65,7 @@ namespace TEC
             InputManager.Singleton.OnRoll += ExecuteRoll;
 
             InputManager.Singleton.OnInteract += ExecuteInteract;
+            InputManager.Singleton.OnInventory += ExecuteInventory;
 
             //스코프
             // InputManager.Singleton.OnRightClickDouble += ToggleRedDotUI;
@@ -344,6 +345,20 @@ namespace TEC
             RedDotUI.Instance?.gameObject.SetActive(false);
 
             Debug.Log("⬅ ExitScopeMode()");
+        }
+
+        void ExecuteInventory()
+        {
+            var inventoryUI = UIManager.Singleton.GetUI<InventoryRenewalUI>(UIList.InventoryRenewalUI);
+            if (inventoryUI.gameObject.activeSelf)
+            {
+                UIManager.Hide<InventoryRenewalUI>(UIList.InventoryRenewalUI);    
+            }
+            else
+            {
+                UIManager.Show<InventoryRenewalUI>(UIList.InventoryRenewalUI);
+            }
+            
         }
 
 

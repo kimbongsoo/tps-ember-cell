@@ -31,6 +31,12 @@ namespace TEC
             // Manager & System Initialize
             UIManager.Singleton.Initialize();
 
+            // GameDAta Initialize
+            GameDataModel.Singleton.Initialize();
+
+            // User Data Initialize
+            UserDataModel.Singleton.Initialize();
+
             isInitialized = true;
         }
 

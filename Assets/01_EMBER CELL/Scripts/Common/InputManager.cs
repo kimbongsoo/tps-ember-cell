@@ -102,7 +102,7 @@ namespace TEC
             {
                 OnRoll?.Invoke();
             }
-            if (Input.GetKeyDown(KeyCode.I))
+            if (Input.GetKeyDown(KeyCode.B))
             {
                 OnInventory?.Invoke();
             }
