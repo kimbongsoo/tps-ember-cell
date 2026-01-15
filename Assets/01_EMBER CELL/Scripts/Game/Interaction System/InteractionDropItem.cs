@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,6 +10,7 @@ namespace TEC
 
         [SerializeField] private Material[] itemGradeMaterials = new Material[5];
         [SerializeField] private MeshRenderer visualRenderer;
+        
 
         private List<IInteractionData> interactionDatas = new();
 
@@ -20,26 +22,12 @@ namespace TEC
             visualRenderer.material = itemGradeMaterials[index];
         }
 
-        // public void Interact(IInteractionData data)
-        // {
-        //     CharacterPlayerController.Instance?.InteractionSensor?.PulseManuallyNextFrame();
-        //     Destroy(gameObject);
-        // }
         public void Interact(IInteractionData data)
         {
-            Debug.Log($"[InteractionDropItem] Interact() data={(data == null ? "null" : data.GetType().Name)}", this);
+            //TODO : 아이템 획득 처리
+            //TODO : 인벤토리에 추가
 
-            if (data is InteractionDropItemData dropData)
-            {
-                Debug.Log($"[InteractionDropItem] Pick item={dropData.name} Icon={(dropData.ActionIcon == null ? "null" : dropData.ActionIcon.name)}", this);
-
-                bool added = Inventory.Singleton != null && Inventory.Singleton.AddItem(dropData);
-                Debug.Log($"[InteractionDropItem] Inventory.AddItem => {added}", this);
-            }
-
-            CharacterPlayerController.Instance?.InteractionSensor?.PulseManuallyNextFrame();
             Destroy(gameObject);
         }
-
     }
 }
