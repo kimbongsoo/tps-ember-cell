@@ -9,15 +9,7 @@ namespace TEC
         // NonAlloc 용 버퍼 (필요시 크기 조절)
         private readonly Collider[] overlapped = new Collider[32];
 
-        private void Update()
-        {
-            if (!Input.GetKeyDown(KeyCode.F))
-                return;
-
-            TryPickupNearestDropItem();
-        }
-
-        private void TryPickupNearestDropItem()
+        public void TryPickupNearestDropItem()
         {
             // Player 위치 기준 반경 내 콜라이더를 NonAlloc으로 탐색
             int count = Physics.OverlapSphereNonAlloc(

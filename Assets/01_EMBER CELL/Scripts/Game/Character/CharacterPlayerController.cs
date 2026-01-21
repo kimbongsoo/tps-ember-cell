@@ -16,6 +16,7 @@ namespace TEC
         public InteractionSensor InteractionSensor => interactionSensor;
         private CharacterBase characterBase;
         private InteractionSensor interactionSensor;
+        private PickupItemInteractor pickupItemInteractor;
 
 
         [Header("Camera Setting")]
@@ -47,6 +48,7 @@ namespace TEC
         private void Awake()
         {
             characterBase = GetComponent<CharacterBase>();
+            pickupItemInteractor = GetComponent<PickupItemInteractor>();
             Instance = this;
 
             GameObject sensorObject = new GameObject("Interaction Sensor");
@@ -66,6 +68,7 @@ namespace TEC
 
             InputManager.Singleton.OnInteract += ExecuteInteract;
             InputManager.Singleton.OnInventory += ExecuteInventory;
+            InputManager.Singleton.OnPickup += ExecutePickup;
 
             //스코프
             // InputManager.Singleton.OnRightClickDouble += ToggleRedDotUI;
@@ -101,6 +104,7 @@ namespace TEC
             InputManager.Singleton.OnRoll -= ExecuteRoll;
 
             InputManager.Singleton.OnInteract -= ExecuteInteract;
+            InputManager.Singleton.OnPickup -= ExecutePickup;
 
             //스코프
             // InputManager.Singleton.OnRightClickDouble -= ToggleRedDotUI;
@@ -359,6 +363,14 @@ namespace TEC
                 UIManager.Show<InventoryRenewalUI>(UIList.InventoryRenewalUI);
             }
             
+        }
+
+        private void ExecutePickup()
+        {
+            if (characterBase == null || characterBase.IsDead)
+                return;
+
+            pickupItemInteractor?.TryPickupNearestDropItem();
         }
 
 
