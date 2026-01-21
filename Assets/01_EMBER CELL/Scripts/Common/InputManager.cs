@@ -64,8 +64,9 @@ namespace TEC
             isLeftMouseButton = Input.GetMouseButton(0);
             isLeftShift = Input.GetKey(KeyCode.LeftShift);
             isRightMouseButton = Input.GetMouseButton(1);
-
-            if (Input.GetKeyDown(KeyCode.F))
+            
+            //원래는 f, 임시로g
+            if (Input.GetKeyDown(KeyCode.G))
             {
                 OnInteract?.Invoke();
             }

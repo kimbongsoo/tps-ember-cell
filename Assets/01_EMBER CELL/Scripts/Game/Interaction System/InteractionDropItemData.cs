@@ -12,6 +12,8 @@ namespace TEC
     }
 
     [CreateAssetMenu(fileName = "InteractionDropItemData", menuName = "TEC/Interaction/Drop Item Data")]
+
+    // 0119
     public class InteractionDropItemData : ScriptableObject, IInteractionData
     {
         public string ID => itemId;

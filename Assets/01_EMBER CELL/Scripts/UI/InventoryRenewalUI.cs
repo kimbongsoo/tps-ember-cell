@@ -19,6 +19,8 @@ namespace TEC
         {
             base.Show();
 
+            ClearList();
+
             // TODO : UserData에 있는 Player Item 정보를 토대로, UI를 갱신한다.
             for(int i=0; i < UserDataModel.Singleton.PlayerItemData.itemDataContainer.Count; i++)
             {
@@ -28,15 +30,31 @@ namespace TEC
             }
         }
 
+        //0119 ClearList
+        private void ClearList()
+        {
+            // listRoot 하위의 실제 생성된 엔티티만 제거
+            for (int i = listRoot.childCount - 1; i >= 0; i--)
+            {
+                var child = listRoot.GetChild(i);
+                if (child == itemListEntity.transform)
+                    continue;
+
+                Destroy(child.gameObject);
+            }
+        }
 
         public void AddItem(string itemId, int count)
         {
             //TODO : UI상에, itemListEntity를 복제해서 추가..
+
             var itemDataSO = GameDataModel.Singleton.ItemData.GetItemDataSO(itemId);
+            if (itemDataSO == null)
+                return;
+
             InventoryRenewalUI_ListEntity newItemEntity = Instantiate(itemListEntity, listRoot);
             newItemEntity.gameObject.SetActive(true);
             newItemEntity.Init(itemDataSO.ItemIcon, itemDataSO.ItemName, count);
-            
         }
 
         public void RemoveItem()

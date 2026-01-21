@@ -22,6 +22,7 @@ namespace TEC
             visualRenderer.material = itemGradeMaterials[index];
         }
 
+        // 0119
         public void Interact(IInteractionData data)
         {
             //TODO : 아이템 획득 처리
