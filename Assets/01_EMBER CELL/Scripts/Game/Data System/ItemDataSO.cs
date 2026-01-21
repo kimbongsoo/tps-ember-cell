@@ -21,24 +21,23 @@ namespace TEC
         public ItemCategory ItemCategory;
         public Sprite ItemIcon;
         public int MaxStack;
+        public int DropQuantity;
 
 #if UNITY_EDITOR
-        private void OnValidate()
-        {
-            switch (ItemCategory)
-            {
-                case ItemCategory.Equipment:
-                    MaxStack = 1;
-                    break;
+private void OnValidate()
+{
+    MaxStack = ItemCategory switch
+    {
+        ItemCategory.Ammo => 100,
+        _ => 1
+    };
 
-                case ItemCategory.Ammo:
-                    MaxStack = 100;
-                    break;
-            }
-
-            if (MaxStack < 1)
-                MaxStack = 1;
-        }
+    DropQuantity = ItemCategory switch
+    {
+        ItemCategory.Ammo => 30,
+        _ => 1
+    };
+}
 #endif
         
     }
