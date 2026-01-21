@@ -46,7 +46,7 @@ namespace TEC
                 UIManager.Show<CrossHairUI>(UIList.CrossHairUI);
                 UIManager.Show<InteractionUI>(UIList.InteractionUI);
 
-                UIManager.Show<RedDotUI>(UIList.RedDotUI);
+                // UIManager.Show<RedDotUI>(UIList.RedDotUI);
 
             }
         }

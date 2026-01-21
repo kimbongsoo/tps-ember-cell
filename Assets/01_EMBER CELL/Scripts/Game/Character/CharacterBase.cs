@@ -99,8 +99,8 @@ namespace TEC
 
         [Header("Weapon Jam Setting")]
         [Range(0f, 1f)]
-        // public float jamChance = 0.05f;   // 5% 기본
-        public float jamChance = 0.50f;
+        public float jamChance = 0.001f;   // 5% 기본
+        // public float jamChance = 0.50f;
         public float jamCooldown = 0.2f;  // 연속 잼 방지(선택)
         private float lastJamTime = -999f;
 
