@@ -9,35 +9,32 @@ namespace TEC
 {
     public class WeaponBase : MonoBehaviour
     {
-        // public int RemainAmmo => clipSize;
-        // public int MaxAmmo => maxAmmo;
         public int RemainAmmo => clipAmmo;
-        public int MaxAmmo => reserveAmmo;
+        public int MaxAmmo => GetReserveAmmoFromInventory();
 
-        public CharacterBase Owner {get;set;}
+        [Header("Ammo Setting")]
+        [SerializeField] private string ammoItemID = "";
+        public string AmmoItemID => ammoItemID;
 
+        public CharacterBase Owner { get; set; }
 
         [Header("Fire Setting")]
         [SerializeField] private Transform fireStartPoint;
         [SerializeField] private GameObject originalBullet;
         [SerializeField] private float fireRate = 0.2f;
         [SerializeField] private float lastFireTime = 0f;
-        // [SerializeField] private int maxAmmo = 30;
-        // [SerializeField] private int clipSize = 30;
+
         [SerializeField] private int reserveAmmo = 90;
-        [SerializeField] private int maxClipAmmo = 30; //탄창 용량
-        [SerializeField] private int clipAmmo = 30; //현재 탄창 수
+
+        [SerializeField] private int maxClipAmmo = 30; // 탄창 용량
+        [SerializeField] private int clipAmmo = 30;    // 현재 탄창 수
 
         [Header("Fire Setting")]
-
         [SerializeField] private float damage = 30f;
 
         private WeaponRecoil weaponRecoil;
-        // private float recoilRate = 2f;
-        // private float recoilVertical = 2f;
-        // private float recoilHorizontal = 1f;
-
         private IObjectPool<Projectile> projectilePool;
+
         private void Awake()
         {
             weaponRecoil = GetComponent<WeaponRecoil>();
@@ -53,7 +50,18 @@ namespace TEC
             );
         }
 
-        //생성
+        public void InitializeReserveAmmoToInventory()
+        {
+            if (string.IsNullOrEmpty(ammoItemID) || UserDataModel.Singleton == null)
+                return;
+
+            if (reserveAmmo <= 0)
+                return;
+
+            UserDataModel.Singleton.AddItem(ammoItemID, reserveAmmo);
+            reserveAmmo = 0;
+        }
+
         private Projectile CreateProjectile()
         {
             var bulletObj = Instantiate(originalBullet);
@@ -78,72 +86,73 @@ namespace TEC
             Destroy(projectile.gameObject);
         }
 
-
-
         public bool Shoot(out int remain, out int max)
         {
-            // bool isShootable = clipSize > 0 && Time.time >= lastFireTime + fireRate;
             bool isShootable = clipAmmo > 0 && Time.time >= lastFireTime + fireRate;
 
             if (isShootable)
             {
                 var projectile = projectilePool.Get();
-
                 projectile.Initialize(Owner.gameObject, damage);
 
                 weaponRecoil?.GenerateRecoil();
 
-                
-                // clipSize--;
                 clipAmmo--;
 
                 EffectManager.Instance.SpawnMuzzleEffect(fireStartPoint);
 
-                // CharacterPlayerController.Instance.CameraRecoil(recoilRate, recoilVertical, recoilHorizontal);
-
                 lastFireTime = Time.time;
             }
-            
-            // remain = clipSize;
-            // max = maxAmmo;
+
             remain = clipAmmo;
-            max = reserveAmmo;
+            max = GetReserveAmmoFromInventory();
 
             return isShootable;
         }
 
         public int SetFullAmmo()
         {
-            if (clipAmmo >= maxClipAmmo || reserveAmmo <= 0)
+            if (clipAmmo >= maxClipAmmo)
+                return clipAmmo;
+
+            if (string.IsNullOrEmpty(ammoItemID) || UserDataModel.Singleton == null)
                 return clipAmmo;
 
             int need = maxClipAmmo - clipAmmo;
-            int toLoad = Mathf.Min(need, reserveAmmo);
+            if (need <= 0)
+                return clipAmmo;
 
-            clipAmmo   += toLoad;
-            reserveAmmo -= toLoad;
+            int pulled = UserDataModel.Singleton.ConsumeItem(ammoItemID, need);
+            if (pulled <= 0)
+                return clipAmmo;
 
+            clipAmmo += pulled;
             return clipAmmo;
-
-            // clipSize = maxAmmo;
-            // return maxAmmo;
         }
 
         public bool IsEmpty()
         {
-            return clipAmmo <= 0 && reserveAmmo <= 0;
-            // return clipSize == 0;
+            return clipAmmo <= 0 && GetReserveAmmoFromInventory() <= 0;
         }
 
         public void AddAmmo(int amount, out int current, out int max)
         {
-            reserveAmmo = Mathf.Max(0, reserveAmmo + amount);
+            if (!string.IsNullOrEmpty(ammoItemID) && UserDataModel.Singleton != null && amount > 0)
+            {
+                UserDataModel.Singleton.AddItem(ammoItemID, amount);
+            }
 
             current = clipAmmo;
-            max     = reserveAmmo;
-            // clipSize = Mathf.Clamp(clipSize + amount, 0, maxAmmo);
-            // current  = clipSize;
-            // max      = maxAmmo;
+            max = GetReserveAmmoFromInventory();
+        }
+
+        private int GetReserveAmmoFromInventory()
+        {
+            if (string.IsNullOrEmpty(ammoItemID) || UserDataModel.Singleton == null)
+                return 0;
+
+            return UserDataModel.Singleton.GetTotalItemCount(ammoItemID);
         }
     }
 }
+

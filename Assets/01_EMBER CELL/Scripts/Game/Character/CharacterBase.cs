@@ -146,6 +146,7 @@ namespace TEC
 
             if (primaryWeapon != null)
             {
+                primaryWeapon.InitializeReserveAmmoToInventory();
                 // 탄약 초기 상태 전달
                 onReloadCompleteEvent?.Invoke(primaryWeapon.RemainAmmo, primaryWeapon.MaxAmmo);
             }

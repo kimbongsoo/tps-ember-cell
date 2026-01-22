@@ -79,6 +79,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc1a4c711477942689dfa49b5bc4b753, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ammoItemID: 40001
   fireStartPoint: {fileID: 6139668880979145962}
   originalBullet: {fileID: 1479500175642930211, guid: 66aa9f9ea9d7e46389dddbd9e5a9b2d1, type: 3}
   fireRate: 0.2

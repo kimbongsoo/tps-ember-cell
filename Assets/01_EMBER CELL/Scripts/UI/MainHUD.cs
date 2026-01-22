@@ -1,17 +1,13 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using System;
 
 namespace TEC
 {
     public class MainHUD : UIBase
     {
-
         public static MainHUD Instance => UIManager.Singleton.GetUI<MainHUD>(UIList.MainHUD);
-
 
         [SerializeField] private Image hpForeground;
         [SerializeField] private Image spForeground;
@@ -22,7 +18,6 @@ namespace TEC
         [SerializeField] private TextMeshProUGUI weaponNameText;
         [SerializeField] private TextMeshProUGUI ammoText;
 
-        // [SerializeField] private TextMeshProUGUI scoreText;
         [Header("Minimap Compass")]
         [SerializeField] private RectTransform compassContainer;
         [SerializeField] private RectTransform northText;
@@ -30,15 +25,13 @@ namespace TEC
         [SerializeField] private RectTransform eastText;
         [SerializeField] private RectTransform westText;
 
-
         public override void Show()
         {
             base.Show();
-
             StartCoroutine(DelayedApplyCamera());
         }
 
-        IEnumerator DelayedApplyCamera()
+        private IEnumerator DelayedApplyCamera()
         {
             yield return new WaitUntil(() => Camera.main != null);
 
@@ -52,6 +45,7 @@ namespace TEC
             weaponIcon.sprite = weaponImage;
             weaponNameText.text = weaponName;
         }
+
 
         public void SetAmmoText(int current, int max)
         {
@@ -71,12 +65,6 @@ namespace TEC
                 ammoText.gameObject.SetActive(false);
             }
         }
-
-
-        // private void SetVisible(bool visible)
-        // {
-        //     if (ammoText) ammoText.gameObject.SetActive(visible);
-        // }
 
         public void SetHP(float current, float max)
         {
@@ -111,20 +99,12 @@ namespace TEC
             ApplyTextRotation(eastText, inverse);
             ApplyTextRotation(westText, inverse);
         }
-        
+
         private void ApplyTextRotation(RectTransform text, Quaternion rotation)
         {
             if (text == null) return;
 
             text.localRotation = rotation;
         }
-
-        // public void SetScore(int score)
-        // {
-        //     scoreText.text = $"Score:{score}";
-        // }
-
-
-
     }
 }

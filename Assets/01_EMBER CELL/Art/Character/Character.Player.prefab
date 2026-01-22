@@ -14,7 +14,6 @@ GameObject:
   - component: {fileID: 5389989113011864481}
   - component: {fileID: 2784416617056531416}
   - component: {fileID: 288873449264289141}
-  - component: {fileID: 8349881407251190059}
   m_Layer: 6
   m_Name: Character.Player
   m_TagString: Untagged
@@ -201,6 +200,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+  jamChance: 0
+  jamCooldown: 0.2
 --- !u!114 &288873449264289141
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -217,19 +218,6 @@ MonoBehaviour:
   - m_Rig: {fileID: 2406281455438601696}
     m_Active: 1
   m_Effectors: []
---- !u!114 &8349881407251190059
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 99603209583646641}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bfd4f36de94544dbda908c76a954d140, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  items: []
 --- !u!1 &378614431817626182
 GameObject:
   m_ObjectHideFlags: 0

@@ -1893,6 +1893,7 @@ MonoBehaviour:
   southText: {fileID: 4963978004526101526}
   eastText: {fileID: 8111566716798191801}
   westText: {fileID: 3411563914249494601}
+  ammoItemID: 40001
 --- !u!1 &7853563393890300136
 GameObject:
   m_ObjectHideFlags: 0

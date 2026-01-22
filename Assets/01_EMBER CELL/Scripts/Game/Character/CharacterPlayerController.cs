@@ -124,6 +124,8 @@ namespace TEC
             characterBase.OnDeadStateChanged += OnLinkedCharacterDeadState;
 
             // characterBase.OnArmedStateChanged += OnArmedStateChanged;
+            if (UserDataModel.Singleton != null)
+                UserDataModel.Singleton.OnInventoryChanged += OnInventoryChanged;
         }
 
         private void OnDisable()
@@ -138,6 +140,8 @@ namespace TEC
             characterBase.OnDeadStateChanged -= OnLinkedCharacterDeadState;
 
             // characterBase.OnArmedStateChanged -= OnArmedStateChanged;
+            if (UserDataModel.Singleton != null)
+               UserDataModel.Singleton.OnInventoryChanged -= OnInventoryChanged;
         }
 
         private void OnReloadCompleted(int current, int max)
@@ -371,6 +375,13 @@ namespace TEC
                 return;
 
             pickupItemInteractor?.TryPickupNearestDropItem();
+        }
+
+        private void OnInventoryChanged()
+        {
+            if (characterBase == null || characterBase.PrimaryWeapon == null)
+                return;
+            MainHUD.Instance.SetAmmoText(characterBase.PrimaryWeapon.RemainAmmo, characterBase.PrimaryWeapon.MaxAmmo);
         }
 
 

@@ -6,6 +6,8 @@ namespace TEC
     {
         [field: SerializeField] public PlayerItemDto PlayerItemData { get; private set; } = new();
 
+        public System.Action OnInventoryChanged;
+
         public void Initialize()
         {
             // TODO : UserData Initialize / Load Logic
@@ -25,75 +27,53 @@ namespace TEC
             */
         }
 
-        // public bool AddItem(string itemId, int amount)
-        // {
-        //     if (string.IsNullOrEmpty(itemId))
-        //         return false;
+        public int GetTotalItemCount(string itemID)
+        {
+            if (string.IsNullOrEmpty(itemID))
+                return 0;
 
-        //     if (amount <= 0)
-        //         return false;
+            int total = 0;
+            var c = PlayerItemData.itemDataContainer;
 
-        //     var container = PlayerItemData.itemDataContainer;
-        //     var existed = container.Find(x => x.itemID == itemId);
+            for (int i = 0; i < c.Count; i++)
+            {
+                if (c[i].itemID == itemID)
+                    total += c[i].quantity;
+            }
 
-        //     if (existed != null)
-        //     {
-        //         existed.quantity += amount;
-        //     }
-        //     else
-        //     {
-        //         container.Add(new PlayerItemDto.PlayerItemData()
-        //         {
-        //             dataID = System.Guid.NewGuid().ToString(),
-        //             itemID = itemId,
-        //             quantity = amount,
-        //         });
-        //     }
+            return total;
+        }
 
-        //     return true;
-        // }
+        // amount만큼
+        public int ConsumeItem(string itemID, int amount)
+        {
+            if (string.IsNullOrEmpty(itemID) || amount <= 0)
+                return 0;
 
-        // public bool AddItem(string itemID, int amount)
-        // {
-        //     if (string.IsNullOrEmpty(itemID) || amount <= 0)
-        //         return false;
+            int remaining = amount;
+            var c = PlayerItemData.itemDataContainer;
 
-        //     var itemDataSO = GameDataModel.Singleton.ItemData.GetItemDataSO(itemID);
-        //     if (itemDataSO == null)
-        //         return false;
+            for (int i = c.Count - 1; i >= 0 && remaining > 0; i--)
+            {
+                if (c[i].itemID != itemID)
+                    continue;
 
-        //     int maxStack = itemDataSO.MaxStack;
+                int take = Mathf.Min(c[i].quantity, remaining);
+                c[i].quantity -= take;
+                remaining -= take;
 
-        //     // 기존 스택 찾기
-        //     var existing = PlayerItemData.itemDataContainer
-        //         .Find(x => x.itemID == itemID && x.quantity < maxStack);
+                if (c[i].quantity <= 0)
+                    c.RemoveAt(i);
+            }
 
-        //     if (existing != null)
-        //     {
-        //         int space = maxStack - existing.quantity;
-        //         int add = Mathf.Min(space, amount);
+            int consumed = amount - remaining;
+            if (consumed > 0)
+                OnInventoryChanged?.Invoke();
 
-        //         existing.quantity += add;
-        //         amount -= add;
-        //     }
+            return consumed;
+        }
 
-        //     // 남은 수량이 있다면 새 스택 생성
-        //     while (amount > 0)
-        //     {
-        //         int add = Mathf.Min(maxStack, amount);
-
-        //         PlayerItemData.itemDataContainer.Add(new PlayerItemDto.PlayerItemData
-        //         {
-        //             dataID = System.Guid.NewGuid().ToString(),
-        //             itemID = itemID,
-        //             quantity = add
-        //         });
-
-        //         amount -= add;
-        //     }
-
-        //     return true;
-        // }
+        // MaxStack초과시 분리
         public bool AddItem(string itemID, int amount)
         {
             if (string.IsNullOrEmpty(itemID) || amount <= 0)
@@ -105,7 +85,6 @@ namespace TEC
 
             int maxStack = itemDataSO.MaxStack;
 
-            // 1️⃣ 기존 스택 중 "아직 덜 찬 스택"부터 채운다
             for (int i = 0; i < PlayerItemData.itemDataContainer.Count && amount > 0; i++)
             {
                 var slot = PlayerItemData.itemDataContainer[i];
@@ -122,25 +101,24 @@ namespace TEC
                 amount -= add;
             }
 
-            // 2️⃣ 아직 남은 수량이 있으면 새 스택을 만든다
             while (amount > 0)
             {
                 int add = Mathf.Min(maxStack, amount);
 
-                PlayerItemData.itemDataContainer.Add(
-                    new PlayerItemDto.PlayerItemData
-                    {
-                        dataID = System.Guid.NewGuid().ToString(),
-                        itemID = itemID,
-                        quantity = add
-                    }
-                );
+                PlayerItemData.itemDataContainer.Add(new PlayerItemDto.PlayerItemData()
+                {
+                    dataID = System.Guid.NewGuid().ToString(),
+                    itemID = itemID,
+                    quantity = add
+                });
 
                 amount -= add;
             }
 
+            OnInventoryChanged?.Invoke();
             return true;
         }
+
 
 
     }
