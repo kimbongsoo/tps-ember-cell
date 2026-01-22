@@ -70,7 +70,6 @@ namespace TEC
                     currentSelectionIndex = 0;
             }
 
-            // ✅ 데이터가 1개 이상이면 UI 켜기
             RefreshVisibility();
         }
 
@@ -100,7 +99,6 @@ namespace TEC
                 }
             }
 
-            // ✅ 0개면 UI 끄기
             RefreshVisibility();
         }
 
@@ -111,11 +109,9 @@ namespace TEC
             infiniteScroll.ClearData(true);
             currentSelectionIndex = -1;
 
-            // ✅ 0개면 UI 끄기
             RefreshVisibility();
         }
 
-        // ✅ 새 변수 만들지 않고, 현재 보유 데이터로만 판단
         private void RefreshVisibility()
         {
             // stackedUIMap 기준(중복 스택 포함한 "표시 리스트")이 0이면 숨김
