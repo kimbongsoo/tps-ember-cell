@@ -14,7 +14,8 @@ namespace TEC
         public IInteractionData Data { get; }
         public IInteractionProvider Provider { get; }
         public string ID => Data.ID;
-        public bool ShouldRemoveAfterInteraction => Data is InteractionDropItemData || Data is InteractionItemBoxData;
+        // public bool ShouldRemoveAfterInteraction => Data is InteractionDropItemData || Data is InteractionItemBoxData;
+        public bool ShouldRemoveAfterInteraction => Data is ItemDataSO || Data is InteractionItemBoxData;
 
         public InteractionDataContext(IInteractionData data, IInteractionProvider provider)
         {

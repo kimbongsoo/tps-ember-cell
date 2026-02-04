@@ -779,7 +779,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 138848091}
-  - component: {fileID: 138848092}
   m_Layer: 0
   m_Name: Visual
   m_TagString: Untagged
@@ -803,27 +802,6 @@ Transform:
   - {fileID: 790787386}
   m_Father: {fileID: 1663536497}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &138848092
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 138848090}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.00001
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!4 &177741594 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3380885755747651666, guid: b7b8af1fa52c04741801fd53282110dd, type: 3}
@@ -958,7 +936,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 222919915}
-  - component: {fileID: 222919916}
   m_Layer: 0
   m_Name: Visual
   m_TagString: Untagged
@@ -982,27 +959,6 @@ Transform:
   - {fileID: 409466016}
   m_Father: {fileID: 1638251906}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &222919916
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 222919914}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.00001
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &223522341
 GameObject:
   m_ObjectHideFlags: 0
@@ -2628,7 +2584,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 734465026}
-  - component: {fileID: 734465027}
   m_Layer: 0
   m_Name: Visual
   m_TagString: Untagged
@@ -2652,27 +2607,6 @@ Transform:
   - {fileID: 454258626}
   m_Father: {fileID: 1073587527}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &734465027
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 734465025}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.00001
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &790787382
 GameObject:
   m_ObjectHideFlags: 0
@@ -2851,13 +2785,14 @@ GameObject:
   m_Component:
   - component: {fileID: 927583832}
   - component: {fileID: 927583831}
+  - component: {fileID: 927583833}
   m_Layer: 0
-  m_Name: DropItem (8)
+  m_Name: DropItem (8) ammo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &927583831
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2888,6 +2823,27 @@ Transform:
   - {fileID: 1585844445}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &927583833
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 927583830}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &928096446
 GameObject:
   m_ObjectHideFlags: 0
@@ -2998,13 +2954,14 @@ GameObject:
   m_Component:
   - component: {fileID: 1073587527}
   - component: {fileID: 1073587526}
+  - component: {fileID: 1073587528}
   m_Layer: 0
-  m_Name: DropItem (2)
+  m_Name: DropItem (2) ammo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1073587526
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3035,6 +2992,27 @@ Transform:
   - {fileID: 734465026}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &1073587528
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1073587525}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1116208267
 GameObject:
   m_ObjectHideFlags: 0
@@ -4401,7 +4379,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1585844445}
-  - component: {fileID: 1585844446}
   m_Layer: 0
   m_Name: Visual
   m_TagString: Untagged
@@ -4425,27 +4402,6 @@ Transform:
   - {fileID: 1513746526}
   m_Father: {fileID: 927583832}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &1585844446
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1585844444}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.00001
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1610150577
 GameObject:
   m_ObjectHideFlags: 0
@@ -4708,13 +4664,14 @@ GameObject:
   m_Component:
   - component: {fileID: 1638251906}
   - component: {fileID: 1638251905}
+  - component: {fileID: 1638251907}
   m_Layer: 0
   m_Name: DropItem (7)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1638251905
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4745,6 +4702,27 @@ Transform:
   - {fileID: 222919915}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &1638251907
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1638251904}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1663536495
 GameObject:
   m_ObjectHideFlags: 0
@@ -4755,13 +4733,14 @@ GameObject:
   m_Component:
   - component: {fileID: 1663536497}
   - component: {fileID: 1663536496}
+  - component: {fileID: 1663536498}
   m_Layer: 0
   m_Name: DropItem (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1663536496
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4792,6 +4771,27 @@ Transform:
   - {fileID: 138848091}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &1663536498
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1663536495}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 0.5
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1695018548 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1475166576208392, guid: 1f98a0b68f1591a48a507169b6d232ad, type: 3}
@@ -5647,6 +5647,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0.644
       objectReference: {fileID: 0}
+    - target: {fileID: 4022861878872184340, guid: 99bf9b2781c074c209d08dca5047be41, type: 3}
+      propertyPath: dummyDestination
+      value: 
+      objectReference: {fileID: 455792852}
     - target: {fileID: 6156213052512621630, guid: 99bf9b2781c074c209d08dca5047be41, type: 3}
       propertyPath: m_Name
       value: Character.Enemy01

@@ -141,7 +141,7 @@ namespace TEC
 
             // characterBase.OnArmedStateChanged -= OnArmedStateChanged;
             if (UserDataModel.Singleton != null)
-               UserDataModel.Singleton.OnInventoryChanged -= OnInventoryChanged;
+                UserDataModel.Singleton.OnInventoryChanged -= OnInventoryChanged;
         }
 
         private void OnReloadCompleted(int current, int max)

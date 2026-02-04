@@ -68,7 +68,7 @@ namespace TEC
             
             if (Input.GetKeyDown(KeyCode.F))
             {
-                OnPickup?.Invoke(); //pickup
+                OnPickup?.Invoke(); 
             }
             //원래는 f, 임시로g
             if (Input.GetKeyDown(KeyCode.G))

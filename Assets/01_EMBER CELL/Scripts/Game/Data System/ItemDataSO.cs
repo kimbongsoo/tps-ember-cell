@@ -14,7 +14,7 @@ namespace TEC
         Ammo = 4,
     }
     [CreateAssetMenu(fileName = "ItemDataSO", menuName = "PROJECT TEC/Game Data/Item Data")]
-    public class ItemDataSO : ScriptableObject
+    public class ItemDataSO : ScriptableObject, IInteractionData
     {
         public string ItemID;
         public string ItemName;
@@ -22,6 +22,13 @@ namespace TEC
         public Sprite ItemIcon;
         public int MaxStack;
         public int DropQuantity;
+
+        //추가
+        public string ID => ItemID;
+        public Sprite ActionIcon => ItemIcon;
+        public string ActionMessage => ItemName;
+
+        
 
 #if UNITY_EDITOR
 private void OnValidate()

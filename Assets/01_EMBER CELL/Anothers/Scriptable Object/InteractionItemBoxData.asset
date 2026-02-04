@@ -16,9 +16,7 @@ MonoBehaviour:
   boxIcon: {fileID: 21300000, guid: 6a521529954f10c42a0a76ea37a4cb57, type: 3}
   boxName: Special Box
   dropItems:
-  - {fileID: 11400000, guid: 89614a188f5a44040b32b76126b347a3, type: 2}
-  - {fileID: 11400000, guid: 898118765fbe3490b9390a94d9609ced, type: 2}
-  - {fileID: 11400000, guid: cd540b8ece4fd469597ed49355fbbaa0, type: 2}
-  - {fileID: 11400000, guid: 22ec10c3398b74660abc61dd1fa8e7ad, type: 2}
-  - {fileID: 11400000, guid: d30ca9e308f624f9b9d498a326fa4e59, type: 2}
-  - {fileID: 11400000, guid: ac9aa20e78738453899c9a762ddf8145, type: 2}
+  - {fileID: 11400000, guid: 77fcc13fbb3b24dedb48fe6668ffe07b, type: 2}
+  - {fileID: 11400000, guid: 27eee4995be3d430987563cce74bcfee, type: 2}
+  - {fileID: 11400000, guid: d2eaafeb662be4782b67e05e895d8711, type: 2}
+  - {fileID: 11400000, guid: 1a00be9b1735f420a84eb8880441a10d, type: 2}

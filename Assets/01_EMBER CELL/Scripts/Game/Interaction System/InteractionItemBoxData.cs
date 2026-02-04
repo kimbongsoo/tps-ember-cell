@@ -10,7 +10,8 @@ namespace TEC
         public string ID => boxId;
         public Sprite ActionIcon => boxIcon;
         public string ActionMessage => boxName;
-        public List<InteractionDropItemData> DropItems => dropItems;
+        // public List<InteractionDropItemData> DropItems => dropItems;
+        public List<ItemDataSO> DropItems => dropItems;
 
         [Header("Box Setting")]
         [SerializeField] private string boxId;
@@ -18,7 +19,8 @@ namespace TEC
         [SerializeField] private string boxName;
 
         [Header("Drop Items")]
-        [SerializeField] private List<InteractionDropItemData> dropItems = new();
+        // [SerializeField] private List<InteractionDropItemData> dropItems = new();
+        [SerializeField] private List<ItemDataSO> dropItems = new();
 
     }
 }
