@@ -30,7 +30,7 @@ namespace TEC
 
         public event System.Action OnInteract;
         public event System.Action OnInventory;
-        public event System.Action OnPickup;
+
 
         // private bool isSpaceTab;
         // private float spaceLastTabTime;
@@ -67,11 +67,6 @@ namespace TEC
             isRightMouseButton = Input.GetMouseButton(1);
             
             if (Input.GetKeyDown(KeyCode.F))
-            {
-                OnPickup?.Invoke(); 
-            }
-            //원래는 f, 임시로g
-            if (Input.GetKeyDown(KeyCode.G))
             {
                 OnInteract?.Invoke();
             }

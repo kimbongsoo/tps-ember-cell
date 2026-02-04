@@ -68,7 +68,6 @@ namespace TEC
 
             InputManager.Singleton.OnInteract += ExecuteInteract;
             InputManager.Singleton.OnInventory += ExecuteInventory;
-            InputManager.Singleton.OnPickup += ExecutePickup;
 
             //스코프
             // InputManager.Singleton.OnRightClickDouble += ToggleRedDotUI;
@@ -104,7 +103,6 @@ namespace TEC
             InputManager.Singleton.OnRoll -= ExecuteRoll;
 
             InputManager.Singleton.OnInteract -= ExecuteInteract;
-            InputManager.Singleton.OnPickup -= ExecutePickup;
 
             //스코프
             // InputManager.Singleton.OnRightClickDouble -= ToggleRedDotUI;
@@ -367,14 +365,6 @@ namespace TEC
                 UIManager.Show<InventoryRenewalUI>(UIList.InventoryRenewalUI);
             }
             
-        }
-
-        private void ExecutePickup()
-        {
-            if (characterBase == null || characterBase.IsDead)
-                return;
-
-            pickupItemInteractor?.TryPickupNearestDropItem();
         }
 
         private void OnInventoryChanged()
