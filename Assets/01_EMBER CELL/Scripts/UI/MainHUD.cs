@@ -25,10 +25,15 @@ namespace TEC
         [SerializeField] private RectTransform eastText;
         [SerializeField] private RectTransform westText;
 
+        [Header("Action UI")]
+        [SerializeField] private GameObject actionUI;
+
         public override void Show()
         {
             base.Show();
             StartCoroutine(DelayedApplyCamera());
+
+            SetAmmoVisible(false);
         }
 
         private IEnumerator DelayedApplyCamera()
@@ -105,6 +110,14 @@ namespace TEC
             if (text == null) return;
 
             text.localRotation = rotation;
+        }
+
+        public void ToggleActionUI()
+        {
+            if(actionUI == null)
+                return;
+
+            actionUI.SetActive(!actionUI.activeSelf);
         }
     }
 }

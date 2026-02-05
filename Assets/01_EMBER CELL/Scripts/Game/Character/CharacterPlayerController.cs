@@ -68,6 +68,7 @@ namespace TEC
 
             InputManager.Singleton.OnInteract += ExecuteInteract;
             InputManager.Singleton.OnInventory += ExecuteInventory;
+            InputManager.Singleton.OnActionUI += ExecuteActionUI;
 
             //스코프
             // InputManager.Singleton.OnRightClickDouble += ToggleRedDotUI;
@@ -103,6 +104,7 @@ namespace TEC
             InputManager.Singleton.OnRoll -= ExecuteRoll;
 
             InputManager.Singleton.OnInteract -= ExecuteInteract;
+            InputManager.Singleton.OnActionUI -= ExecuteActionUI;
 
             //스코프
             // InputManager.Singleton.OnRightClickDouble -= ToggleRedDotUI;
@@ -372,6 +374,11 @@ namespace TEC
             if (characterBase == null || characterBase.PrimaryWeapon == null)
                 return;
             MainHUD.Instance.SetAmmoText(characterBase.PrimaryWeapon.RemainAmmo, characterBase.PrimaryWeapon.MaxAmmo);
+        }
+
+        private void ExecuteActionUI()
+        {
+            MainHUD.Instance.ToggleActionUI();
         }
 
 

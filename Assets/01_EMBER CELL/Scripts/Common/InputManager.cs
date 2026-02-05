@@ -30,6 +30,7 @@ namespace TEC
 
         public event System.Action OnInteract;
         public event System.Action OnInventory;
+        public event System.Action OnActionUI;
 
 
         // private bool isSpaceTab;
@@ -106,6 +107,10 @@ namespace TEC
             if (Input.GetKeyDown(KeyCode.I))
             {
                 OnInventory?.Invoke();
+            }
+            if (Input.GetKey(KeyCode.LeftAlt) && Input.GetKeyDown(KeyCode.K))
+            {
+                OnActionUI?.Invoke();
             }
             // if (Input.GetKeyDown(KeyCode.Space))
             // {
