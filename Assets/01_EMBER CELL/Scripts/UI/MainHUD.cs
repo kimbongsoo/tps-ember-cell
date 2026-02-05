@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Collections.Generic;
 
 namespace TEC
 {
@@ -27,6 +28,9 @@ namespace TEC
 
         [Header("Action UI")]
         [SerializeField] private GameObject actionUI;
+
+        [Header("HP Test")]
+        [SerializeField] private List<Image> hpSegmentFills = new(); // 10개
 
         public override void Show()
         {
@@ -76,6 +80,35 @@ namespace TEC
             hpForeground.fillAmount = current / max;
             hpText.text = $"{current:00}/{max:00}";
         }
+        
+        // public void SetHP(float current, float max)
+        // {
+        //     current = Mathf.Clamp(current, 0f, max);
+
+        //     const int segmentCount = 10;
+        //     float hpPerSegment = max / segmentCount; // = 10
+
+        //     for (int i = 0; i < hpSegmentFills.Count; i++)
+        //     {
+        //         float segmentMin = i * hpPerSegment;
+        //         float segmentMax = (i + 1) * hpPerSegment;
+
+        //         if (current >= segmentMax)
+        //         {
+        //             hpSegmentFills[i].fillAmount = 1f;
+        //         }
+        //         else if (current <= segmentMin)
+        //         {
+        //             hpSegmentFills[i].fillAmount = 0f;
+        //         }
+        //         else
+        //         {
+        //             float partial = (current - segmentMin) / hpPerSegment;
+        //             hpSegmentFills[i].fillAmount = partial;
+        //         }
+        //     }
+        // }
+
 
         public void SetSP(float current, float max)
         {

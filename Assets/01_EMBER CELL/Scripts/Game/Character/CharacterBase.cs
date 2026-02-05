@@ -281,7 +281,9 @@ namespace TEC
         {
             if (IsReloading || !isArmed || isRolling)
                 return;
-            
+            if (PrimaryWeapon != null && PrimaryWeapon.RemainAmmo >= PrimaryWeapon.MaxClipAmmo)
+                return;
+
             IsReloading = true;
             characterAnimator.SetTrigger("Reload Trigger");
             leftHandIk.weight = 0f;

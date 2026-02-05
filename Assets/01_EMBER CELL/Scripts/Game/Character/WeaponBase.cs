@@ -11,6 +11,7 @@ namespace TEC
     {
         public int RemainAmmo => clipAmmo;
         public int MaxAmmo => GetReserveAmmoFromInventory();
+        public int MaxClipAmmo => maxClipAmmo;
 
         [Header("Ammo Setting")]
         [SerializeField] private string ammoItemID = "";

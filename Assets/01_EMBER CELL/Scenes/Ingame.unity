@@ -820,7 +820,7 @@ GameObject:
   - component: {fileID: 189758275}
   - component: {fileID: 189758274}
   - component: {fileID: 189758278}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: DamageSphere
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -907,7 +907,7 @@ Transform:
   m_GameObject: {fileID: 189758272}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.42, y: 0.82, z: 6.15}
+  m_LocalPosition: {x: -9.31, y: 0.82, z: 6.15}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -925,7 +925,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e54e3853154b47bd864339e4df53733, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageAmount: 100
+  damageAmount: 30
   destroyAfterHit: 1
 --- !u!1 &222919914
 GameObject:
@@ -5404,7 +5404,7 @@ GameObject:
   - component: {fileID: 2118703520}
   - component: {fileID: 2118703519}
   - component: {fileID: 2118703518}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: DamageSphere (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5423,7 +5423,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e54e3853154b47bd864339e4df53733, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damageAmount: 100
+  damageAmount: 30
   destroyAfterHit: 1
 --- !u!135 &2118703519
 SphereCollider:
@@ -5505,7 +5505,7 @@ Transform:
   m_GameObject: {fileID: 2118703517}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.47, y: 0.82, z: 6.15}
+  m_LocalPosition: {x: -14.88, y: 0.82, z: 6.15}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5648,9 +5648,17 @@ PrefabInstance:
       value: 0.644
       objectReference: {fileID: 0}
     - target: {fileID: 4022861878872184340, guid: 99bf9b2781c074c209d08dca5047be41, type: 3}
+      propertyPath: destinationPoint
+      value: 
+      objectReference: {fileID: 455792852}
+    - target: {fileID: 4022861878872184340, guid: 99bf9b2781c074c209d08dca5047be41, type: 3}
       propertyPath: dummyDestination
       value: 
       objectReference: {fileID: 455792852}
+    - target: {fileID: 5768973169681022718, guid: 99bf9b2781c074c209d08dca5047be41, type: 3}
+      propertyPath: m_Speed
+      value: 1.5
+      objectReference: {fileID: 0}
     - target: {fileID: 6156213052512621630, guid: 99bf9b2781c074c209d08dca5047be41, type: 3}
       propertyPath: m_Name
       value: Character.Enemy01
