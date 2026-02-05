@@ -568,7 +568,5 @@ namespace TEC
 
             // OnJamStateChanged?.Invoke(false);
         }
-
-
     }
 }
