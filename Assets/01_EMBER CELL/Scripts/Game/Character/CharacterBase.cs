@@ -269,7 +269,7 @@ namespace TEC
                 }
                 else
                 {
-                    if (PrimaryWeapon.IsEmpty())
+                    if (PrimaryWeapon.RemainAmmo <= 0 && PrimaryWeapon.MaxAmmo > 0)
                     {
                         Reload();
                     }
