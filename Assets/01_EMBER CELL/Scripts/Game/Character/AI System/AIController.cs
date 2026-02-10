@@ -38,7 +38,11 @@ namespace TEC
             if (navAgent.hasPath && !navAgent.pathPending)
             {
                 Vector3 moveDirection = (navAgent.steeringTarget - transform.position).normalized; //목적지 방향 계산
-                Vector2 input = new Vector2(moveDirection.x, moveDirection.z); // 2D 입력벡터 생성
+
+                //추가
+                Vector3 local = transform.InverseTransformDirection(moveDirection);
+                // Vector2 input = new Vector2(moveDirection.x, moveDirection.z); // 2D 입력벡터 생성
+                Vector2 input = new Vector2(local.x, local.y);
 
                 characterBase.Move(input, 0); //이동
 

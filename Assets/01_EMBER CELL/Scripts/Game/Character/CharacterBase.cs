@@ -252,7 +252,7 @@ namespace TEC
 
         public void Fire()
         {
-            if (IsReloading || !isArmed || IsJammed)
+            if (IsReloading || !isArmed || IsJammed || IsDead)
                 return;
 
             if (isAiming)
