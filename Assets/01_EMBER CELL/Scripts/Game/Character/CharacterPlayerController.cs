@@ -16,7 +16,7 @@ namespace TEC
         public InteractionSensor InteractionSensor => interactionSensor;
         private CharacterBase characterBase;
         private InteractionSensor interactionSensor;
-        private PickupItemInteractor pickupItemInteractor;
+        // private PickupItemInteractor pickupItemInteractor;
 
 
         [Header("Camera Setting")]
@@ -48,7 +48,7 @@ namespace TEC
         private void Awake()
         {
             characterBase = GetComponent<CharacterBase>();
-            pickupItemInteractor = GetComponent<PickupItemInteractor>();
+            // pickupItemInteractor = GetComponent<PickupItemInteractor>();
             Instance = this;
 
             GameObject sensorObject = new GameObject("Interaction Sensor");
