@@ -16,7 +16,6 @@ namespace TEC
         public InteractionSensor InteractionSensor => interactionSensor;
         private CharacterBase characterBase;
         private InteractionSensor interactionSensor;
-        // private PickupItemInteractor pickupItemInteractor;
 
 
         [Header("Camera Setting")]
@@ -48,7 +47,6 @@ namespace TEC
         private void Awake()
         {
             characterBase = GetComponent<CharacterBase>();
-            // pickupItemInteractor = GetComponent<PickupItemInteractor>();
             Instance = this;
 
             GameObject sensorObject = new GameObject("Interaction Sensor");
@@ -122,6 +120,8 @@ namespace TEC
             characterBase.OnChangedSP += OnChangedSP;
             characterBase.OnArmedStateChanged += OnLinkedCharacterArmedChanged;
             characterBase.OnDeadStateChanged += OnLinkedCharacterDeadState;
+            //인디케이터 추가
+            characterBase.OnHitAttackerPosition += OnHitAttackerPosition;
 
             // characterBase.OnArmedStateChanged += OnArmedStateChanged;
             if (UserDataModel.Singleton != null)
@@ -138,6 +138,8 @@ namespace TEC
             characterBase.OnChangedSP -= OnChangedSP;
             characterBase.OnArmedStateChanged -= OnLinkedCharacterArmedChanged;
             characterBase.OnDeadStateChanged -= OnLinkedCharacterDeadState;
+            //인디케이터 추가
+            characterBase.OnHitAttackerPosition -= OnHitAttackerPosition;
 
             // characterBase.OnArmedStateChanged -= OnArmedStateChanged;
             if (UserDataModel.Singleton != null)
@@ -379,6 +381,12 @@ namespace TEC
         private void ExecuteActionUI()
         {
             MainHUD.Instance.ToggleActionUI();
+        }
+
+        //인디케이터 추가
+        private void OnHitAttackerPosition(Vector3 attackerPosition)
+        {
+            MainHUD.Instance.ShowHitDirection(transform, attackerPosition);
         }
 
 

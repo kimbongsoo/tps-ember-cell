@@ -111,6 +111,8 @@ namespace TEC
         //추가
         public System.Action<bool> OnArmedStateChanged;
         public System.Action<bool> OnDeadStateChanged;
+        //인디케이터 추가
+        public System.Action<Vector3> OnHitAttackerPosition;
 
         private float _blendAiming = 0f;
 
@@ -429,6 +431,12 @@ namespace TEC
         public void ReceiveDamage(IDamageData damageData)
         {
             if (damageData == null || currentHP <= 0f || isDead) return;
+
+            //인디케이터 추가
+            if (damageData.Attacker != null)
+            {
+                OnHitAttackerPosition?.Invoke(damageData.Attacker.transform.position);
+            }
 
             currentHP -= damageData.DamageAmount;
             currentHP = Mathf.Clamp(currentHP, 0f, maxHP);

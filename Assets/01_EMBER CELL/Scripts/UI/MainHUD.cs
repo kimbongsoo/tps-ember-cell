@@ -32,6 +32,10 @@ namespace TEC
         [Header("HP Test")]
         [SerializeField] private List<Image> hpSegmentFills = new(); // 10개
 
+        //인디케이터 추가
+        [Header("Indicator")]
+        [SerializeField] private DamageDirectionIndicatorUI damageDirectionIndicator;
+
         public override void Show()
         {
             base.Show();
@@ -151,6 +155,15 @@ namespace TEC
                 return;
 
             actionUI.SetActive(!actionUI.activeSelf);
+        }
+
+        //인디케이터 추가
+        public void ShowHitDirection(Transform player, Vector3 attackerPosition) // [CHANGED]
+        {
+            if (damageDirectionIndicator == null)
+                return;
+
+            damageDirectionIndicator.ShowFromAttackerPosition(player, attackerPosition);
         }
     }
 }
