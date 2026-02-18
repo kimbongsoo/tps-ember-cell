@@ -27,7 +27,11 @@ namespace TEC
         {
             // Patrol State에 진입한 첫 순간
             brain.AIController.OnDestinationReached += OnDestinationReached;
-            ExecutePatrolPlan(0); // 첫 번째 인덱스의 포인트가 목적지가 됨
+            // ExecutePatrolPlan(0); // 첫 번째 인덱스의 포인트가 목적지가 됨
+
+            //추가
+            isWaiting = false; // 복귀 시 상태 초기화
+            ExecutePatrolPlan(patrolIndex); // patrolIndex 0 고정 대신 현재 patrolIndex로
 
         }
         public void Update()

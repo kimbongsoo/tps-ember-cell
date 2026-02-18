@@ -37,15 +37,22 @@ namespace TEC
 
             if (navAgent.hasPath && !navAgent.pathPending)
             {
-                Vector3 moveDirection = (navAgent.steeringTarget - transform.position).normalized; //목적지 방향 계산
+                Vector3 desire = navAgent.desiredVelocity;
+                desire.y = 0f;
 
-                //추가
-                Vector3 local = transform.InverseTransformDirection(moveDirection);
-                // Vector2 input = new Vector2(moveDirection.x, moveDirection.z); // 2D 입력벡터 생성
-                Vector2 input = new Vector2(local.x, local.y);
+                if (desire.sqrMagnitude > 0.0001f)
+                {
+                    transform.forward = desire.normalized;
 
-                characterBase.Move(input, 0); //이동
+                    Vector3 local = transform.InverseTransformDirection(desire.normalized);
+                    Vector2 input = new Vector2(local.x, local.z);
 
+                    characterBase.Move(input, 0);       
+                }
+                else
+                {
+                    characterBase.Move(Vector2.zero, 0);
+                }
                 // 목적지 도착했는지 판단
                 if(navAgent.remainingDistance <= navAgent.stoppingDistance)
                 {
@@ -64,12 +71,35 @@ namespace TEC
         {
             navAgent.isStopped = false;
             navAgent.SetDestination(destination);
+
+            // 추가 NavMesh 위로 보정
+            // if (!navAgent.isOnNavMesh)
+            // {
+            //     if (NavMesh.SamplePosition(transform.position, out NavMeshHit selfHit, 3.0f, NavMesh.AllAreas))
+            //     {
+            //         navAgent.Warp(selfHit.position);
+            //     }
+            //     else
+            //     {
+            //         navAgent.ResetPath();
+            //         return;
+            //     }
+            // }
+
+            // // [CHANGED] 목적지 보정 반경 확대
+            // if (NavMesh.SamplePosition(destination, out NavMeshHit destHit, 5.0f, NavMesh.AllAreas))
+            // {
+            //     navAgent.SetDestination(destHit.position);
+            //     return;
+            // }
+
+            // navAgent.ResetPath();
         }
 
         public void Stop()
         {
             navAgent.isStopped = true;
-            navAgent.ResetPath();
+            // navAgent.ResetPath(); //Combat 중 경로 사라지는 문제 발생
         }
 
         public void EquipWeapon()
