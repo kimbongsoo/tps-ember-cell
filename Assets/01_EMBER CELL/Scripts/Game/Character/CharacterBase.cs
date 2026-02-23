@@ -554,6 +554,18 @@ namespace TEC
             OnchangedHP?.Invoke(currentHP, maxHP);
         }
 
+        public void RecoverSP(float amount) // 추가
+        {
+            if (isDead)
+                return;
+
+            if (amount <= 0f)
+                return;
+
+            currentSP = Mathf.Clamp(currentSP + amount, 0f, maxSP);
+            OnChangedSP?.Invoke(currentSP, maxSP);
+        }
+
         private void StartUnjam()
         {
             if (IsJammed || IsReloading || isRolling)

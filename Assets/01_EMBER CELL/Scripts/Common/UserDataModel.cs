@@ -5,9 +5,14 @@ namespace TEC
     public class UserDataModel : SingletonBase<UserDataModel>
     {
         [field: SerializeField] public PlayerItemDto PlayerItemData { get; private set; } = new();
+        //추가
+        [field: SerializeField] public string[] QuickSlotItemIDs { get; private set; } = new string[4];
 
         public System.Action OnInventoryChanged;
 
+        //추가 아이템효과 적용
+        public System.Action<ItemUseEffectType, float> OnItemEffectRequested;
+        // private GameDataModel gameDataModel;
         public void Initialize()
         {
             // TODO : UserData Initialize / Load Logic
@@ -80,6 +85,8 @@ namespace TEC
                 return false;
 
             var itemDataSO = GameDataModel.Singleton.ItemData.GetItemDataSO(itemID);
+            // var itemDataSO = gameDataModel.GetItemData(itemID);
+
             if (itemDataSO == null)
                 return false;
 
@@ -119,7 +126,86 @@ namespace TEC
             return true;
         }
 
+        //추가 힐
+        public bool TryUseItem(string itemID)
+        {
+            if (string.IsNullOrEmpty(itemID))
+                return false;
 
+            // var itemDataSO = gameDataModel.GetItemData(itemID);
+            var itemDataSO = GameDataModel.Singleton.ItemData.GetItemDataSO(itemID);
+
+            if (itemDataSO == null)
+                return false;
+
+            if (itemDataSO.UseEffectType == ItemUseEffectType.None)
+                return false;
+
+            if (itemDataSO.UseEffectValue <= 0f)
+                return false;
+
+            int consumed = ConsumeItem(itemID, 1);
+            if (consumed <= 0)
+                return false;
+
+            OnItemEffectRequested?.Invoke(itemDataSO.UseEffectType, itemDataSO.UseEffectValue);
+            return true;
+        }
+
+        //추가
+        public bool TryDropItem(string itemID, int amount)
+        {
+            if (string.IsNullOrEmpty(itemID) || amount <= 0)
+                return false;
+
+            int consumed = ConsumeItem(itemID, amount);
+            return consumed > 0;
+        }
+
+        public bool TryDropAll(string itemID)
+        {
+            if (string.IsNullOrEmpty(itemID))
+                return false;
+
+            int total = GetTotalItemCount(itemID);
+            if (total <= 0)
+                return false;
+
+            int consumed = ConsumeItem(itemID, total);
+            return consumed > 0;
+        }
+
+        public bool RegisterQuickSlot(int slotIndex, string itemID)
+        {
+            if (slotIndex < 0 || slotIndex >= QuickSlotItemIDs.Length)
+                return false;
+
+            if (string.IsNullOrEmpty(itemID))
+                return false;
+
+            QuickSlotItemIDs[slotIndex] = itemID;
+            return true;
+        }
+        // [ADDED] dataID 단위로 해당 줄(슬롯) 삭제
+        public bool TryDropByDataID(string dataID)
+        {
+            if (string.IsNullOrEmpty(dataID))
+                return false;
+
+            var c = PlayerItemData.itemDataContainer;
+
+            for (int i = c.Count - 1; i >= 0; i--)
+            {
+                if (c[i].dataID != dataID)
+                    continue;
+
+                c.RemoveAt(i);
+                OnInventoryChanged?.Invoke();
+                return true;
+            }
+
+            return false;
+        }
 
     }
 }

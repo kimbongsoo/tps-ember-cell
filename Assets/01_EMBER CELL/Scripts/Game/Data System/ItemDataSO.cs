@@ -13,6 +13,15 @@ namespace TEC
         Material = 3,
         Ammo = 4,
     }
+
+    //추가
+    public enum ItemUseEffectType
+    {
+        None = 0,
+        HealHP = 1,
+        RecoverSP = 2,
+    }
+
     [CreateAssetMenu(fileName = "ItemDataSO", menuName = "PROJECT TEC/Game Data/Item Data")]
     public class ItemDataSO : ScriptableObject, IInteractionData
     {
@@ -24,6 +33,10 @@ namespace TEC
         public int DropQuantity;
 
         //추가
+        [Header("Use Effect")]
+        public ItemUseEffectType UseEffectType = ItemUseEffectType.None;
+        public float UseEffectValue = 0f;
+        
         public string ID => ItemID;
         public Sprite ActionIcon => ItemIcon;
         public string ActionMessage => ItemName;

@@ -27,6 +27,9 @@ namespace TEC
         //스코프
         public event System.Action OnRightClickDouble;
 
+        // 인벤 추가
+        private bool isCursorForcedByUI = false;
+
 
         public event System.Action OnInteract;
         public event System.Action OnInventory;
@@ -57,8 +60,15 @@ namespace TEC
 
         private void Update()
         {
-            bool isForceCursorVisible = Input.GetKey(KeyCode.LeftAlt);
-            SetCursorVisible(isForceCursorVisible);
+            // bool isForceCursorVisible = Input.GetKey(KeyCode.LeftAlt);
+            // SetCursorVisible(isForceCursorVisible);
+            // 인벤 추가UI가 커서를 강제하는 동안은 여기서 건드리지 않음
+            if (!isCursorForcedByUI)
+            {
+                bool isForceCursorVisible = Input.GetKey(KeyCode.LeftAlt);
+                SetCursorVisible(isForceCursorVisible);
+            }
+
 
             move = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
             look = new Vector2(Input.GetAxis("Mouse X"), Input.GetAxis("Mouse Y"));
@@ -155,7 +165,14 @@ namespace TEC
         {
             Cursor.visible = isVisible;
             Cursor.lockState = isVisible ? CursorLockMode.None : CursorLockMode.Locked;
-            
+        }
+
+        // 인벤 추가
+        public void SetCursorForcedByUI(bool enable, bool visible)
+        {
+            isCursorForcedByUI = enable;
+            if (enable)
+                SetCursorVisible(visible);
         }
     }
 }

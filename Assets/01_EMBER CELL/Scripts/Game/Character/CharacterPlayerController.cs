@@ -41,6 +41,13 @@ namespace TEC
         // 1. 스코프 필드 추가
         private bool isScoped = false;
 
+        // 추가 인벤 열려있을 때 체크
+        private bool IsInventoryUIOpen()
+        {
+            var inventoryUI = UIManager.Singleton.GetUI<InventoryRenewalUI>(UIList.InventoryRenewalUI);
+            return inventoryUI != null && inventoryUI.gameObject.activeSelf;
+        }
+
 
 
 
@@ -125,7 +132,10 @@ namespace TEC
 
             // characterBase.OnArmedStateChanged += OnArmedStateChanged;
             if (UserDataModel.Singleton != null)
+            {
                 UserDataModel.Singleton.OnInventoryChanged += OnInventoryChanged;
+                UserDataModel.Singleton.OnItemEffectRequested += OnItemEffectRequested; //추가
+            }
         }
 
         private void OnDisable()
@@ -143,7 +153,10 @@ namespace TEC
 
             // characterBase.OnArmedStateChanged -= OnArmedStateChanged;
             if (UserDataModel.Singleton != null)
+            {
                 UserDataModel.Singleton.OnInventoryChanged -= OnInventoryChanged;
+                UserDataModel.Singleton.OnItemEffectRequested -= OnItemEffectRequested; //추가
+            }
         }
 
         private void OnReloadCompleted(int current, int max)
@@ -187,6 +200,17 @@ namespace TEC
                     characterBase.Revive();
                 return;
             }
+            // 추가 인벤이 열려있으면 게임 입력 차단(UI 모드)
+            if (IsInventoryUIOpen())
+            {
+                // 조준 중이었다면 안전하게 해제
+                characterBase.IsAiming = false;
+
+                // 스코프 중이었다면 해제
+                if (isScoped)
+                    ExitScopeMode();
+            }
+
 
             bool isInputRunning = InputManager.Singleton.InputSprint;
             characterBase.IsRunning = isInputRunning;
@@ -224,6 +248,9 @@ namespace TEC
 
         private void LateUpdate()
         {
+            // 추가 인벤 열려있으면 카메라 회전/반동/미니맵 회전도 막기
+            if (characterBase != null && !characterBase.IsDead && IsInventoryUIOpen())
+                return;
             CameraRotation();
             CameraRecovery();
             MinimapRotation();
@@ -387,6 +414,23 @@ namespace TEC
         private void OnHitAttackerPosition(Vector3 attackerPosition)
         {
             MainHUD.Instance.ShowHitDirection(transform, attackerPosition);
+        }
+
+        private void OnItemEffectRequested(ItemUseEffectType effectType, float value) // [CHANGED]
+        {
+            if (characterBase == null || characterBase.IsDead)
+                return;
+
+            switch (effectType)
+            {
+                case ItemUseEffectType.HealHP:
+                    characterBase.HealHP(value);
+                    break;
+
+                case ItemUseEffectType.RecoverSP:
+                    characterBase.RecoverSP(value);
+                    break;
+            }
         }
 
 

@@ -15,7 +15,7 @@ namespace TEC
         // Popup UI
         //===================
         SCENE_POPUP,
-
+        InventoryContextMenu,
         MAX_SCENE_POPUP,
         //===================
 
@@ -32,8 +32,8 @@ namespace TEC
         RedDotUI,
 
         //인벤토리
-        InventoryUI,
-        InventoryContextMenu,
+        // InventoryUI,
+        // InventoryContextMenu,
         InventoryRenewalUI,
 
         MAX_SCENE_PANEL,
