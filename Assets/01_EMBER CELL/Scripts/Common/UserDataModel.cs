@@ -6,30 +6,34 @@ namespace TEC
     {
         [field: SerializeField] public PlayerItemDto PlayerItemData { get; private set; } = new();
         //추가
-        [field: SerializeField] public string[] QuickSlotItemIDs { get; private set; } = new string[4];
+        [field: SerializeField] public QuickSlotDto QuickSlotData { get; private set; } = new();
+
 
         public System.Action OnInventoryChanged;
 
         //추가 아이템효과 적용
         public System.Action<ItemUseEffectType, float> OnItemEffectRequested;
+        public System.Action OnQuickSlotChanged;
         // private GameDataModel gameDataModel;
         public void Initialize()
         {
             // TODO : UserData Initialize / Load Logic
+            InitializeQuickSlots();
+        }
 
-            // 더미 데이터는 비활성화
-            /*
-            int totalItemCnt = GameDataModel.Singleton.ItemData.itemDataContainer.Count;
-            for (int i = 0; i < totalItemCnt; i++)
-            {
-                PlayerItemData.itemDataContainer.Add(new PlayerItemDto.PlayerItemData()
-                {
-                    dataID = System.Guid.NewGuid().ToString(),
-                    itemID = GameDataModel.Singleton.ItemData.itemDataContainer[i].id,
-                    quantity = Random.Range(1, 10),
-                });
-            }
-            */
+        private void InitializeQuickSlots()
+        {
+            if (QuickSlotData == null)
+                QuickSlotData = new QuickSlotDto();
+
+            if (QuickSlotData.slotItemIDs == null)
+                QuickSlotData.slotItemIDs = new();
+
+            while (QuickSlotData.slotItemIDs.Count < 2)
+                QuickSlotData.slotItemIDs.Add(string.Empty);
+
+            if (QuickSlotData.slotItemIDs.Count > 2)
+                QuickSlotData.slotItemIDs.RemoveRange(2, QuickSlotData.slotItemIDs.Count - 2);
         }
 
         public int GetTotalItemCount(string itemID)
@@ -74,6 +78,7 @@ namespace TEC
             int consumed = amount - remaining;
             if (consumed > 0)
                 OnInventoryChanged?.Invoke();
+                CleanupQuickSlotsByInventory();
 
             return consumed;
         }
@@ -175,17 +180,6 @@ namespace TEC
             return consumed > 0;
         }
 
-        public bool RegisterQuickSlot(int slotIndex, string itemID)
-        {
-            if (slotIndex < 0 || slotIndex >= QuickSlotItemIDs.Length)
-                return false;
-
-            if (string.IsNullOrEmpty(itemID))
-                return false;
-
-            QuickSlotItemIDs[slotIndex] = itemID;
-            return true;
-        }
         // [ADDED] dataID 단위로 해당 줄(슬롯) 삭제
         public bool TryDropByDataID(string dataID)
         {
@@ -205,6 +199,82 @@ namespace TEC
             }
 
             return false;
+        }
+
+                public string GetQuickSlotItemID(int slotIndex)
+        {
+            InitializeQuickSlots();
+
+            if (slotIndex < 0 || slotIndex >= 2)
+                return string.Empty;
+
+            return QuickSlotData.slotItemIDs[slotIndex];
+        }
+
+        // [ADDED] 아이템의 UseEffectType에 따라 1번/2번에 고정 등록
+        public bool RegisterQuickSlotByEffect(string itemID)
+        {
+            if (string.IsNullOrEmpty(itemID))
+                return false;
+
+            if (GetTotalItemCount(itemID) <= 0)
+                return false;
+
+            var itemDataSO = GameDataModel.Singleton.ItemData.GetItemDataSO(itemID);
+            if (itemDataSO == null)
+                return false;
+
+            InitializeQuickSlots();
+
+            if (itemDataSO.UseEffectType == ItemUseEffectType.HealHP)
+            {
+                QuickSlotData.slotItemIDs[0] = itemID;
+                OnQuickSlotChanged?.Invoke();
+                return true;
+            }
+
+            if (itemDataSO.UseEffectType == ItemUseEffectType.RecoverSP)
+            {
+                QuickSlotData.slotItemIDs[1] = itemID;
+                OnQuickSlotChanged?.Invoke();
+                return true;
+            }
+
+            return false;
+        }
+
+        // [ADDED]
+        public bool TryUseQuickSlot(int slotIndex)
+        {
+            string itemID = GetQuickSlotItemID(slotIndex);
+            if (string.IsNullOrEmpty(itemID))
+                return false;
+
+            return TryUseItem(itemID);
+        }
+
+        // [ADDED]
+        private void CleanupQuickSlotsByInventory()
+        {
+            InitializeQuickSlots();
+
+            bool changed = false;
+
+            for (int i = 0; i < 2; i++)
+            {
+                string itemID = QuickSlotData.slotItemIDs[i];
+                if (string.IsNullOrEmpty(itemID))
+                    continue;
+
+                if (GetTotalItemCount(itemID) <= 0)
+                {
+                    QuickSlotData.slotItemIDs[i] = string.Empty;
+                    changed = true;
+                }
+            }
+
+            if (changed)
+                OnQuickSlotChanged?.Invoke();
         }
 
     }

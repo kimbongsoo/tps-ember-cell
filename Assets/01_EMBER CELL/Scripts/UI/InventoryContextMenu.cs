@@ -51,6 +51,7 @@ namespace TEC
             if (string.IsNullOrEmpty(currentItemID))
                 return;
 
+            UserDataModel.Singleton.RegisterQuickSlotByEffect(currentItemID);
             // TODO: 다음 단계에서 UserDataModel.RegisterQuickSlot(slotIndex, itemID) 연결
             Hide();
         }

@@ -19,4 +19,12 @@ namespace TEC
 
         public List<PlayerItemData> itemDataContainer = new();
     }
+
+    //퀵슬롯 추가
+    [System.Serializable]
+    public class QuickSlotDto : UserDataDto
+    {
+        // 0 = HP 회복 아이템, 1 = SP 회복 아이템
+        public List<string> slotItemIDs = new() { string.Empty, string.Empty };
+    }
 }

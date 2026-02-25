@@ -79,6 +79,9 @@ namespace TEC
             // InputManager.Singleton.OnRightClickDouble += ToggleRedDotUI;
             InputManager.Singleton.OnRightClickDouble += OnRightClickDouble;
 
+            InputManager.Singleton.OnQuickSlot1 += ExecuteQuickSlot1;
+            InputManager.Singleton.OnQuickSlot2 += ExecuteQuickSlot2;
+
 
             // OnFired(characterBase.PrimaryWeapon.RemainAmmo, characterBase.PrimaryWeapon.MaxAmmo);
         }
@@ -115,6 +118,9 @@ namespace TEC
             // InputManager.Singleton.OnRightClickDouble -= ToggleRedDotUI;
             InputManager.Singleton.OnRightClickDouble -= OnRightClickDouble;
 
+            InputManager.Singleton.OnQuickSlot1 -= ExecuteQuickSlot1;
+            InputManager.Singleton.OnQuickSlot2 -= ExecuteQuickSlot2;
+
 
 
         }
@@ -135,6 +141,8 @@ namespace TEC
             {
                 UserDataModel.Singleton.OnInventoryChanged += OnInventoryChanged;
                 UserDataModel.Singleton.OnItemEffectRequested += OnItemEffectRequested; //추가
+
+                UserDataModel.Singleton.OnQuickSlotChanged += OnQuickSlotChanged;
             }
         }
 
@@ -156,6 +164,8 @@ namespace TEC
             {
                 UserDataModel.Singleton.OnInventoryChanged -= OnInventoryChanged;
                 UserDataModel.Singleton.OnItemEffectRequested -= OnItemEffectRequested; //추가
+
+                UserDataModel.Singleton.OnQuickSlotChanged -= OnQuickSlotChanged;
             }
         }
 
@@ -403,6 +413,12 @@ namespace TEC
             if (characterBase == null || characterBase.PrimaryWeapon == null)
                 return;
             MainHUD.Instance.SetAmmoText(characterBase.PrimaryWeapon.RemainAmmo, characterBase.PrimaryWeapon.MaxAmmo);
+
+            MainHUD.Instance.RefreshQuickSlots();
+        }
+        private void OnQuickSlotChanged()
+        {
+            MainHUD.Instance.RefreshQuickSlots();
         }
 
         private void ExecuteActionUI()
@@ -431,6 +447,22 @@ namespace TEC
                     characterBase.RecoverSP(value);
                     break;
             }
+        }
+
+        private void ExecuteQuickSlot1()
+        {
+            if (UserDataModel.Singleton == null)
+                return;
+
+            UserDataModel.Singleton.TryUseQuickSlot(0);
+        }
+
+        private void ExecuteQuickSlot2()
+        {
+            if (UserDataModel.Singleton == null)
+                return;
+
+            UserDataModel.Singleton.TryUseQuickSlot(1);
         }
 
 

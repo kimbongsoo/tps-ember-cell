@@ -36,12 +36,19 @@ namespace TEC
         [Header("Indicator")]
         [SerializeField] private DamageDirectionIndicatorUI damageDirectionIndicator;
 
+        // [ADDED] QuickSlot UI (2칸)
+        [Header("QuickSlot")]
+        [SerializeField] private List<Image> quickSlotIcons = new();
+        [SerializeField] private List<TextMeshProUGUI> quickSlotCountTexts = new();
+
         public override void Show()
         {
             base.Show();
             StartCoroutine(DelayedApplyCamera());
 
             SetAmmoVisible(false);
+
+            RefreshQuickSlots();
         }
 
         private IEnumerator DelayedApplyCamera()
@@ -165,5 +172,52 @@ namespace TEC
 
             damageDirectionIndicator.ShowFromAttackerPosition(player, attackerPosition);
         }
+
+        public void RefreshQuickSlots()
+        {
+            if (quickSlotIcons == null || quickSlotIcons.Count < 2)
+                return;
+
+            if (UserDataModel.Singleton == null)
+                return;
+
+            for (int i = 0; i < 2; i++)
+            {
+                string itemID = UserDataModel.Singleton.GetQuickSlotItemID(i);
+
+                if (string.IsNullOrEmpty(itemID))
+                {
+                    quickSlotIcons[i].sprite = null;
+                    quickSlotIcons[i].enabled = false;
+
+                    if (quickSlotCountTexts != null && i < quickSlotCountTexts.Count && quickSlotCountTexts[i] != null)
+                        quickSlotCountTexts[i].text = string.Empty;
+
+                    continue;
+                }
+
+                var itemDataSO = GameDataModel.Singleton.ItemData.GetItemDataSO(itemID);
+                if (itemDataSO == null)
+                {
+                    quickSlotIcons[i].sprite = null;
+                    quickSlotIcons[i].enabled = false;
+
+                    if (quickSlotCountTexts != null && i < quickSlotCountTexts.Count && quickSlotCountTexts[i] != null)
+                        quickSlotCountTexts[i].text = string.Empty;
+
+                    continue;
+                }
+
+                quickSlotIcons[i].sprite = itemDataSO.ItemIcon;
+                quickSlotIcons[i].enabled = true;
+
+                if (quickSlotCountTexts != null && i < quickSlotCountTexts.Count && quickSlotCountTexts[i] != null)
+                {
+                    int total = UserDataModel.Singleton.GetTotalItemCount(itemID);
+                    quickSlotCountTexts[i].text = total > 0 ? $"{total}" : string.Empty;
+                }
+            }
+        }
+        
     }
 }
