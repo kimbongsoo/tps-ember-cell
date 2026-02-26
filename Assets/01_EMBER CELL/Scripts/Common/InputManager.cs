@@ -35,7 +35,6 @@ namespace TEC
         public event System.Action OnInventory;
         public event System.Action OnActionUI;
 
-        // [ADDED] QuickSlot (2칸)
         public event System.Action OnQuickSlot1;
         public event System.Action OnQuickSlot2;
 

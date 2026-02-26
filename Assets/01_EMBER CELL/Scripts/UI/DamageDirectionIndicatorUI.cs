@@ -35,7 +35,6 @@ namespace TEC
 
             float angle = Mathf.Atan2(localDir.x, localDir.z) * Mathf.Rad2Deg;
 
-            // UI는 보통 Z축 회전. 시각 리소스 방향에 따라 부호가 반대면 -angle 대신 angle로 바꾸면 됩니다.
             transform.localRotation = Quaternion.Euler(0f, 0f, -angle);
 
             if (fadeRoutine != null)
