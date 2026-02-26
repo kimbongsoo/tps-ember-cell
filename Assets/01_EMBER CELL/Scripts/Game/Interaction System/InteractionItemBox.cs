@@ -43,20 +43,22 @@ namespace TEC
                     Vector3 forward = cachedForward;
 
                     // 중심축에서 좌우로 퍼지는 각도 설정
-                    float anngleH = UnityEngine.Random.Range(-60f, 60f);
-                    float anngleV = UnityEngine.Random.Range(45f, 60f);
+                    float anngleH = UnityEngine.Random.Range(-18f, 18f); //원래 60
+                    float anngleV = UnityEngine.Random.Range(18f, 28f); // 45 60
 
                     // 각도를 방향 벡터로 변환
                     Quaternion rotationH = Quaternion.AngleAxis(anngleH, Vector3.up);
                     Quaternion rotationV = Quaternion.AngleAxis(-anngleV, cachedRight);
+                    // Vector3 direction = rotationH * rotationV * forward; 추가
                     Vector3 direction = rotationH * rotationV * forward;
+                    direction = Vector3.Lerp(direction, Vector3.up, 0.25f);
 
                     Vector3 spawnPos = cachedPos + Vector3.up * 0.2f;
                     newDropItem.transform.position = spawnPos;
 
                     if (newDropItem.TryGetComponent<Rigidbody>(out var rb))
                     {
-                        float force = UnityEngine.Random.Range(30, 45f); //포물선 탄도에 적당 초기 속도
+                        float force = UnityEngine.Random.Range(6, 9f); //포물선 탄도에 적당 초기 속도 30, 45
                         rb.AddForce(direction.normalized * force, ForceMode.Impulse);
                     }
                 });

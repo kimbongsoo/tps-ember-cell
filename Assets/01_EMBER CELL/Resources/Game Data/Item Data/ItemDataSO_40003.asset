@@ -18,3 +18,6 @@ MonoBehaviour:
   ItemIcon: {fileID: 21300012, guid: 5163ae49a0de665458bba61cd20c99b1, type: 3}
   MaxStack: 100
   DropQuantity: 30
+  UseEffectType: 0
+  UseEffectValue: 0
+  WorldPrefab: {fileID: 2807899121540822793, guid: 3450b56182d05416e8e80cc3b2a1130b, type: 3}

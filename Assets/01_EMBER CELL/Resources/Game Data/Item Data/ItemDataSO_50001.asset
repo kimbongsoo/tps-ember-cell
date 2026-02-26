@@ -16,7 +16,8 @@ MonoBehaviour:
   ItemName: Bandage
   ItemCategory: 2
   ItemIcon: {fileID: 21300050, guid: 309ac3eb4cc441349b63128366ca98b6, type: 3}
-  MaxStack: 1
-  DropQuantity: 1
+  MaxStack: 10
+  DropQuantity: 5
   UseEffectType: 1
   UseEffectValue: 20
+  WorldPrefab: {fileID: 2252759379253202423, guid: 0e88baaf20c4b4ee6816e60f97cb6368, type: 3}
