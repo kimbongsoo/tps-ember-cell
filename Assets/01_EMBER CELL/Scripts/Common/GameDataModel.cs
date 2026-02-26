@@ -22,8 +22,6 @@ namespace TEC
                 });
             }
         }
-
-        //추가
         public ItemDataSO GetItemData(string itemID)
         {
             return ItemData.GetItemDataSO(itemID);

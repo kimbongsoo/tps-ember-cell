@@ -44,12 +44,14 @@ namespace TEC
         // 추가 인벤 열려있을 때 체크
         private bool IsInventoryUIOpen()
         {
-            var inventoryUI = UIManager.Singleton.GetUI<InventoryRenewalUI>(UIList.InventoryRenewalUI);
+            var inventoryUI = InventoryRenewalUI.Instance;
             return inventoryUI != null && inventoryUI.gameObject.activeSelf;
         }
-
-
-
+        private bool IsContextMenuOpen()
+        {
+            var menu = InventoryContextMenu.Instance;
+            return menu != null && menu.gameObject.activeSelf;
+        }
 
         private void Awake()
         {
@@ -210,22 +212,27 @@ namespace TEC
                     characterBase.Revive();
                 return;
             }
-            // 추가 인벤이 열려있으면 게임 입력 차단(UI 모드)
-            if (IsInventoryUIOpen())
+            
+            bool isInventoryOpen = IsInventoryUIOpen();
+
+            if (isInventoryOpen)
             {
-                // 조준 중이었다면 안전하게 해제
                 characterBase.IsAiming = false;
 
-                // 스코프 중이었다면 해제
                 if (isScoped)
                     ExitScopeMode();
+
+                if (Input.GetMouseButtonDown(1) && IsContextMenuOpen())
+                {
+                    InventoryContextMenu.Instance.Hide();
+                }
             }
 
 
             bool isInputRunning = InputManager.Singleton.InputSprint;
             characterBase.IsRunning = isInputRunning;
 
-            bool isAimingInput = InputManager.Singleton.InputAim;
+            bool isAimingInput = !isInventoryOpen && InputManager.Singleton.InputAim;
             characterBase.IsAiming = isAimingInput;
             // 스코프 해제 
             if (!InputManager.Singleton.InputAim && isScoped)
@@ -233,7 +240,7 @@ namespace TEC
                 ExitScopeMode();
             }
 
-            if (InputManager.Singleton.InputFire)
+            if (!isInventoryOpen && InputManager.Singleton.InputFire)
             {
                 characterBase.Fire();
             }
@@ -360,6 +367,9 @@ namespace TEC
         private void OnRightClickDouble()
         {
             // 우클릭 더블탭 직후, 버튼이 눌린 상태면 스코프 진입
+            if (IsInventoryUIOpen())
+                return;
+
             if (InputManager.Singleton.InputAim && !isScoped)
             {
                 EnterScopeMode();
@@ -396,9 +406,12 @@ namespace TEC
 
         void ExecuteInventory()
         {
-            var inventoryUI = UIManager.Singleton.GetUI<InventoryRenewalUI>(UIList.InventoryRenewalUI);
+            var inventoryUI = InventoryRenewalUI.Instance;
             if (inventoryUI.gameObject.activeSelf)
             {
+                if (IsContextMenuOpen())
+                    InventoryContextMenu.Instance.Hide();
+
                 UIManager.Hide<InventoryRenewalUI>(UIList.InventoryRenewalUI);    
             }
             else
@@ -415,6 +428,13 @@ namespace TEC
             MainHUD.Instance.SetAmmoText(characterBase.PrimaryWeapon.RemainAmmo, characterBase.PrimaryWeapon.MaxAmmo);
 
             MainHUD.Instance.RefreshQuickSlots();
+
+            // 인벤 UI가 열려있으면 리스트 갱신
+            var inventoryUI = InventoryRenewalUI.Instance;
+            if (inventoryUI != null && inventoryUI.gameObject.activeSelf)
+            {
+                inventoryUI.Refresh();
+            }
         }
         private void OnQuickSlotChanged()
         {

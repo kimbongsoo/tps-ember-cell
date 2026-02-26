@@ -4,6 +4,7 @@ namespace TEC
 {
     public class InventoryContextMenu : UIBase
     {
+        public static InventoryContextMenu Instance => UIManager.Singleton.GetUI<InventoryContextMenu>(UIList.InventoryContextMenu);
         [SerializeField] private RectTransform root;
         private string currentItemID = string.Empty;
         private string currentDataID = string.Empty;
@@ -24,7 +25,6 @@ namespace TEC
             root.position = Input.mousePosition;
         }
 
-        // 버튼 OnClick에 연결
         public void OnClickUse()
         {
             if (string.IsNullOrEmpty(currentItemID))
@@ -34,7 +34,6 @@ namespace TEC
             Hide();
         }
 
-        // 버튼 OnClick에 연결 (1개 버리기)
         public void OnClickDrop()
         {
             if (string.IsNullOrEmpty(currentDataID))
@@ -45,7 +44,6 @@ namespace TEC
             Hide();
         }
 
-        // 버튼 OnClick에 연결 (퀵슬롯 등록: 데이터만, UI 없음)
         public void OnClickRegisterQuickSlot()
         {
             if (string.IsNullOrEmpty(currentItemID))

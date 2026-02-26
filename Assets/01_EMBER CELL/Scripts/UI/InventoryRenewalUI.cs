@@ -7,6 +7,7 @@ namespace TEC
 {
     public class InventoryRenewalUI : UIBase
     {
+        public static InventoryRenewalUI Instance => UIManager.Singleton.GetUI<InventoryRenewalUI>(UIList.InventoryRenewalUI);
         public Transform listRoot; //하이어러키 상의, Content 오브젝트
         public InventoryRenewalUI_ListEntity itemListEntity; // 프리팹오브젝트 
 
@@ -14,49 +15,25 @@ namespace TEC
         {
             itemListEntity.gameObject.SetActive(false);
         }
-
-        //추가
-        private void OnEnable()
-        {
-            if(UserDataModel.Singleton != null)
-                UserDataModel.Singleton.OnInventoryChanged += Refresh;
-        }
-
-        private void OnDisEnable()
-        {
-            if(UserDataModel.Singleton != null)
-                UserDataModel.Singleton.OnInventoryChanged -= Refresh;
-        }
-
         public override void Show()
         {
             base.Show();
-            
-            //추가
             InputManager.Singleton.SetCursorForcedByUI(true, true);
             Refresh();
 
-            // ClearList();
-
-            // // TODO : UserData에 있는 Player Item 정보를 토대로, UI를 갱신한다.
-            // for(int i=0; i < UserDataModel.Singleton.PlayerItemData.itemDataContainer.Count; i++)
-            // {
-            //     string itemId = UserDataModel.Singleton.PlayerItemData.itemDataContainer[i].itemID;
-            //     int count = UserDataModel.Singleton.PlayerItemData.itemDataContainer[i].quantity;
-            //     AddItem(itemId, count);
-            // }
         }
 
-        //추가
         public override void Hide()
         {
             base.Hide();
-
             InputManager.Singleton.SetCursorForcedByUI(false, false);
+
+            if (InventoryContextMenu.Instance != null && InventoryContextMenu.Instance.gameObject.activeSelf)
+                InventoryContextMenu.Instance.Hide();
         }
 
         //추가
-        private void Refresh()
+        public void Refresh()
         {
             ClearList();
 
@@ -96,9 +73,7 @@ namespace TEC
 
             InventoryRenewalUI_ListEntity newItemEntity = Instantiate(itemListEntity, listRoot);
             newItemEntity.gameObject.SetActive(true);
-            // newItemEntity.Init(itemDataSO.ItemIcon, itemDataSO.ItemName, count);
 
-            //추가
             newItemEntity.Init(dataId, itemId, itemDataSO.ItemIcon, itemDataSO.ItemName, count);
         }
 

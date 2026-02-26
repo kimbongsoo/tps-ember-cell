@@ -38,35 +38,6 @@ namespace TEC
             if (menu != null)
                 menu.Open(DataID, ItemID, transform as RectTransform);
         }
-        // public void OnPointerClick(PointerEventData eventData)
-        // {
-        //     Debug.Log("[Inventory] OnPointerClick CALLED"); // [ADDED] 무조건 찍히는지
-
-        //     if (eventData == null)
-        //     {
-        //         Debug.Log("[Inventory] eventData is NULL"); // [ADDED]
-        //         return;
-        //     }
-
-        //     Debug.Log($"[Inventory] button={eventData.button}, ItemID={ItemID}"); // [ADDED]
-
-        //     if (eventData.button != PointerEventData.InputButton.Right)
-        //         return;
-
-        //     if (string.IsNullOrEmpty(ItemID))
-        //     {
-        //         Debug.Log("[Inventory] ItemID is empty"); // [ADDED]
-        //         return;
-        //     }
-
-        //     // 우선 메뉴 호출은 주석 처리(이벤트만 확인)
-        //     var menu = UIManager.Show<InventoryContextMenu>(UIList.InventoryContextMenu);
-        //     Debug.Log($"[Inventory] ContextMenu = {(menu == null ? "NULL" : "OK")}"); // [ADDED]
-        //     if (menu != null)
-        //         menu.Open(ItemID, transform as RectTransform);
-
-        //     Debug.Log("[Inventory] RIGHT CLICK OK"); // [ADDED]
-        // }
 
     }
 }

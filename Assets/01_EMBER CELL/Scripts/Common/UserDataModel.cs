@@ -5,16 +5,14 @@ namespace TEC
     public class UserDataModel : SingletonBase<UserDataModel>
     {
         [field: SerializeField] public PlayerItemDto PlayerItemData { get; private set; } = new();
-        //추가
         [field: SerializeField] public QuickSlotDto QuickSlotData { get; private set; } = new();
 
 
         public System.Action OnInventoryChanged;
 
-        //추가 아이템효과 적용
+        //아이템효과 적용
         public System.Action<ItemUseEffectType, float> OnItemEffectRequested;
         public System.Action OnQuickSlotChanged;
-        // private GameDataModel gameDataModel;
         public void Initialize()
         {
             // TODO : UserData Initialize / Load Logic
@@ -90,7 +88,6 @@ namespace TEC
                 return false;
 
             var itemDataSO = GameDataModel.Singleton.ItemData.GetItemDataSO(itemID);
-            // var itemDataSO = gameDataModel.GetItemData(itemID);
 
             if (itemDataSO == null)
                 return false;
@@ -131,13 +128,11 @@ namespace TEC
             return true;
         }
 
-        //추가 힐
         public bool TryUseItem(string itemID)
         {
             if (string.IsNullOrEmpty(itemID))
                 return false;
 
-            // var itemDataSO = gameDataModel.GetItemData(itemID);
             var itemDataSO = GameDataModel.Singleton.ItemData.GetItemDataSO(itemID);
 
             if (itemDataSO == null)
@@ -157,7 +152,6 @@ namespace TEC
             return true;
         }
 
-        //추가
         public bool TryDropItem(string itemID, int amount)
         {
             if (string.IsNullOrEmpty(itemID) || amount <= 0)
@@ -180,7 +174,7 @@ namespace TEC
             return consumed > 0;
         }
 
-        // [ADDED] dataID 단위로 해당 줄(슬롯) 삭제
+        // dataID로 슬롯 삭제
         public bool TryDropByDataID(string dataID)
         {
             if (string.IsNullOrEmpty(dataID))
@@ -201,7 +195,7 @@ namespace TEC
             return false;
         }
 
-                public string GetQuickSlotItemID(int slotIndex)
+        public string GetQuickSlotItemID(int slotIndex)
         {
             InitializeQuickSlots();
 
@@ -211,7 +205,7 @@ namespace TEC
             return QuickSlotData.slotItemIDs[slotIndex];
         }
 
-        // [ADDED] 아이템의 UseEffectType에 따라 1번/2번에 고정 등록
+        // UseEffectType에 따라 등록
         public bool RegisterQuickSlotByEffect(string itemID)
         {
             if (string.IsNullOrEmpty(itemID))
@@ -243,7 +237,6 @@ namespace TEC
             return false;
         }
 
-        // [ADDED]
         public bool TryUseQuickSlot(int slotIndex)
         {
             string itemID = GetQuickSlotItemID(slotIndex);
@@ -253,7 +246,6 @@ namespace TEC
             return TryUseItem(itemID);
         }
 
-        // [ADDED]
         private void CleanupQuickSlotsByInventory()
         {
             InitializeQuickSlots();

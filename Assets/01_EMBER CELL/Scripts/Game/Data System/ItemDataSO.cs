@@ -36,6 +36,9 @@ namespace TEC
         [Header("Use Effect")]
         public ItemUseEffectType UseEffectType = ItemUseEffectType.None;
         public float UseEffectValue = 0f;
+
+        [Header("World Visual")]
+        public GameObject WorldPrefab;
         
         public string ID => ItemID;
         public Sprite ActionIcon => ItemIcon;
@@ -49,12 +52,14 @@ private void OnValidate()
     MaxStack = ItemCategory switch
     {
         ItemCategory.Ammo => 100,
+        ItemCategory.Consumable => 10,
         _ => 1
     };
 
     DropQuantity = ItemCategory switch
     {
         ItemCategory.Ammo => 30,
+        ItemCategory.Consumable => 5,
         _ => 1
     };
 }
