@@ -84,6 +84,8 @@ namespace TEC
             InputManager.Singleton.OnQuickSlot1 += ExecuteQuickSlot1;
             InputManager.Singleton.OnQuickSlot2 += ExecuteQuickSlot2;
 
+            characterBase.Initialize(true);
+
 
             // OnFired(characterBase.PrimaryWeapon.RemainAmmo, characterBase.PrimaryWeapon.MaxAmmo);
         }

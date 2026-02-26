@@ -43,7 +43,7 @@ namespace TEC
                 effect => effect.SetActive(true),
                 effect => effect.SetActive(false),
                 effect => Destroy(effect),
-                true, 10, 30
+                true, 50, 100
             );
         }
 

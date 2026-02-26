@@ -4,6 +4,7 @@ using System.Xml.Serialization;
 using UnityEngine;
 using UnityEngine.Animations.Rigging;
 using UnityEngine.Pool;
+using UnityEngine.TextCore.Text;
 
 namespace TEC
 {
@@ -35,6 +36,7 @@ namespace TEC
 
         private WeaponRecoil weaponRecoil;
         private IObjectPool<Projectile> projectilePool;
+        private CharacterBase ownerCharacter;
 
         private void Awake()
         {
@@ -46,22 +48,29 @@ namespace TEC
                 OnReleaseToPool,
                 OnDestroyPooledObject,
                 true,
-                10,
-                50
-            );
+                30,
+                100
+            ); //10, 50
         }
 
-        public void InitializeReserveAmmoToInventory()
+        public void Initialize(CharacterBase owner)
         {
-            if (string.IsNullOrEmpty(ammoItemID) || UserDataModel.Singleton == null)
-                return;
+            ownerCharacter = owner;
 
-            if (reserveAmmo <= 0)
-                return;
-
-            UserDataModel.Singleton.AddItem(ammoItemID, reserveAmmo);
-            reserveAmmo = 0;
         }
+    
+        //지워
+        // public void InitializeReserveAmmoToInventory()
+        // {
+        //     if (string.IsNullOrEmpty(ammoItemID) || UserDataModel.Singleton == null)
+        //         return;
+
+        //     if (reserveAmmo <= 0)
+        //         return;
+
+        //     UserDataModel.Singleton.AddItem(ammoItemID, reserveAmmo);
+        //     reserveAmmo = 0;
+        // }
 
         private Projectile CreateProjectile()
         {
@@ -94,15 +103,21 @@ namespace TEC
             if (isShootable)
             {
                 var projectile = projectilePool.Get();
+                // projectile.transform.position = fireStartPoint.position;
+                // projectile.transform.forward = fireStartPoint.forward;
                 projectile.Initialize(Owner.gameObject, damage);
 
-                weaponRecoil?.GenerateRecoil();
+                if(ownerCharacter.IsPlayerCharacter)
+                {
+                    weaponRecoil?.GenerateRecoil();
+                }
 
                 clipAmmo--;
 
                 EffectManager.Instance.SpawnMuzzleEffect(fireStartPoint);
 
                 lastFireTime = Time.time;
+                // Debug.DrawLine(fireStartPoint.position, fireStartPoint.position + fireStartPoint * 10f, Color.yellow, 1f);
             }
 
             remain = clipAmmo;

@@ -81,7 +81,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ammoItemID: 40001
   fireStartPoint: {fileID: 6139668880979145962}
-  originalBullet: {fileID: 7963694017885034123, guid: 812c491db03c94adbaf77f36f34f51b6, type: 3}
+  originalBullet: {fileID: 1356394087337518221, guid: 32c212a5a2bde4a39bbc5070b04e5292, type: 3}
   fireRate: 0.2
   lastFireTime: 0
   reserveAmmo: 90

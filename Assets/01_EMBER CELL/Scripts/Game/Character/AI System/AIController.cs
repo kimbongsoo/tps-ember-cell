@@ -28,6 +28,8 @@ namespace TEC
         public void Start()
         {
             navAgent.speed = characterBase.moveSpeed;
+
+            characterBase.Initialize(false);
         }
 
         public void Update()

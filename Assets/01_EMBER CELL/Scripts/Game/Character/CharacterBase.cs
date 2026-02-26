@@ -11,6 +11,7 @@ namespace TEC
 {
     public class CharacterBase : MonoBehaviour, IDamageReceiver
     {
+        public bool IsPlayerCharacter => isPlayerCharacter;
         public float CurrentHP => currentHP;
         public float CurrentSP => currentSP;
         public float MaxHP => maxHP;
@@ -115,6 +116,7 @@ namespace TEC
         public System.Action<Vector3> OnHitAttackerPosition;
 
         private float _blendAiming = 0f;
+        private bool isPlayerCharacter;
 
 
 
@@ -137,6 +139,11 @@ namespace TEC
 
         private void Start()
         {
+        }
+
+        public void Initialize(bool isPlayer = false)
+        {
+            isPlayerCharacter = isPlayer;
             currentHP = maxHP;
             currentSP = maxSP;
 
@@ -148,11 +155,11 @@ namespace TEC
 
             if (primaryWeapon != null)
             {
-                primaryWeapon.InitializeReserveAmmoToInventory();
+                PrimaryWeapon.Initialize(this);
+                // primaryWeapon.InitializeReserveAmmoToInventory(); 지워
                 // 탄약 초기 상태 전달
                 onReloadCompleteEvent?.Invoke(primaryWeapon.RemainAmmo, primaryWeapon.MaxAmmo);
             }
-
         }
 
         private void Update()

@@ -14,6 +14,10 @@ namespace TEC
 
         public float maxSpread = 300f;
 
+        private void Awake()
+        {
+            SetVisible(false);
+        }
         public void ToggleCrosshairByArmedState(bool armed)
         {
             SetVisible(armed);

@@ -29,8 +29,9 @@ namespace TEC
             initialized = true;
 
             isReleasedToPool = false;
-
-            rb.velocity = transform.forward * 100f;
+            rb.velocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero; //추가
+            rb.AddForce(transform.forward * 100f, ForceMode.Impulse);
         }
 
         public void SetPool(IObjectPool<Projectile> pool)
@@ -63,7 +64,7 @@ namespace TEC
             //     var data = new DamageData(damage, attacker);
             //     receiver.ReceiveDamage(data);
             // }
-            var receiver = collision.transform.GetComponentInParent<IDamageReceiver>();
+            var receiver = collision.transform.root.GetComponent<IDamageReceiver>();
             if (receiver != null)
             {
                 if (receiver is Component comp && comp.gameObject == attacker)
@@ -101,6 +102,7 @@ namespace TEC
         private void OnDisable()
         {
             rb.velocity = Vector3.zero;
+            rb.angularVelocity = Vector3.zero;//추가
             initialized = false;
         }
     }
