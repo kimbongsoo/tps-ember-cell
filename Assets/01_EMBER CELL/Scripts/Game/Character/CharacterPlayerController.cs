@@ -6,6 +6,9 @@ using UnityEngine;
 using UnityEngine.Animations.Rigging;
 using UnityEngine.Tilemaps;
 using UnityEngine.UI;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 namespace TEC
 {
@@ -485,6 +488,13 @@ namespace TEC
                 return;
 
             UserDataModel.Singleton.TryUseQuickSlot(1);
+        }
+
+        public void RequestExit()
+        {
+        #if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+        #endif
         }
 
 

@@ -41,6 +41,9 @@ namespace TEC
         [SerializeField] private List<Image> quickSlotIcons = new();
         [SerializeField] private List<TextMeshProUGUI> quickSlotCountTexts = new();
 
+        [Header("Exit Button")]
+        [SerializeField] private Button exitButton;
+
         public override void Show()
         {
             base.Show();
@@ -217,6 +220,12 @@ namespace TEC
                     quickSlotCountTexts[i].text = total > 0 ? $"{total}" : string.Empty;
                 }
             }
+        }
+
+        public void OnClickExitButton()
+        {
+            if (CharacterPlayerController.Instance != null)
+                CharacterPlayerController.Instance.RequestExit();
         }
         
     }

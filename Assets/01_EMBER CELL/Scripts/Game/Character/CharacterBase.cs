@@ -462,7 +462,9 @@ namespace TEC
             isDead = true;
 
             if(isPlayerCharacter)
+            {
                 StartCoroutine(PlayerDeathSlowMotion());
+            }
 
             if (rigBuilder != null)
                 rigBuilder.enabled = false;
