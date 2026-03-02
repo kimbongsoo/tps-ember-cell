@@ -52,6 +52,15 @@ namespace TEC
 
         private void Update()
         {
+            if (targetCharacter != null && targetCharacter.IsDead)
+            {
+                targetCharacter = null;
+
+                if (currentAIState != AIState.Patrol)
+                    SetState(AIState.Patrol);
+
+                return;
+            }
             currentState?.Update(); //현재 상태 업데이트
         }
 
