@@ -64,13 +64,27 @@ namespace TEC
             //     var data = new DamageData(damage, attacker);
             //     receiver.ReceiveDamage(data);
             // }
+            //
+            // var receiver = collision.transform.root.GetComponent<IDamageReceiver>();
+            // if (receiver != null)
+            // {
+            //     if (receiver is Component comp && comp.gameObject == attacker)
+            //     return;
+                
+            //     var data = new DamageData(damage, attacker);
+            //     receiver.ReceiveDamage(data);
+            // }
+
             var receiver = collision.transform.root.GetComponent<IDamageReceiver>();
             if (receiver != null)
             {
                 if (receiver is Component comp && comp.gameObject == attacker)
-                return;
-                
-                var data = new DamageData(damage, attacker);
+                    return;
+
+                float multiplier = GetDamageMultiplier(collision.collider.transform);
+                float finalDamage = damage * multiplier;
+
+                var data = new DamageData(finalDamage, attacker);
                 receiver.ReceiveDamage(data);
             }
 
@@ -104,6 +118,25 @@ namespace TEC
             rb.velocity = Vector3.zero;
             rb.angularVelocity = Vector3.zero;//추가
             initialized = false;
+        }
+
+        private float GetDamageMultiplier(Transform hitTransform)
+        {
+            string boneName = hitTransform.name;
+
+            if (boneName.Contains("Head"))
+                return 2.0f;
+
+            if (boneName.Contains("Spine") || boneName.Contains("Chest"))
+                return 1.0f;
+
+            if (boneName.Contains("UpperArm"))
+                return 0.7f;
+
+            if (boneName.Contains("UpperLeg"))
+                return 0.7f;
+
+            return 1.0f;
         }
     }
 }
