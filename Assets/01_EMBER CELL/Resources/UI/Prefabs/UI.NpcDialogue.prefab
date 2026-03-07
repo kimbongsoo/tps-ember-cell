@@ -264,6 +264,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 536100212918229110}
+  - component: {fileID: 1340111182248342742}
   m_Layer: 5
   m_Name: DialogueUI
   m_TagString: Untagged
@@ -294,6 +295,22 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 200}
   m_SizeDelta: {x: 1700, y: 300}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1340111182248342742
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2054764810871357621}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f8974c7d0f81405197d9a42b1560867, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speakerNameText: {fileID: 6179761707852670322}
+  messageText: {fileID: 2336830042406750421}
+  portraitImage: {fileID: 0}
+  nextButton: {fileID: 2418204536516287924}
 --- !u!1 &2336726050849635110
 GameObject:
   m_ObjectHideFlags: 0
@@ -1035,6 +1052,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3498222367589102411}
+  - component: {fileID: 4665889180592466499}
   m_Layer: 5
   m_Name: QuestAcceptUI
   m_TagString: Untagged
@@ -1065,6 +1083,22 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 200}
   m_SizeDelta: {x: 1700, y: 300}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &4665889180592466499
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6690135234052690056}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fcda2090d6a6041b9a282e146de3df36, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  questTitleText: {fileID: 6333743852215775122}
+  questDescriptionText: {fileID: 1079053593973412565}
+  acceptButton: {fileID: 2897891249556828732}
+  declineButton: {fileID: 6936047221275783513}
 --- !u!1 &6965083088174982119
 GameObject:
   m_ObjectHideFlags: 0
@@ -1332,8 +1366,6 @@ GameObject:
   - component: {fileID: 923654360290347084}
   - component: {fileID: 398381030940593340}
   - component: {fileID: 6770126092080572565}
-  - component: {fileID: 1562818497302162387}
-  - component: {fileID: 7403070046223273375}
   m_Layer: 5
   m_Name: UI.NpcDialogue
   m_TagString: Untagged
@@ -1425,38 +1457,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &1562818497302162387
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8077616961217771111}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f8974c7d0f81405197d9a42b1560867, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speakerNameText: {fileID: 6179761707852670322}
-  messageText: {fileID: 2336830042406750421}
-  portraitImage: {fileID: 0}
-  nextButton: {fileID: 2418204536516287924}
---- !u!114 &7403070046223273375
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8077616961217771111}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fcda2090d6a6041b9a282e146de3df36, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  questTitleText: {fileID: 6333743852215775122}
-  questDescriptionText: {fileID: 1079053593973412565}
-  acceptButton: {fileID: 2897891249556828732}
-  declineButton: {fileID: 6936047221275783513}
 --- !u!1 &8192705064067639733
 GameObject:
   m_ObjectHideFlags: 0
