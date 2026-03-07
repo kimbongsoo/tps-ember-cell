@@ -115,7 +115,7 @@ namespace TEC
                 clipAmmo--;
 
                 EffectManager.Instance.SpawnMuzzleEffect(fireStartPoint);
-
+                
                 lastFireTime = Time.time;
                 // Debug.DrawLine(fireStartPoint.position, fireStartPoint.position + fireStartPoint * 10f, Color.yellow, 1f);
             }

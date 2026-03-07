@@ -118,10 +118,6 @@ namespace TEC
         private float _blendAiming = 0f;
         private bool isPlayerCharacter;
 
-
-
-
-
         private void Awake()
         {
             characterAnimator = GetComponent<Animator>();
