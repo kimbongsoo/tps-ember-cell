@@ -55,6 +55,11 @@ namespace TEC
             var menu = InventoryContextMenu.Instance;
             return menu != null && menu.gameObject.activeSelf;
         }
+        // 대화 창 오픈 여부
+        private bool IsDialogueUIOpen()
+        {
+            return DialogueUI.IsDialogueOpen || QuestAcceptUI.IsQuestAcceptOpen;
+        }
 
         private void Awake()
         {
@@ -233,6 +238,26 @@ namespace TEC
                 }
             }
 
+            bool isDialogueOpen = IsDialogueUIOpen();
+            if (isDialogueOpen)
+            {
+                characterBase.IsRunning = false;
+                characterBase.IsAiming = false;
+
+                if (isScoped)
+                    ExitScopeMode();
+
+                characterBase.Move(Vector2.zero, Camera.main.transform.eulerAngles.y);
+
+                crosshairCurrentSpread = Mathf.Clamp(
+                    crosshairCurrentSpread - (crosshairRecoverySpeed * Time.deltaTime),
+                    crosshairSpreadMin,
+                    crosshairSpreadMax);
+
+                CrossHairUI.Instance.SetCrosshairSpread(crosshairCurrentSpread / crosshairSpreadMax);
+                return;
+            }
+
 
             bool isInputRunning = InputManager.Singleton.InputSprint;
             characterBase.IsRunning = isInputRunning;
@@ -271,7 +296,7 @@ namespace TEC
         private void LateUpdate()
         {
             // 추가 인벤 열려있으면 카메라 회전/반동/미니맵 회전도 막기
-            if (characterBase != null && !characterBase.IsDead && IsInventoryUIOpen())
+            if (characterBase != null && !characterBase.IsDead && IsInventoryUIOpen() || IsDialogueUIOpen()) //||IsDialogueUIOpen
                 return;
             CameraRotation();
             CameraRecovery();
@@ -333,37 +358,58 @@ namespace TEC
 
         void ToggleCrouch()
         {
+            if (IsDialogueUIOpen())
+                return;
+
             characterBase.IsCrouch = !characterBase.IsCrouch;
         }
 
         void ExecuteReload()
         {
+            if (IsDialogueUIOpen())
+                return;
+
             characterBase.Reload();
         }
 
 
         void ExecuteHolster()
         {
+            if (IsDialogueUIOpen())
+                return;
+
             characterBase.HolsterWeapon();
         }
 
         void ExecuteEquipPrimaryWeapon()
         {
+            if (IsDialogueUIOpen())
+                return;
+
             characterBase.EquipWeapon();
         }
 
         void ExecuteJump()
         {
+            if (IsDialogueUIOpen())
+                return;
+
             characterBase.Jump();
         }
 
         void ExecuteRoll()
         {
+            if (IsDialogueUIOpen())
+                return;
+
             characterBase.Roll();
         }
 
         void ExecuteInteract()
         {
+            if (IsDialogueUIOpen())
+                return;
+
             var interactionUI = UIManager.Singleton.GetUI<InteractionUI>(UIList.InteractionUI);
             interactionUI.TryInteract();
         }
@@ -371,6 +417,9 @@ namespace TEC
         //스코프
         private void OnRightClickDouble()
         {
+            if (IsDialogueUIOpen())
+                return;
+
             // 우클릭 더블탭 직후, 버튼이 눌린 상태면 스코프 진입
             if (IsInventoryUIOpen())
                 return;
@@ -411,6 +460,9 @@ namespace TEC
 
         void ExecuteInventory()
         {
+            if (IsDialogueUIOpen())
+                return;
+
             var inventoryUI = InventoryRenewalUI.Instance;
             if (inventoryUI.gameObject.activeSelf)
             {
@@ -448,6 +500,9 @@ namespace TEC
 
         private void ExecuteActionUI()
         {
+            if (IsDialogueUIOpen())
+                return;
+
             MainHUD.Instance.ToggleActionUI();
         }
 
@@ -476,6 +531,9 @@ namespace TEC
 
         private void ExecuteQuickSlot1()
         {
+            if (IsDialogueUIOpen())
+                return;
+
             if (UserDataModel.Singleton == null)
                 return;
 
@@ -484,6 +542,9 @@ namespace TEC
 
         private void ExecuteQuickSlot2()
         {
+            if (IsDialogueUIOpen())
+                return;
+
             if (UserDataModel.Singleton == null)
                 return;
 

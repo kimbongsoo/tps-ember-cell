@@ -36,13 +36,17 @@ namespace TEC
         [Header("Indicator")]
         [SerializeField] private DamageDirectionIndicatorUI damageDirectionIndicator;
 
-        // [ADDED] QuickSlot UI (2칸)
+        // 추가 QuickSlot UI (2칸)
         [Header("QuickSlot")]
         [SerializeField] private List<Image> quickSlotIcons = new();
         [SerializeField] private List<TextMeshProUGUI> quickSlotCountTexts = new();
 
         [Header("Exit Button")]
         [SerializeField] private Button exitButton;
+
+        // 추가 대화 중 숨길 HUD 대상
+        [Header("Dialogue Mode")]
+        [SerializeField] private List<GameObject> dialogueHideTargets = new();
 
         public override void Show()
         {
@@ -226,6 +230,19 @@ namespace TEC
         {
             if (CharacterPlayerController.Instance != null)
                 CharacterPlayerController.Instance.RequestExit();
+        }
+
+        // 추가 대화/퀘스트 UI 중일 때 일반 HUD 숨김
+        public void SetDialogueMode(bool isDialogueMode)
+        {
+            if (dialogueHideTargets == null)
+                return;
+
+            for (int i = 0; i < dialogueHideTargets.Count; i++)
+            {
+                if (dialogueHideTargets[i] != null)
+                    dialogueHideTargets[i].SetActive(!isDialogueMode);
+            }
         }
         
     }

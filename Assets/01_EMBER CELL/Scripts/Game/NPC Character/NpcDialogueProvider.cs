@@ -4,9 +4,6 @@ using UnityEngine.Events;
 
 namespace TEC
 {
-    // [ADDED] NPC 상호작용 Provider
-    // 주의: Collider가 붙은 같은 GameObject에 이 스크립트가 같이 있어야
-    // InteractionSensor의 other.GetComponent<IInteractionProvider>() 에 감지됩니다.
     public class NPCDialogueProvider : MonoBehaviour, IInteractionProvider
     {
         [Header("Interaction UI")]
@@ -30,11 +27,23 @@ namespace TEC
 
         private void Awake()
         {
-            // [ADDED] NPC는 "대화하기" 1개의 상호작용만 제공
             interactions = new List<IInteractionData>()
             {
                 new NPCDialogueInteractionData("NPC_DIALOGUE", actionIcon, actionMessage)
             };
+        }
+
+        // [ADDED] 런타임 자동 연결
+        private void Start()
+        {
+            // MainHUD가 아직 생성 안 됐을 수 있으므로 먼저 생성 보장
+            UIManager.Singleton.GetUI<MainHUD>(UIList.MainHUD);
+
+            if (dialogueUI == null)
+                dialogueUI = FindObjectOfType<DialogueUI>(true);
+
+            if (questAcceptUI == null)
+                questAcceptUI = FindObjectOfType<QuestAcceptUI>(true);
         }
 
         public void Interact(IInteractionData data)
@@ -45,17 +54,19 @@ namespace TEC
             if (dialogueData == null)
                 return;
 
+            // [CHANGED] 직접 연결 실패 대비 런타임 재탐색
+            if (dialogueUI == null)
+                dialogueUI = FindObjectOfType<DialogueUI>(true);
+
             if (dialogueUI == null)
                 return;
 
             if (data.ID != "NPC_DIALOGUE")
                 return;
 
-            // [ADDED] 대화 시작
             dialogueUI.ShowDialogue(dialogueData, OnDialogueFinished);
         }
 
-        // [ADDED] 대화 종료 후 퀘스트 UI 분기
         private void OnDialogueFinished()
         {
             if (dialogueData == null)
@@ -63,6 +74,10 @@ namespace TEC
 
             if (dialogueData.showQuestAcceptUIAfterDialogue == false)
                 return;
+
+            // [CHANGED] 직접 연결 실패 대비 런타임 재탐색
+            if (questAcceptUI == null)
+                questAcceptUI = FindObjectOfType<QuestAcceptUI>(true);
 
             if (questAcceptUI == null)
                 return;
@@ -75,14 +90,12 @@ namespace TEC
             );
         }
 
-        // [ADDED] 수락 처리
         private void OnAcceptQuest()
         {
             Debug.Log($"[NPCDialogueProvider] Quest Accepted : {dialogueData.questID}");
             onQuestAccepted?.Invoke();
         }
 
-        // [ADDED] 거절 처리
         private void OnDeclineQuest()
         {
             Debug.Log($"[NPCDialogueProvider] Quest Declined : {dialogueData.questID}");
