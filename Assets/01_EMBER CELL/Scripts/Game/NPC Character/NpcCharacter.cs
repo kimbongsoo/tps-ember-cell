@@ -43,7 +43,6 @@ namespace TEC
             if (isDead) return;
             isDead = true;
 
-            // NPC 제어 시스템 OFF
             if (characterController != null)
                 characterController.enabled = false;
 

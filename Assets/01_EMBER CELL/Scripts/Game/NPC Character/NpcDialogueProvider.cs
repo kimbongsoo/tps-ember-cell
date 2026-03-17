@@ -33,10 +33,8 @@ namespace TEC
             };
         }
 
-        // [ADDED] 런타임 자동 연결
         private void Start()
         {
-            // MainHUD가 아직 생성 안 됐을 수 있으므로 먼저 생성 보장
             UIManager.Singleton.GetUI<MainHUD>(UIList.MainHUD);
 
             if (dialogueUI == null)
@@ -54,7 +52,6 @@ namespace TEC
             if (dialogueData == null)
                 return;
 
-            // [CHANGED] 직접 연결 실패 대비 런타임 재탐색
             if (dialogueUI == null)
                 dialogueUI = FindObjectOfType<DialogueUI>(true);
 
@@ -75,7 +72,6 @@ namespace TEC
             if (dialogueData.showQuestAcceptUIAfterDialogue == false)
                 return;
 
-            // [CHANGED] 직접 연결 실패 대비 런타임 재탐색
             if (questAcceptUI == null)
                 questAcceptUI = FindObjectOfType<QuestAcceptUI>(true);
 

@@ -123,7 +123,7 @@ namespace TEC
 {
     public class DialogueUI : UIBase
     {
-        // [ADDED] 다른 스크립트에서 대화 중 여부 확인용
+        // 다른 스크립트에서 대화 중 여부 확인용
         public static bool IsDialogueOpen { get; private set; } = false;
 
         [Header("Dialogue UI")]
@@ -161,14 +161,14 @@ namespace TEC
 
             Show();
 
-            // [ADDED] HUD 숨김 + 마우스 활성화
+            //  HUD 숨김 + 마우스 활성화
             IsDialogueOpen = true;
 
-            if (MainHUD.Instance != null)
-                MainHUD.Instance.SetDialogueMode(true);
+            // if (MainHUD.Instance != null)
+            //     MainHUD.Instance.SetDialogueMode(true);
 
-            Cursor.visible = true;
-            Cursor.lockState = CursorLockMode.None;
+            // Cursor.visible = true;
+            // Cursor.lockState = CursorLockMode.None;
 
             RefreshCurrentLine();
         }
@@ -234,17 +234,17 @@ namespace TEC
                 portraitImage.enabled = false;
             }
 
-            // [ADDED] HUD 복구 + 마우스 원복
+            // HUD 복구 + 마우스 원복
             IsDialogueOpen = false;
 
-            if (MainHUD.Instance != null && QuestAcceptUI.IsQuestAcceptOpen == false)
-                MainHUD.Instance.SetDialogueMode(false);
+            // if (MainHUD.Instance != null && QuestAcceptUI.IsQuestAcceptOpen == false)
+            //     MainHUD.Instance.SetDialogueMode(false);
 
-            if (QuestAcceptUI.IsQuestAcceptOpen == false)
-            {
-                Cursor.visible = false;
-                Cursor.lockState = CursorLockMode.Locked;
-            }
+            // if (QuestAcceptUI.IsQuestAcceptOpen == false)
+            // {
+            //     Cursor.visible = false;
+            //     Cursor.lockState = CursorLockMode.Locked;
+            // }
         }
     }
 }

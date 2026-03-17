@@ -41,6 +41,10 @@ namespace TEC
 
         public void PulseManually()
         {
+            //추가
+            if (DialogueUI.IsDialogueOpen || QuestAcceptUI.IsQuestAcceptOpen)
+                return;
+
             var interactionUI = UIManager.Singleton.GetUI<InteractionUI>(UIList.InteractionUI);
 
             interactionUI.ClearData();
@@ -62,6 +66,10 @@ namespace TEC
 
         private void OnTriggerEnter(Collider other)
         {
+            // 추가
+            if (DialogueUI.IsDialogueOpen || QuestAcceptUI.IsQuestAcceptOpen)
+                return;
+
             var interactionProvider = other.GetComponent<IInteractionProvider>();
             if (interactionProvider != null)
             {
@@ -76,6 +84,10 @@ namespace TEC
 
         private void OnTriggerExit(Collider other)
         {
+            // 추가
+            if (DialogueUI.IsDialogueOpen || QuestAcceptUI.IsQuestAcceptOpen)
+                return;
+                
             var interactionProvider = other.GetComponent<IInteractionProvider>();
             if (interactionProvider != null)
             {

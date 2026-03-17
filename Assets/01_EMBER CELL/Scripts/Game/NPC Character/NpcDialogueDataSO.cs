@@ -13,7 +13,7 @@ namespace TEC
         public Sprite portrait;
     }
 
-    // [ADDED] NPC 대화 데이터 SO
+    // NPC 대화 데이터 SO
     [CreateAssetMenu(fileName = "NPCDialogueDataSO", menuName = "PROJECT TEC/NPC/Dialogue Data")]
     public class NPCDialogueDataSO : ScriptableObject
     {

@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace TEC
 {
-    // [ADDED] NPC용 상호작용 데이터
+    // NPC용 상호작용 데이터
     public class NPCDialogueInteractionData : IInteractionData
     {
         public string ID => id;

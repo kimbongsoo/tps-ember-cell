@@ -90,7 +90,7 @@ namespace TEC
 {
     public class QuestAcceptUI : UIBase
     {
-        // [ADDED] 다른 스크립트에서 퀘스트 UI 오픈 여부 확인용
+        // 다른 스크립트에서 퀘스트 UI 오픈 여부 확인용
         public static bool IsQuestAcceptOpen { get; private set; } = false;
 
         [Header("Quest Accept UI")]
@@ -132,14 +132,14 @@ namespace TEC
 
             Show();
 
-            // [ADDED] HUD 숨김 + 마우스 활성화
+            // HUD 숨김 + 마우스 활성화
             IsQuestAcceptOpen = true;
 
-            if (MainHUD.Instance != null)
-                MainHUD.Instance.SetDialogueMode(true);
+            // if (MainHUD.Instance != null)
+            //     MainHUD.Instance.SetDialogueMode(true);
 
-            Cursor.visible = true;
-            Cursor.lockState = CursorLockMode.None;
+            // Cursor.visible = true;
+            // Cursor.lockState = CursorLockMode.None;
         }
 
         public void OnClickAccept()
@@ -169,17 +169,17 @@ namespace TEC
             if (questDescriptionText != null)
                 questDescriptionText.text = string.Empty;
 
-            // [ADDED] HUD 복구 + 마우스 원복
+            // HUD 복구 + 마우스 원복
             IsQuestAcceptOpen = false;
 
-            if (MainHUD.Instance != null && DialogueUI.IsDialogueOpen == false)
-                MainHUD.Instance.SetDialogueMode(false);
+            // if (MainHUD.Instance != null && DialogueUI.IsDialogueOpen == false)
+            //     MainHUD.Instance.SetDialogueMode(false);
 
-            if (DialogueUI.IsDialogueOpen == false)
-            {
-                Cursor.visible = false;
-                Cursor.lockState = CursorLockMode.Locked;
-            }
+            // if (DialogueUI.IsDialogueOpen == false)
+            // {
+            //     Cursor.visible = false;
+            //     Cursor.lockState = CursorLockMode.Locked;
+            // }
         }
     }
 }

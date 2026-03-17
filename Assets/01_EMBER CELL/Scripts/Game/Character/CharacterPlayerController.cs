@@ -44,6 +44,9 @@ namespace TEC
         // 1. 스코프 필드 추가
         private bool isScoped = false;
 
+        //추가
+        private bool wasDialogueUIOpen = false;
+
         // 추가 인벤 열려있을 때 체크
         private bool IsInventoryUIOpen()
         {
@@ -239,6 +242,47 @@ namespace TEC
             }
 
             bool isDialogueOpen = IsDialogueUIOpen();
+
+            //추가 (커서)
+            if (isDialogueOpen)
+            {
+                InputManager.Singleton.SetCursorForcedByUI(true, true);
+            }
+
+            // 추가
+            if (wasDialogueUIOpen != isDialogueOpen)
+            {
+                var interactionUI = UIManager.Singleton.GetUI<InteractionUI>(UIList.InteractionUI);
+                if (interactionUI != null)
+                {
+                    if (isDialogueOpen)
+                    {
+                        interactionUI.ClearData();
+                        interactionUI.gameObject.SetActive(false);
+                    }
+                    else
+                    {
+                        interactionSensor.PulseManuallyNextFrame();
+                    }
+                }
+
+                if (MainHUD.Instance != null)
+                    MainHUD.Instance.SetDialogueMode(isDialogueOpen);
+
+                if (isDialogueOpen)
+                {
+                    InputManager.Singleton.SetCursorForcedByUI(true, true);
+                }
+                else
+                {
+                    InputManager.Singleton.SetCursorForcedByUI(false, false);
+                    InputManager.Singleton.SetCursorVisible(false);
+                }
+
+                wasDialogueUIOpen = isDialogueOpen;
+            }
+            //여기까지 추가
+
             if (isDialogueOpen)
             {
                 characterBase.IsRunning = false;
@@ -296,7 +340,7 @@ namespace TEC
         private void LateUpdate()
         {
             // 추가 인벤 열려있으면 카메라 회전/반동/미니맵 회전도 막기
-            if (characterBase != null && !characterBase.IsDead && IsInventoryUIOpen() || IsDialogueUIOpen()) //||IsDialogueUIOpen
+            if (characterBase != null && !characterBase.IsDead && IsInventoryUIOpen() || IsDialogueUIOpen() || IsDialogueUIOpen()) //||IsDialogueUIOpen
                 return;
             CameraRotation();
             CameraRecovery();
@@ -352,12 +396,19 @@ namespace TEC
 
         void CameraTab()
         {
+            //추가
+            if (IsDialogueUIOpen())
+                return;
             CameraSystem.Instance.SetChangeCameraSide();
         }
 
 
         void ToggleCrouch()
         {
+            //추가
+            if (IsDialogueUIOpen())
+                return;
+
             if (IsDialogueUIOpen())
                 return;
 
@@ -366,6 +417,10 @@ namespace TEC
 
         void ExecuteReload()
         {
+            //추가
+            if (IsDialogueUIOpen())
+                return;
+
             if (IsDialogueUIOpen())
                 return;
 
@@ -375,6 +430,10 @@ namespace TEC
 
         void ExecuteHolster()
         {
+            //추가
+            if (IsDialogueUIOpen())
+                return;
+
             if (IsDialogueUIOpen())
                 return;
 
@@ -383,6 +442,7 @@ namespace TEC
 
         void ExecuteEquipPrimaryWeapon()
         {
+            //추가
             if (IsDialogueUIOpen())
                 return;
 
@@ -391,6 +451,10 @@ namespace TEC
 
         void ExecuteJump()
         {
+            //추가
+            if (IsDialogueUIOpen())
+                return;
+
             if (IsDialogueUIOpen())
                 return;
 
@@ -399,6 +463,10 @@ namespace TEC
 
         void ExecuteRoll()
         {
+            //추가
+            if (IsDialogueUIOpen())
+                return;
+
             if (IsDialogueUIOpen())
                 return;
 
@@ -407,7 +475,7 @@ namespace TEC
 
         void ExecuteInteract()
         {
-            if (IsDialogueUIOpen())
+            if (IsInventoryUIOpen() || IsDialogueUIOpen())
                 return;
 
             var interactionUI = UIManager.Singleton.GetUI<InteractionUI>(UIList.InteractionUI);
