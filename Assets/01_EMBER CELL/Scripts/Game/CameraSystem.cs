@@ -29,6 +29,11 @@ namespace TEC
         [SerializeField] private float fovBlendTime = 0.12f;
         private Coroutine fovCoroutine;
 
+        //npc
+        [SerializeField] private CinemachineVirtualCamera dialogueCamera;
+        [SerializeField] private int tpsPriority = 10;
+        [SerializeField] private int dialoguePriority = 20;
+
 
         private void Awake()
         {
@@ -37,6 +42,13 @@ namespace TEC
             Debug.Log("TPS Camera follow: " + tpsCamera3rdFollow); //디버깅용
             cameraSideBlend = isCameraSideRight ? 1 : 0;
 
+            // Dialogue Camera 초기 설정
+            if (TpsCamera != null)
+                TpsCamera.Priority = tpsPriority;
+
+            if (dialogueCamera != null)
+                dialogueCamera.Priority = 0;
+            
             //스코프
             if (scopeCamera != null)
                 scopeCamera.SetActive(false);
@@ -95,6 +107,31 @@ namespace TEC
         {
             if (scopeCamera != null) scopeCamera.SetActive(false);
             StartFovLerp(Camera.main.fieldOfView, tpsFov, fovBlendTime);
+        }
+
+        //추가
+        public void EnterDialogueMode(Transform followTarget, Transform lookTarget)
+        {
+            if (dialogueCamera == null)
+                return;
+
+            dialogueCamera.Follow = followTarget;
+            dialogueCamera.LookAt = lookTarget;
+            dialogueCamera.Priority = dialoguePriority;
+        }
+
+        //추가
+        public void ExitDialogueMode()
+        {
+            if (dialogueCamera == null)
+                return;
+
+            dialogueCamera.Priority = 0;
+            dialogueCamera.Follow = null;
+            dialogueCamera.LookAt = null;
+
+            if (TpsCamera != null)
+                TpsCamera.Priority = tpsPriority;
         }
 
         private void StartFovLerp(float from, float to, float duration)

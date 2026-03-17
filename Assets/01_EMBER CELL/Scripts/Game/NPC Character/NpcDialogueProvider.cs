@@ -13,6 +13,10 @@ namespace TEC
         [Header("Dialogue Data")]
         [SerializeField] private NPCDialogueDataSO dialogueData;
 
+        [Header("Dialogue Camera")]
+        [SerializeField] private Transform dialogueCameraFollowPoint;
+        [SerializeField] private Transform dialogueCameraLookPoint;
+
         [Header("UI References")]
         [SerializeField] private DialogueUI dialogueUI;
         [SerializeField] private QuestAcceptUI questAcceptUI;
@@ -60,6 +64,14 @@ namespace TEC
 
             if (data.ID != "NPC_DIALOGUE")
                 return;
+
+            Debug.Log("follow : " + dialogueCameraFollowPoint);
+            Debug.Log("look : " + dialogueCameraLookPoint);
+            // 추가 대화 카메라 진입
+            if (CameraSystem.Instance != null)
+            {
+                CameraSystem.Instance.EnterDialogueMode(dialogueCameraFollowPoint, dialogueCameraLookPoint);
+            }
 
             dialogueUI.ShowDialogue(dialogueData, OnDialogueFinished);
         }

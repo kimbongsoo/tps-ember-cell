@@ -147,6 +147,11 @@ namespace TEC
             Action accept = onAccept;
             Hide();
             accept?.Invoke();
+
+            if (CameraSystem.Instance != null)
+            {
+                CameraSystem.Instance.ExitDialogueMode();
+            }
         }
 
         public void OnClickDecline()
@@ -154,6 +159,11 @@ namespace TEC
             Action decline = onDecline;
             Hide();
             decline?.Invoke();
+
+            if (CameraSystem.Instance != null)
+            {
+                CameraSystem.Instance.ExitDialogueMode();
+            }
         }
 
         public override void Hide()
