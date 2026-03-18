@@ -30,6 +30,14 @@ MonoBehaviour:
   - speakerName: soldier
     message: Dialogue 5
     portrait: {fileID: 0}
+  acceptLines:
+  - speakerName: soldier
+    message: thank you
+    portrait: {fileID: 0}
+  declineLines:
+  - speakerName: soldier
+    message: no thanks
+    portrait: {fileID: 0}
   showQuestAcceptUIAfterDialogue: 1
   questID: get_Military_map
   questTitle: get Military Map

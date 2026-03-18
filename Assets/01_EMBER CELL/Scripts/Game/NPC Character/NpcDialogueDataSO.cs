@@ -24,11 +24,19 @@ namespace TEC
         [Header("Dialogue Lines")]
         public List<DialogueLineData> lines = new();
 
+        // 추가
+        [Header("Accept Dialogue Lines")]
+        public List<DialogueLineData> acceptLines = new();
+
+        // 추가
+        [Header("Decline Dialogue Lines")]
+        public List<DialogueLineData> declineLines = new();
+
         [Header("Quest Offer")]
         public bool showQuestAcceptUIAfterDialogue = false;
         public string questID;
         public string questTitle;
-        [TextArea(2, 5)]
+        // [TextArea(2, 5)]
         public string questDescription;
     }
 }

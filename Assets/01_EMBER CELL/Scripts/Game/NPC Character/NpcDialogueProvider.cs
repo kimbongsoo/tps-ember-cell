@@ -6,9 +6,13 @@ namespace TEC
 {
     public class NPCDialogueProvider : MonoBehaviour, IInteractionProvider
     {
+        // 추가
+        public static bool IsConversationSequenceOpen { get; private set; } = false;
+
         [Header("Interaction UI")]
         [SerializeField] private Sprite actionIcon;
-        [SerializeField] private string actionMessage = "대화하기";
+        // [SerializeField] private string actionMessage = "대화하기"
+        [SerializeField] private string actionMessage;
 
         [Header("Dialogue Data")]
         [SerializeField] private NPCDialogueDataSO dialogueData;
@@ -65,9 +69,9 @@ namespace TEC
             if (data.ID != "NPC_DIALOGUE")
                 return;
 
-            Debug.Log("follow : " + dialogueCameraFollowPoint);
-            Debug.Log("look : " + dialogueCameraLookPoint);
-            // 추가 대화 카메라 진입
+            // 추가
+            IsConversationSequenceOpen = true;
+
             if (CameraSystem.Instance != null)
             {
                 CameraSystem.Instance.EnterDialogueMode(dialogueCameraFollowPoint, dialogueCameraLookPoint);
@@ -79,16 +83,25 @@ namespace TEC
         private void OnDialogueFinished()
         {
             if (dialogueData == null)
+            {
+                EndConversationSequence();
                 return;
+            }
 
             if (dialogueData.showQuestAcceptUIAfterDialogue == false)
+            {
+                EndConversationSequence();
                 return;
+            }
 
             if (questAcceptUI == null)
                 questAcceptUI = FindObjectOfType<QuestAcceptUI>(true);
 
             if (questAcceptUI == null)
+            {
+                EndConversationSequence();
                 return;
+            }
 
             questAcceptUI.ShowQuestAccept(
                 dialogueData.questTitle,
@@ -100,14 +113,83 @@ namespace TEC
 
         private void OnAcceptQuest()
         {
-            Debug.Log($"[NPCDialogueProvider] Quest Accepted : {dialogueData.questID}");
-            onQuestAccepted?.Invoke();
+            // 추가
+            if (CameraSystem.Instance != null)
+            {
+                CameraSystem.Instance.EnterDialogueMode(dialogueCameraFollowPoint, dialogueCameraLookPoint);
+            }
+
+            if (dialogueData != null && dialogueData.acceptLines != null && dialogueData.acceptLines.Count > 0)
+            {
+                dialogueUI.ShowDialogue(CreateTempDialogue(dialogueData.acceptLines), OnAcceptDialogueFinished);
+                return;
+            }
+
+            ExecuteAccept();
         }
 
         private void OnDeclineQuest()
         {
+            // 추가
+            if (CameraSystem.Instance != null)
+            {
+                CameraSystem.Instance.EnterDialogueMode(dialogueCameraFollowPoint, dialogueCameraLookPoint);
+            }
+
+            if (dialogueData != null && dialogueData.declineLines != null && dialogueData.declineLines.Count > 0)
+            {
+                dialogueUI.ShowDialogue(CreateTempDialogue(dialogueData.declineLines), OnDeclineDialogueFinished);
+                return;
+            }
+
+            ExecuteDecline();
+        }
+
+        // 추가
+        private void OnAcceptDialogueFinished()
+        {
+            ExecuteAccept();
+        }
+
+        // 추가
+        private void OnDeclineDialogueFinished()
+        {
+            ExecuteDecline();
+        }
+
+        // 추가
+        private void ExecuteAccept()
+        {
+            Debug.Log($"[NPCDialogueProvider] Quest Accepted : {dialogueData.questID}");
+            onQuestAccepted?.Invoke();
+            EndConversationSequence();
+        }
+
+        // 추가
+        private void ExecuteDecline()
+        {
             Debug.Log($"[NPCDialogueProvider] Quest Declined : {dialogueData.questID}");
             onQuestDeclined?.Invoke();
+            EndConversationSequence();
+        }
+
+        // 추가
+        private void EndConversationSequence()
+        {
+            IsConversationSequenceOpen = false;
+
+            if (CameraSystem.Instance != null)
+            {
+                CameraSystem.Instance.ExitDialogueMode();
+            }
+        }
+
+        // 추가
+        private NPCDialogueDataSO CreateTempDialogue(List<DialogueLineData> lines)
+        {
+            var tempDialogueData = ScriptableObject.CreateInstance<NPCDialogueDataSO>();
+            tempDialogueData.lines = lines;
+            return tempDialogueData;
         }
     }
 }

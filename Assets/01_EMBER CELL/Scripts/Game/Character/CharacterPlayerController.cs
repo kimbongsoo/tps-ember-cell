@@ -61,7 +61,10 @@ namespace TEC
         // 대화 창 오픈 여부
         private bool IsDialogueUIOpen()
         {
-            return DialogueUI.IsDialogueOpen || QuestAcceptUI.IsQuestAcceptOpen;
+            // return DialogueUI.IsDialogueOpen || QuestAcceptUI.IsQuestAcceptOpen;
+            return DialogueUI.IsDialogueOpen
+                || QuestAcceptUI.IsQuestAcceptOpen
+                || NPCDialogueProvider.IsConversationSequenceOpen;
         }
 
         private void Awake()
@@ -339,9 +342,12 @@ namespace TEC
 
         private void LateUpdate()
         {
-            // 추가 인벤 열려있으면 카메라 회전/반동/미니맵 회전도 막기
-            if (characterBase != null && !characterBase.IsDead && IsInventoryUIOpen() || IsDialogueUIOpen() || IsDialogueUIOpen()) //||IsDialogueUIOpen
+            if (characterBase == null || characterBase.IsDead)
                 return;
+
+            if (IsInventoryUIOpen() || IsDialogueUIOpen())
+                return;
+
             CameraRotation();
             CameraRecovery();
             MinimapRotation();
