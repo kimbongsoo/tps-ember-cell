@@ -6,12 +6,10 @@ namespace TEC
 {
     public class NPCDialogueProvider : MonoBehaviour, IInteractionProvider
     {
-        // 추가
         public static bool IsConversationSequenceOpen { get; private set; } = false;
 
         [Header("Interaction UI")]
         [SerializeField] private Sprite actionIcon;
-        // [SerializeField] private string actionMessage = "대화하기"
         [SerializeField] private string actionMessage;
 
         [Header("Dialogue Data")]
@@ -33,12 +31,11 @@ namespace TEC
 
         public List<IInteractionData> Interactions => interactions;
 
+        private QuestState currentQuestState = QuestState.NotStarted;
+
         private void Awake()
         {
-            interactions = new List<IInteractionData>()
-            {
-                new NPCDialogueInteractionData("NPC_DIALOGUE", actionIcon, actionMessage)
-            };
+            RefreshInteractionData();
         }
 
         private void Start()
@@ -50,6 +47,20 @@ namespace TEC
 
             if (questAcceptUI == null)
                 questAcceptUI = FindObjectOfType<QuestAcceptUI>(true);
+
+            // 수정
+            QuestManager.Singleton.OnQuestStateChanged += OnQuestStateChanged;
+
+            RefreshInteractionData();
+        }
+
+        private void OnDisable()
+        {
+            // 수정
+            if (QuestManager.Singleton != null)
+            {
+                QuestManager.Singleton.OnQuestStateChanged -= OnQuestStateChanged;
+            }
         }
 
         public void Interact(IInteractionData data)
@@ -69,7 +80,14 @@ namespace TEC
             if (data.ID != "NPC_DIALOGUE")
                 return;
 
-            // 추가
+            RefreshInteractionData();
+
+            currentQuestState = GetCurrentQuestState();
+
+            List<DialogueLineData> currentLines = GetCurrentDialogueLines(currentQuestState);
+            if (currentLines == null || currentLines.Count == 0)
+                return;
+
             IsConversationSequenceOpen = true;
 
             if (CameraSystem.Instance != null)
@@ -77,11 +95,17 @@ namespace TEC
                 CameraSystem.Instance.EnterDialogueMode(dialogueCameraFollowPoint, dialogueCameraLookPoint);
             }
 
-            dialogueUI.ShowDialogue(dialogueData, OnDialogueFinished);
+            dialogueUI.ShowDialogue(CreateTempDialogue(currentLines), OnDialogueFinished);
         }
 
         private void OnDialogueFinished()
         {
+            if (currentQuestState != QuestState.NotStarted)
+            {
+                EndConversationSequence();
+                return;
+            }
+
             if (dialogueData == null)
             {
                 EndConversationSequence();
@@ -113,7 +137,6 @@ namespace TEC
 
         private void OnAcceptQuest()
         {
-            // 추가
             if (CameraSystem.Instance != null)
             {
                 CameraSystem.Instance.EnterDialogueMode(dialogueCameraFollowPoint, dialogueCameraLookPoint);
@@ -130,7 +153,6 @@ namespace TEC
 
         private void OnDeclineQuest()
         {
-            // 추가
             if (CameraSystem.Instance != null)
             {
                 CameraSystem.Instance.EnterDialogueMode(dialogueCameraFollowPoint, dialogueCameraLookPoint);
@@ -145,35 +167,45 @@ namespace TEC
             ExecuteDecline();
         }
 
-        // 추가
         private void OnAcceptDialogueFinished()
         {
             ExecuteAccept();
         }
 
-        // 추가
         private void OnDeclineDialogueFinished()
         {
             ExecuteDecline();
         }
 
-        // 추가
         private void ExecuteAccept()
         {
             Debug.Log($"[NPCDialogueProvider] Quest Accepted : {dialogueData.questID}");
+
+            // 수정
+            QuestManager.Singleton.StartQuest(dialogueData.questID);
+
             onQuestAccepted?.Invoke();
+
+            RefreshInteractionData();
+
+            if (CharacterPlayerController.Instance != null)
+            {
+                CharacterPlayerController.Instance.InteractionSensor.PulseManuallyNextFrame();
+            }
+
             EndConversationSequence();
         }
 
-        // 추가
         private void ExecuteDecline()
         {
             Debug.Log($"[NPCDialogueProvider] Quest Declined : {dialogueData.questID}");
             onQuestDeclined?.Invoke();
+
+            RefreshInteractionData();
+
             EndConversationSequence();
         }
 
-        // 추가
         private void EndConversationSequence()
         {
             IsConversationSequenceOpen = false;
@@ -184,12 +216,94 @@ namespace TEC
             }
         }
 
-        // 추가
         private NPCDialogueDataSO CreateTempDialogue(List<DialogueLineData> lines)
         {
             var tempDialogueData = ScriptableObject.CreateInstance<NPCDialogueDataSO>();
             tempDialogueData.lines = lines;
             return tempDialogueData;
+        }
+
+        private QuestState GetCurrentQuestState()
+        {
+            if (dialogueData == null)
+                return QuestState.NotStarted;
+
+            if (string.IsNullOrEmpty(dialogueData.questID))
+                return QuestState.NotStarted;
+
+            // 수정
+            return QuestManager.Singleton.GetQuestState(dialogueData.questID);
+        }
+
+        private List<DialogueLineData> GetCurrentDialogueLines(QuestState state)
+        {
+            if (dialogueData == null)
+                return null;
+
+            switch (state)
+            {
+                case QuestState.InProgress:
+                    if (dialogueData.inProgressLines != null && dialogueData.inProgressLines.Count > 0)
+                        return dialogueData.inProgressLines;
+                    break;
+
+                case QuestState.Completed:
+                    if (dialogueData.completedLines != null && dialogueData.completedLines.Count > 0)
+                        return dialogueData.completedLines;
+                    break;
+            }
+
+            return dialogueData.lines;
+        }
+
+        private string GetCurrentActionMessage(QuestState state)
+        {
+            if (dialogueData == null)
+                return actionMessage;
+
+            switch (state)
+            {
+                case QuestState.InProgress:
+                    if (string.IsNullOrEmpty(dialogueData.inProgressActionMessage) == false)
+                        return dialogueData.inProgressActionMessage;
+                    break;
+
+                case QuestState.Completed:
+                    if (string.IsNullOrEmpty(dialogueData.completedActionMessage) == false)
+                        return dialogueData.completedActionMessage;
+                    break;
+            }
+
+            if (string.IsNullOrEmpty(dialogueData.notStartedActionMessage) == false)
+                return dialogueData.notStartedActionMessage;
+
+            return actionMessage;
+        }
+
+        private void RefreshInteractionData()
+        {
+            interactions.Clear();
+
+            QuestState state = GetCurrentQuestState();
+            string currentActionMessage = GetCurrentActionMessage(state);
+
+            interactions.Add(new NPCDialogueInteractionData("NPC_DIALOGUE", actionIcon, currentActionMessage));
+        }
+
+        private void OnQuestStateChanged(string questID, QuestState state)
+        {
+            if (dialogueData == null)
+                return;
+
+            if (dialogueData.questID != questID)
+                return;
+
+            RefreshInteractionData();
+
+            if (CharacterPlayerController.Instance != null)
+            {
+                CharacterPlayerController.Instance.InteractionSensor.PulseManuallyNextFrame();
+            }
         }
     }
 }

@@ -16,28 +16,39 @@ MonoBehaviour:
   npcName: soldier
   lines:
   - speakerName: soldier
-    message: Dialogue 1
+    message: help me
     portrait: {fileID: 0}
   - speakerName: me
-    message: Dialogue 2
+    message: what happen
     portrait: {fileID: 0}
   - speakerName: soldier
-    message: Dialogue 3
+    message: I had my map stolen.
+    portrait: {fileID: 0}
+  - speakerName: me
+    message: Need help?
     portrait: {fileID: 0}
   - speakerName: soldier
-    message: Dialogue 4
-    portrait: {fileID: 0}
-  - speakerName: soldier
-    message: Dialogue 5
+    message: Please find my map
     portrait: {fileID: 0}
   acceptLines:
   - speakerName: soldier
-    message: thank you
+    message: Good Luck
     portrait: {fileID: 0}
   declineLines:
   - speakerName: soldier
-    message: no thanks
+    message: Go Away
     portrait: {fileID: 0}
+  inProgressLines:
+  - speakerName: soldier
+    message: Not yet?
+    portrait: {fileID: 0}
+  completedLines:
+  - speakerName: soldier
+    message: thank you so much
+    portrait: {fileID: 0}
+  notStartedActionMessage: NotStarted
+  inProgressActionMessage: Inprogress
+  completedActionMessage: Complete
   showQuestAcceptUIAfterDialogue: 1
   questID: get_Military_map
   questTitle: get Military Map
