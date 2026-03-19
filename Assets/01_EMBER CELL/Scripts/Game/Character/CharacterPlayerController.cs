@@ -246,13 +246,11 @@ namespace TEC
 
             bool isDialogueOpen = IsDialogueUIOpen();
 
-            //추가 (커서)
             if (isDialogueOpen)
             {
                 InputManager.Singleton.SetCursorForcedByUI(true, true);
             }
-
-            // 추가
+            
             if (wasDialogueUIOpen != isDialogueOpen)
             {
                 var interactionUI = UIManager.Singleton.GetUI<InteractionUI>(UIList.InteractionUI);
@@ -402,7 +400,6 @@ namespace TEC
 
         void CameraTab()
         {
-            //추가
             if (IsDialogueUIOpen())
                 return;
             CameraSystem.Instance.SetChangeCameraSide();
@@ -411,7 +408,6 @@ namespace TEC
 
         void ToggleCrouch()
         {
-            //추가
             if (IsDialogueUIOpen())
                 return;
 
@@ -423,10 +419,6 @@ namespace TEC
 
         void ExecuteReload()
         {
-            //추가
-            if (IsDialogueUIOpen())
-                return;
-
             if (IsDialogueUIOpen())
                 return;
 
@@ -436,10 +428,6 @@ namespace TEC
 
         void ExecuteHolster()
         {
-            //추가
-            if (IsDialogueUIOpen())
-                return;
-
             if (IsDialogueUIOpen())
                 return;
 
@@ -448,7 +436,6 @@ namespace TEC
 
         void ExecuteEquipPrimaryWeapon()
         {
-            //추가
             if (IsDialogueUIOpen())
                 return;
 
@@ -457,10 +444,6 @@ namespace TEC
 
         void ExecuteJump()
         {
-            //추가
-            if (IsDialogueUIOpen())
-                return;
-
             if (IsDialogueUIOpen())
                 return;
 
@@ -469,10 +452,6 @@ namespace TEC
 
         void ExecuteRoll()
         {
-            //추가
-            if (IsDialogueUIOpen())
-                return;
-
             if (IsDialogueUIOpen())
                 return;
 
@@ -514,8 +493,6 @@ namespace TEC
             // UI 전환
             CrossHairUI.Instance?.gameObject.SetActive(false);
             RedDotUI.Instance?.gameObject.SetActive(true);
-
-            Debug.Log("🎯 EnterScopeMode()");
         }
 
         private void ExitScopeMode()
@@ -580,7 +557,6 @@ namespace TEC
             MainHUD.Instance.ToggleActionUI();
         }
 
-        //인디케이터 추가
         private void OnHitAttackerPosition(Vector3 attackerPosition)
         {
             MainHUD.Instance.ShowHitDirection(transform, attackerPosition);

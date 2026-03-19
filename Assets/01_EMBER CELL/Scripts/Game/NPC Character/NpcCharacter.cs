@@ -72,8 +72,7 @@ namespace TEC
         private Animator characterAnimator;
         private CharacterController characterController;
         private RigBuilder rigBuilder;
-
-        // 추가
+        
         [Header("Quest Complete")]
         [SerializeField] private string completeQuestID;
 

@@ -4312,6 +4312,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHP: 100
+  completeQuestID: 
 --- !u!114 &1823603028
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4789,6 +4790,24 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2052122822 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6156213052512621630, guid: 99bf9b2781c074c209d08dca5047be41, type: 3}
+  m_PrefabInstance: {fileID: 4156055947923852102}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2052122831
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2052122822}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f6b54f44d7324030a25eeb6096e712f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  questID: get_Military_map
 --- !u!1 &2118703517
 GameObject:
   m_ObjectHideFlags: 0
@@ -5436,7 +5455,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6156213052512621630, guid: 99bf9b2781c074c209d08dca5047be41, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2052122831}
   m_SourcePrefab: {fileID: 100100000, guid: 99bf9b2781c074c209d08dca5047be41, type: 3}
 --- !u!1001 &4689261426813566992
 PrefabInstance:

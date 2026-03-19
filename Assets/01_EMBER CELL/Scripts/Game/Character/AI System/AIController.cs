@@ -73,29 +73,6 @@ namespace TEC
         {
             navAgent.isStopped = false;
             navAgent.SetDestination(destination);
-
-            // 추가 NavMesh 위로 보정
-            // if (!navAgent.isOnNavMesh)
-            // {
-            //     if (NavMesh.SamplePosition(transform.position, out NavMeshHit selfHit, 3.0f, NavMesh.AllAreas))
-            //     {
-            //         navAgent.Warp(selfHit.position);
-            //     }
-            //     else
-            //     {
-            //         navAgent.ResetPath();
-            //         return;
-            //     }
-            // }
-
-            // // [CHANGED] 목적지 보정 반경 확대
-            // if (NavMesh.SamplePosition(destination, out NavMeshHit destHit, 5.0f, NavMesh.AllAreas))
-            // {
-            //     navAgent.SetDestination(destHit.position);
-            //     return;
-            // }
-
-            // navAgent.ResetPath();
         }
 
         public void Stop()

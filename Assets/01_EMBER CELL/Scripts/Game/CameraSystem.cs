@@ -109,7 +109,6 @@ namespace TEC
             StartFovLerp(Camera.main.fieldOfView, tpsFov, fovBlendTime);
         }
 
-        //추가
         public void EnterDialogueMode(Transform followTarget, Transform lookTarget)
         {
             if (dialogueCamera == null)
@@ -120,7 +119,6 @@ namespace TEC
             dialogueCamera.Priority = dialoguePriority;
         }
 
-        //추가
         public void ExitDialogueMode()
         {
             if (dialogueCamera == null)

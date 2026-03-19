@@ -13,8 +13,7 @@ namespace TEC
         Material = 3,
         Ammo = 4,
     }
-
-    //추가
+    
     public enum ItemUseEffectType
     {
         None = 0,
@@ -31,8 +30,7 @@ namespace TEC
         public Sprite ItemIcon;
         public int MaxStack;
         public int DropQuantity;
-
-        //추가
+  
         [Header("Use Effect")]
         public ItemUseEffectType UseEffectType = ItemUseEffectType.None;
         public float UseEffectValue = 0f;
