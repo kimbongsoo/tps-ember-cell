@@ -31,6 +31,11 @@ namespace TEC
             // Manager & System Initialize
             UIManager.Singleton.Initialize();
 
+            //SoundManager Initialize
+            var soundMgrPrefab = Resources.Load<GameObject>("Systems/TEC.SoundManager");
+            Instantiate(soundMgrPrefab);
+            SoundManager.Singleton.Initialize();
+
             // GameDAta Initialize
             GameDataModel.Singleton.Initialize();
 

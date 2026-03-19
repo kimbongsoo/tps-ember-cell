@@ -48,6 +48,8 @@ namespace TEC
 
                 // UIManager.Show<RedDotUI>(UIList.RedDotUI);
 
+                // SoundManager.Singleton.PlaySound("Music_1");
+
             }
         }
 

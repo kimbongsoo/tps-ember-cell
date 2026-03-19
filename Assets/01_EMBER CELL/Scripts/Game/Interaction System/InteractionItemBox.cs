@@ -64,7 +64,7 @@ namespace TEC
                 });
 
                 // TODO : Interaction UI를 갱신
-                //추가
+                
                 CharacterPlayerController.Instance?.InteractionSensor?.PulseManuallyNextFrame();
                 Destroy(gameObject);
                 return;

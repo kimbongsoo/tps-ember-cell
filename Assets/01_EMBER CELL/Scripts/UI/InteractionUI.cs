@@ -41,38 +41,15 @@ namespace TEC
 
         private void Update()
         {
-            //추가
-            // if (isBlocked)
-            //     return;
-
             float mouseWheel = Input.GetAxis("Mouse ScrollWheel");
             if (mouseWheel != 0f)
             {
                 MoveSelection(mouseWheel);
             }
         }
-        //추가
-        // public void SetBlocked(bool blocked)
-        // {
-        //     isBlocked = blocked;
-
-        //     if (blocked)
-        //     {
-        //         ClearData(); // 기존 데이터 제거
-
-        //         gameObject.SetActive(false);
-        //     }
-        //     else
-        //     {
-        //         RefreshVisibility();
-        //     }
-        // }
 
         public void AddInteractionData(InteractionDataContext context)
         {
-            // if (isBlocked)
-            //     return;
-
             dataContexts.Add(context);
 
             string id = context.ID;
@@ -142,18 +119,9 @@ namespace TEC
 
         private void RefreshVisibility()
         {
-            //추가
-            // if (isBlocked)
-            // {
-            //     gameObject.SetActive(false);
-            //     return;
-            // }
-
-            // stackedUIMap 기준(중복 스택 포함한 "표시 리스트")이 0이면 숨김
+            // stackedUIMap 기준이 0이면 숨김
             bool hasAny = stackedUIMap.Count > 0;
 
-            // if (hasAny) Show();
-            // else Hide();
             gameObject.SetActive(hasAny);
         }
 
@@ -184,10 +152,6 @@ namespace TEC
 
         public void TryInteract()
         {
-            //추가
-            // if (isBlocked)
-            //     return;
-
             if (currentSelectionIndex < 0)
                 return;
 

@@ -17,6 +17,8 @@ namespace TEC
             UIManager.Show<CrossHairUI>(UIList.CrossHairUI);
             // UIManager.Show<InteractionUI>(UIList.InteractionUI);
 
+            SoundManager.Singleton.PlayMusic("Music_1");
+
             yield return null;
         }
 

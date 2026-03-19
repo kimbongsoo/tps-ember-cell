@@ -105,6 +105,8 @@ namespace TEC
 
             characterBase.Initialize(true);
 
+            // SoundManager.Singleton.PlayMusic("Music_1");
+
 
             // OnFired(characterBase.PrimaryWeapon.RemainAmmo, characterBase.PrimaryWeapon.MaxAmmo);
         }
@@ -233,7 +235,7 @@ namespace TEC
                     characterBase.Revive();
                 return;
             }
-            
+
             if (isSequenceControl)
             {
                 characterBase.IsRunning = false;
