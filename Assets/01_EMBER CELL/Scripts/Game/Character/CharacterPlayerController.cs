@@ -46,6 +46,11 @@ namespace TEC
 
         //추가
         private bool wasDialogueUIOpen = false;
+        private bool isSequenceControl = false;
+        public void SetSequenceControl(bool active)
+        {
+            isSequenceControl = active;
+        }
 
         // 추가 인벤 열려있을 때 체크
         private bool IsInventoryUIOpen()
@@ -61,11 +66,11 @@ namespace TEC
         // 대화 창 오픈 여부
         private bool IsDialogueUIOpen()
         {
-            // return DialogueUI.IsDialogueOpen || QuestAcceptUI.IsQuestAcceptOpen;
             return DialogueUI.IsDialogueOpen
                 || QuestAcceptUI.IsQuestAcceptOpen
-                || NPCDialogueProvider.IsConversationSequenceOpen;
-        }
+                || NPCDialogueProvider.IsConversationSequenceOpen
+                || isSequenceControl;
+        }   
 
         private void Awake()
         {
@@ -226,6 +231,23 @@ namespace TEC
             {
                 if (Input.GetKeyDown(KeyCode.P))
                     characterBase.Revive();
+                return;
+            }
+            
+            if (isSequenceControl)
+            {
+                characterBase.IsRunning = false;
+                characterBase.IsAiming = false;
+
+                if (isScoped)
+                    ExitScopeMode();
+
+                crosshairCurrentSpread = Mathf.Clamp(
+                    crosshairCurrentSpread - (crosshairRecoverySpeed * Time.deltaTime),
+                    crosshairSpreadMin,
+                    crosshairSpreadMax);
+
+                CrossHairUI.Instance.SetCrosshairSpread(crosshairCurrentSpread / crosshairSpreadMax);
                 return;
             }
             
