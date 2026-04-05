@@ -56,6 +56,12 @@ namespace TEC
         private float blendCrouch = 0f;
         private float blendRunning = 0f;
 
+        // 추가
+        [Header("Move Speed")]
+        public float runSpeedMultiplier = 1.5f;
+        public float aimingSpeedMultiplier = 0.6f;
+        public float crouchSpeedMultiplier = 0.5f;
+
         [Header("IK Setting")]
         public Transform aimingTargetPoint;
         public TwoBoneIKConstraint leftHandIk;
@@ -240,9 +246,32 @@ namespace TEC
 
                 // movement = (transform.forward * input.y + transform.right * input.x) 
                 //             * moveSpeed * Time.deltaTime;
+
+                // 추가
+                float currentSpeed = moveSpeed;
+
+                // 추가
+                if (isRunning && currentSP > 0f)
+                {
+                    currentSpeed *= runSpeedMultiplier;
+                }
+
+                // 추가
+                if (isAiming)
+                {
+                    currentSpeed *= aimingSpeedMultiplier;
+                }
+
+                // 추가
+                if (isCrouch)
+                {
+                    currentSpeed *= crouchSpeedMultiplier;
+                }
+
                 Vector3 dir = transform.forward * input.y + transform.right * input.x;
                 if (dir.sqrMagnitude > 1f) dir.Normalize();   // 대각 속도 보정
-                movement = dir * moveSpeed * Time.deltaTime;
+                // movement = dir * moveSpeed * Time.deltaTime;
+                movement = dir * currentSpeed * Time.deltaTime;
             }
             else
             {
