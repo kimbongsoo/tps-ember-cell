@@ -72,6 +72,12 @@ namespace TEC
                 || isSequenceControl;
         }   
 
+        // 추가
+        private bool IsAltCursorOpen()
+        {
+            return Input.GetKey(KeyCode.LeftAlt);
+        }
+
         private void Awake()
         {
             characterBase = GetComponent<CharacterBase>();
@@ -269,6 +275,7 @@ namespace TEC
             }
 
             bool isDialogueOpen = IsDialogueUIOpen();
+            bool isAltCursorOpen = IsAltCursorOpen();
 
             if (isDialogueOpen)
             {
@@ -308,7 +315,7 @@ namespace TEC
             }
             //여기까지 추가
 
-            if (isDialogueOpen)
+            if (isDialogueOpen || isAltCursorOpen)
             {
                 characterBase.IsRunning = false;
                 characterBase.IsAiming = false;
@@ -367,7 +374,7 @@ namespace TEC
             if (characterBase == null || characterBase.IsDead)
                 return;
 
-            if (IsInventoryUIOpen() || IsDialogueUIOpen())
+            if (IsInventoryUIOpen() || IsDialogueUIOpen() || IsAltCursorOpen())
                 return;
 
             CameraRotation();
