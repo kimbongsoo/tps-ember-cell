@@ -34,13 +34,14 @@ namespace TEC
         public static void SystemBoot()
         {
             Scene activeScene = EditorSceneManager.GetActiveScene();
+            Debug.Log($"Active Scene Name : [{activeScene.name}]"); //추가
             if (IsActiveBootStrapper && false == activeScene.name.Equals("Main"))
             {
                 InternalBoot();
             }
 
             //만약 인게임 씬에서 바로 실행한 상황이라면? 인게임 관련 UI가 나오도록 예외처리 추가
-            if (activeScene.name.Equals("Ingame"))
+            if (activeScene.name.Equals("Ingame") || activeScene.name.Equals("IngameLevel") )
             {
                 UIManager.Show<MainHUD>(UIList.MainHUD);
                 UIManager.Show<CrossHairUI>(UIList.CrossHairUI);

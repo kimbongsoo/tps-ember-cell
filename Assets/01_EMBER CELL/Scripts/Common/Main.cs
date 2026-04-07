@@ -9,7 +9,8 @@ namespace TEC
         None,
         Empty,
         Title,
-        Ingame
+        Ingame,
+        IngameLevel, //추가
     }
     public class Main : SingletonBase<Main>
     {
@@ -68,12 +69,19 @@ namespace TEC
                     {
                         ChangeScene<TitleScene>(sceneType);
                     }
-                    break;
+                break;
+
                 case SceneType.Ingame:
                     {
                         ChangeScene<IngameScene>(sceneType);
                     }
-                    break;
+                break;
+
+                case SceneType.IngameLevel: // 추가
+                {
+                    ChangeScene<IngameLevelScene>(sceneType); // 추가
+                }
+                break;
             }
         }
 
