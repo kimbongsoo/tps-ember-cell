@@ -10,6 +10,10 @@ namespace TEC
         // 1. ClockStone의 AudioController에게 플레이 시킬 사운드 전달
         //사운드 설정에 대한 값/이벤트를 전달
 
+        // 추가
+        private const string MASTER_VOLUME_KEY = "MasterVolume";
+        private const string MUSIC_VOLUME_KEY = "MusicVolume";
+        private const string SFX_VOLUME_KEY = "SfxVolume";
         public float MasterVolume // Volume 0 ~ 1
         {
             get => AudioController.GetGlobalVolume();
@@ -31,9 +35,21 @@ namespace TEC
         public void Initialize()
         {
             //TODO : 개인 설정되어있는 Game Option - Volume 값을 Audio Controller에 전달해서 세팅
+            MasterVolume = PlayerPrefs.GetFloat(MASTER_VOLUME_KEY, 1f);
+            MusicVolume = PlayerPrefs.GetFloat(MUSIC_VOLUME_KEY, 1f);
+            SfxVolume = PlayerPrefs.GetFloat(SFX_VOLUME_KEY, 1f);
 
             //Hint : PlayerPrefabs를 이용해서, 개인 PC에 옵션 값을 저장하고, 그 값을 불러와서 AudioController의 볼륨을 셋팅하는 기능 구현.
             
+        }
+
+        // 추가
+        public void SaveVolumeOption()
+        {
+            PlayerPrefs.SetFloat(MASTER_VOLUME_KEY, MasterVolume);
+            PlayerPrefs.SetFloat(MUSIC_VOLUME_KEY, MusicVolume);
+            PlayerPrefs.SetFloat(SFX_VOLUME_KEY, SfxVolume);
+            PlayerPrefs.Save();
         }
 
         public void PlayMusic(string musicName)

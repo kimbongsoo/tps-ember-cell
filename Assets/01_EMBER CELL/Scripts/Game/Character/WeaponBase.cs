@@ -115,6 +115,9 @@ namespace TEC
                 clipAmmo--;
 
                 EffectManager.Instance.SpawnMuzzleEffect(fireStartPoint);
+
+                // [추가] 발사가 성공한 시점에 총 소리 재생
+                SoundManager.Singleton.PlaySound("gun_rifle_shot_01", fireStartPoint.position);
                 
                 lastFireTime = Time.time;
                 // Debug.DrawLine(fireStartPoint.position, fireStartPoint.position + fireStartPoint * 10f, Color.yellow, 1f);
