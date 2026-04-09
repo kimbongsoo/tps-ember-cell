@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -16,9 +17,15 @@ namespace TEC
         [SerializeField] private Image portraitImage;
         [SerializeField] private Button nextButton;
 
+        [Header("TypeWriter Effect")] 
+        [SerializeField] private float typeWriterInterval = 0.03f; 
+
         private NPCDialogueDataSO currentDialogueData;
         private int currentLineIndex = -1;
         private Action onDialogueFinished;
+
+        private Coroutine typeWriterCoroutine; 
+        private bool isTyping = false; 
 
         private void Awake()
         {
@@ -28,7 +35,7 @@ namespace TEC
                 nextButton.onClick.AddListener(OnClickNext);
             }
 
-            gameObject.SetActive(false);
+            gameObject.SetActive(false); 
         }
 
         public void ShowDialogue(NPCDialogueDataSO dialogueData, Action onFinished = null)
@@ -54,6 +61,12 @@ namespace TEC
         {
             if (currentDialogueData == null)
                 return;
+
+            if (isTyping) 
+            {
+                CompleteCurrentTyping();
+                return;
+            }
 
             currentLineIndex++;
 
@@ -81,18 +94,84 @@ namespace TEC
             if (speakerNameText != null)
                 speakerNameText.text = line.speakerName;
 
-            if (messageText != null)
-                messageText.text = line.message;
-
             if (portraitImage != null)
             {
                 portraitImage.sprite = line.portrait;
                 portraitImage.enabled = line.portrait != null;
             }
+
+            if (typeWriterCoroutine != null)
+            {
+                StopCoroutine(typeWriterCoroutine);
+                typeWriterCoroutine = null;
+            }
+
+            if (messageText != null)
+                messageText.text = string.Empty;
+
+            typeWriterCoroutine = StartCoroutine(TypeWriterRoutine(line.message)); 
+        }
+
+        private IEnumerator TypeWriterRoutine(string fullMessage)
+        {
+            isTyping = true;
+
+            if (messageText == null)
+            {
+                isTyping = false;
+                yield break;
+            }
+
+            if (string.IsNullOrEmpty(fullMessage))
+            {
+                messageText.text = string.Empty;
+                isTyping = false;
+                typeWriterCoroutine = null;
+                yield break;
+            }
+
+            for (int i = 0; i < fullMessage.Length; i++)
+            {
+                messageText.text += fullMessage[i];
+                yield return new WaitForSeconds(typeWriterInterval);
+            }
+
+            isTyping = false;
+            typeWriterCoroutine = null;
+        }
+
+        private void CompleteCurrentTyping() 
+        {
+            if (currentDialogueData == null)
+                return;
+
+            if (currentLineIndex < 0 || currentLineIndex >= currentDialogueData.lines.Count)
+                return;
+
+            if (typeWriterCoroutine != null)
+            {
+                StopCoroutine(typeWriterCoroutine);
+                typeWriterCoroutine = null;
+            }
+
+            DialogueLineData line = currentDialogueData.lines[currentLineIndex];
+
+            if (messageText != null)
+                messageText.text = line.message;
+
+            isTyping = false;
         }
 
         public override void Hide()
         {
+            if (typeWriterCoroutine != null) 
+            {
+                StopCoroutine(typeWriterCoroutine); 
+                typeWriterCoroutine = null; 
+            }
+
+            isTyping = false; 
+
             base.Hide();
 
             currentDialogueData = null;
@@ -110,6 +189,7 @@ namespace TEC
                 portraitImage.sprite = null;
                 portraitImage.enabled = false;
             }
+
             IsDialogueOpen = false;
         }
     }

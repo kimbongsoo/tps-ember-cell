@@ -10,6 +10,9 @@ namespace TEC
         // 다른 스크립트에서 퀘스트 UI 오픈 여부 확인용
         public static bool IsQuestAcceptOpen { get; private set; } = false;
 
+        [Header("Dialogue Root")]
+        // [SerializeField] private GameObject dialogueUIRoot; // [CHANGED] 부모 캔버스(UI.DialogueUI)
+
         [Header("Quest Accept UI")]
         [SerializeField] private TextMeshProUGUI questTitleText;
         [SerializeField] private TextMeshProUGUI questDescriptionText;
@@ -47,6 +50,11 @@ namespace TEC
             if (questDescriptionText != null)
                 questDescriptionText.text = questDescription;
 
+            // [CHANGED] 부모 캔버스 활성화
+            // if (dialogueUIRoot != null)
+            //     dialogueUIRoot.SetActive(true);
+
+
             Show();
 
             IsQuestAcceptOpen = true;
@@ -79,6 +87,10 @@ namespace TEC
 
             if (questDescriptionText != null)
                 questDescriptionText.text = string.Empty;
+
+            // [CHANGED] 부모 캔버스 비활성화
+            // if (dialogueUIRoot != null)
+            //     dialogueUIRoot.SetActive(false);
 
             IsQuestAcceptOpen = false;
         }

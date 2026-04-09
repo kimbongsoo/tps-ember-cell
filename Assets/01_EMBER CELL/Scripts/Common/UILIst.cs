@@ -30,6 +30,9 @@ namespace TEC
         MainHUD,
         InteractionUI,
         RedDotUI,
+        DialogueRoot,
+        // DialogueUI,
+        // QuestAcceptUI,
 
         //인벤토리
         InventoryRenewalUI,

@@ -37,18 +37,16 @@ namespace TEC
         {
             RefreshInteractionData();
         }
-
         private void Start()
         {
-            UIManager.Singleton.GetUI<MainHUD>(UIList.MainHUD);
+            UIManager.Singleton.GetUI<DialogueRoot>(UIList.DialogueRoot);
 
-            if (dialogueUI == null)
-                dialogueUI = FindObjectOfType<DialogueUI>(true);
+            if (DialogueRoot.Instance != null)
+            {
+                dialogueUI = DialogueRoot.Instance.DialogueUI;
+                questAcceptUI = DialogueRoot.Instance.QuestAcceptUI;
+            }
 
-            if (questAcceptUI == null)
-                questAcceptUI = FindObjectOfType<QuestAcceptUI>(true);
-
-            // 수정
             QuestManager.Singleton.OnQuestStateChanged += OnQuestStateChanged;
 
             RefreshInteractionData();
@@ -71,8 +69,13 @@ namespace TEC
             if (dialogueData == null)
                 return;
 
-            if (dialogueUI == null)
-                dialogueUI = FindObjectOfType<DialogueUI>(true);
+            // [CHANGED] 생성 보장
+            UIManager.Singleton.GetUI<DialogueRoot>(UIList.DialogueRoot);
+
+            if (DialogueRoot.Instance != null)
+            {
+                dialogueUI = DialogueRoot.Instance.DialogueUI;
+            }
 
             if (dialogueUI == null)
                 return;
@@ -94,6 +97,9 @@ namespace TEC
             {
                 CameraSystem.Instance.EnterDialogueMode(dialogueCameraFollowPoint, dialogueCameraLookPoint);
             }
+
+            // [CHANGED] Root 활성화
+            DialogueRoot.Instance.Show();
 
             dialogueUI.ShowDialogue(CreateTempDialogue(currentLines), OnDialogueFinished);
         }
