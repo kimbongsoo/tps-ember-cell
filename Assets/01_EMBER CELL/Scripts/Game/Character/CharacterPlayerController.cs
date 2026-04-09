@@ -237,6 +237,13 @@ namespace TEC
             //부활 임시코드
             if (characterBase.IsDead)
             {
+                var interactionUI = UIManager.Singleton.GetUI<InteractionUI>(UIList.InteractionUI); 
+                if (interactionUI != null) 
+                {
+                    interactionUI.ClearData(); 
+                    interactionUI.Hide(); 
+                }
+
                 if (Input.GetKeyDown(KeyCode.P))
                     characterBase.Revive();
                 return;

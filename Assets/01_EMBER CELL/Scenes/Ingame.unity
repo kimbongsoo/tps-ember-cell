@@ -1841,6 +1841,7 @@ MonoBehaviour:
   sequenceDelay: 0.4
   sequenceCameraFollowPoint: {fileID: 0}
   sequenceCameraLookPoint: {fileID: 0}
+  nextSceneType: 4
 --- !u!65 &513830286
 BoxCollider:
   m_ObjectHideFlags: 0

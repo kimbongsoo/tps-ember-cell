@@ -9,6 +9,9 @@ namespace TEC
     {
         public override IEnumerator OnStart()
         {
+            Time.timeScale = 1f; 
+            Time.fixedDeltaTime = 0.02f;
+
             AsyncOperation async = SceneManager.LoadSceneAsync(SceneType.Ingame.ToString(), LoadSceneMode.Single);
             yield return new WaitUntil(()=> async.isDone);
             // TODO : Ingame Scene Initialize

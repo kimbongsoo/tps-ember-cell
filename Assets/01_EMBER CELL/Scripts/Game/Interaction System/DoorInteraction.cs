@@ -30,6 +30,9 @@ namespace TEC
         [SerializeField] private Transform sequenceCameraFollowPoint;
         [SerializeField] private Transform sequenceCameraLookPoint;
 
+        [Header("Scene Transition")] // 추가
+        [SerializeField] private SceneType nextSceneType = SceneType.IngameLevel; // 추가
+
         private bool isOpen = false;
         private bool isSequencePlaying = false;
 
@@ -152,6 +155,12 @@ namespace TEC
             if (playerController.InteractionSensor != null)
             {
                 playerController.InteractionSensor.PulseManuallyNextFrame();
+            }
+
+            // 🔥 [CHANGED] 씬 전환 추가 (핵심)
+            if (Main.Singleton != null)
+            {
+                Main.Singleton.ChangeScene(nextSceneType);
             }
         }
 
