@@ -37,8 +37,11 @@ namespace TEC
         {
             RefreshInteractionData();
         }
+
         private void Start()
         {
+            UIManager.Singleton.GetUI<MainHUD>(UIList.MainHUD);
+
             UIManager.Singleton.GetUI<DialogueRoot>(UIList.DialogueRoot);
 
             if (DialogueRoot.Instance != null)
@@ -54,7 +57,6 @@ namespace TEC
 
         private void OnDisable()
         {
-            // 수정
             if (QuestManager.Singleton != null)
             {
                 QuestManager.Singleton.OnQuestStateChanged -= OnQuestStateChanged;
@@ -67,21 +69,27 @@ namespace TEC
                 return;
 
             if (dialogueData == null)
+            {
                 return;
+            }
 
-            // [CHANGED] 생성 보장
             UIManager.Singleton.GetUI<DialogueRoot>(UIList.DialogueRoot);
 
             if (DialogueRoot.Instance != null)
             {
                 dialogueUI = DialogueRoot.Instance.DialogueUI;
+                questAcceptUI = DialogueRoot.Instance.QuestAcceptUI;
             }
 
             if (dialogueUI == null)
+            {
                 return;
+            }
 
             if (data.ID != "NPC_DIALOGUE")
+            {
                 return;
+            }
 
             RefreshInteractionData();
 
@@ -89,7 +97,9 @@ namespace TEC
 
             List<DialogueLineData> currentLines = GetCurrentDialogueLines(currentQuestState);
             if (currentLines == null || currentLines.Count == 0)
+            {
                 return;
+            }
 
             IsConversationSequenceOpen = true;
 
@@ -98,8 +108,10 @@ namespace TEC
                 CameraSystem.Instance.EnterDialogueMode(dialogueCameraFollowPoint, dialogueCameraLookPoint);
             }
 
-            // [CHANGED] Root 활성화
-            DialogueRoot.Instance.Show();
+            if (DialogueRoot.Instance != null)
+            {
+                DialogueRoot.Instance.Show();
+            }
 
             dialogueUI.ShowDialogue(CreateTempDialogue(currentLines), OnDialogueFinished);
         }
@@ -124,8 +136,14 @@ namespace TEC
                 return;
             }
 
-            if (questAcceptUI == null)
-                questAcceptUI = FindObjectOfType<QuestAcceptUI>(true);
+            UIManager.Singleton.GetUI<DialogueRoot>(UIList.DialogueRoot);
+
+            if (DialogueRoot.Instance != null)
+            {
+                dialogueUI = DialogueRoot.Instance.DialogueUI;
+                questAcceptUI = DialogueRoot.Instance.QuestAcceptUI;
+                DialogueRoot.Instance.Show();
+            }
 
             if (questAcceptUI == null)
             {
@@ -187,7 +205,6 @@ namespace TEC
         {
             Debug.Log($"[NPCDialogueProvider] Quest Accepted : {dialogueData.questID}");
 
-            // 수정
             QuestManager.Singleton.StartQuest(dialogueData.questID);
 
             onQuestAccepted?.Invoke();
@@ -220,6 +237,11 @@ namespace TEC
             {
                 CameraSystem.Instance.ExitDialogueMode();
             }
+
+            if (DialogueRoot.Instance != null)
+            {
+                DialogueRoot.Instance.Hide();
+            }
         }
 
         private NPCDialogueDataSO CreateTempDialogue(List<DialogueLineData> lines)
@@ -237,7 +259,6 @@ namespace TEC
             if (string.IsNullOrEmpty(dialogueData.questID))
                 return QuestState.NotStarted;
 
-            // 수정
             return QuestManager.Singleton.GetQuestState(dialogueData.questID);
         }
 
