@@ -33,6 +33,7 @@ namespace TEC
         DialogueRoot,
         // DialogueUI,
         // QuestAcceptUI,
+        ResultUI,
 
         //인벤토리
         InventoryRenewalUI,
