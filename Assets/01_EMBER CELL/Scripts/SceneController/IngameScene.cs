@@ -10,15 +10,32 @@ namespace TEC
         public override IEnumerator OnStart()
         {
             Time.timeScale = 1f; 
-            Time.fixedDeltaTime = 0.02f;
+            Time.fixedDeltaTime = 0.02f; 
 
             AsyncOperation async = SceneManager.LoadSceneAsync(SceneType.Ingame.ToString(), LoadSceneMode.Single);
             yield return new WaitUntil(()=> async.isDone);
-            // TODO : Ingame Scene Initialize
-            // TODO : Show Ingame Scene UI
+
             UIManager.Show<MainHUD>(UIList.MainHUD);
             UIManager.Show<CrossHairUI>(UIList.CrossHairUI);
-            // UIManager.Show<InteractionUI>(UIList.InteractionUI);
+
+            var interactionUI = UIManager.Singleton.GetUI<InteractionUI>(UIList.InteractionUI); 
+            if (interactionUI != null) 
+            {
+                interactionUI.ClearData(); 
+                interactionUI.Hide(); 
+            }
+
+            var resultUI = UIManager.Singleton.GetUI<ResultUI>(UIList.ResultUI); 
+            if (resultUI != null) 
+            {
+                resultUI.Hide(); 
+            }
+
+            if (CharacterPlayerController.Instance != null &&
+                CharacterPlayerController.Instance.InteractionSensor != null) 
+            {
+                CharacterPlayerController.Instance.InteractionSensor.PulseManuallyNextFrame(); 
+            }
 
             SoundManager.Singleton.PlayMusic("Music_1");
 
@@ -27,15 +44,23 @@ namespace TEC
 
         public override IEnumerator OnEnd()
         {
+            var interactionUI = UIManager.Singleton.GetUI<InteractionUI>(UIList.InteractionUI); 
+            if (interactionUI != null) 
+            {
+                interactionUI.ClearData(); 
+                interactionUI.Hide(); 
+            }
+
+            var resultUI = UIManager.Singleton.GetUI<ResultUI>(UIList.ResultUI); 
+            if (resultUI != null) 
+            {
+                resultUI.Hide(); 
+            }
+
             yield return null;
 
-            // // TODO : Ingame Scene Destory
-            // // TODO : Hide Ingame Scene UI
             UIManager.Hide<MainHUD>(UIList.MainHUD);
             UIManager.Hide<CrossHairUI>(UIList.CrossHairUI);
-            // UIManager.Hide<InteractionUI>(UIList.InteractionUI);
-
         }
-
     }
 }

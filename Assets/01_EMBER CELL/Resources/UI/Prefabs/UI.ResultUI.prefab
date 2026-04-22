@@ -803,6 +803,7 @@ GameObject:
   - component: {fileID: 4873481290169332377}
   - component: {fileID: 3097921274799556300}
   - component: {fileID: 3843785076338632928}
+  - component: {fileID: 4353279938780116244}
   m_Layer: 5
   m_Name: UI.ResultUI
   m_TagString: Untagged
@@ -898,6 +899,21 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &4353279938780116244
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5816112848179056756}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48ce446b2833d4edabfd27649dd59f52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playtimeText: {fileID: 3082992088846917406}
+  hitRateText: {fileID: 309287904256184675}
+  continueButton: {fileID: 5081136050735977069}
 --- !u!1 &6915715109647532533
 GameObject:
   m_ObjectHideFlags: 0

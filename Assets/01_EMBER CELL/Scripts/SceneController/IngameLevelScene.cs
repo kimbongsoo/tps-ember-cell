@@ -7,10 +7,11 @@ namespace TEC
 {
     public class IngameLevelScene : SceneBase
     {
-        private CharacterBase playerCharacterBase;
-        private bool isReturning = false;
+        private CharacterBase playerCharacterBase; 
+        private bool isReturning = false; 
 
         private const string TARGET_QUEST_ID = "get_Military_map"; 
+        private ResultUI resultUI; 
 
         public override IEnumerator OnStart()
         {
@@ -19,7 +20,7 @@ namespace TEC
 
             AsyncOperation async = SceneManager.LoadSceneAsync(SceneType.IngameLevel.ToString(), LoadSceneMode.Single);
 
-            if (async == null) 
+            if (async == null)
             {
                 Debug.LogError($"[IngameLevelScene] LoadSceneAsync Failed : {SceneType.IngameLevel}"); 
                 yield break; 
@@ -27,12 +28,12 @@ namespace TEC
 
             yield return new WaitUntil(() => async.isDone);
 
-            if (CharacterPlayerController.Instance != null)
+            if (CharacterPlayerController.Instance != null) 
             {
-                playerCharacterBase = CharacterPlayerController.Instance.GetComponent<CharacterBase>();
+                playerCharacterBase = CharacterPlayerController.Instance.GetComponent<CharacterBase>(); 
             }
 
-            if (playerCharacterBase != null)
+            if (playerCharacterBase != null) 
             {
                 playerCharacterBase.OnDeadStateChanged += OnPlayerDeadStateChanged; 
             }
@@ -42,9 +43,14 @@ namespace TEC
                 QuestManager.Singleton.OnQuestStateChanged += OnQuestStateChanged; 
             }
 
+            resultUI = UIManager.Singleton.GetUI<ResultUI>(UIList.ResultUI); 
+            if (resultUI != null)
+            {
+                resultUI.Hide(); 
+            }
+
             UIManager.Show<MainHUD>(UIList.MainHUD);
             UIManager.Show<CrossHairUI>(UIList.CrossHairUI);
-            // UIManager.Show<InteractionUI>(UIList.InteractionUI);
 
             var interactionUI = UIManager.Singleton.GetUI<InteractionUI>(UIList.InteractionUI);
             if (interactionUI != null) 
@@ -60,15 +66,20 @@ namespace TEC
 
         public override IEnumerator OnEnd()
         {
-            if (playerCharacterBase != null)
+            if (playerCharacterBase != null) 
             {
                 playerCharacterBase.OnDeadStateChanged -= OnPlayerDeadStateChanged; 
-                playerCharacterBase = null; 
+                playerCharacterBase = null;
             }
 
             if (QuestManager.Singleton != null) 
             {
                 QuestManager.Singleton.OnQuestStateChanged -= OnQuestStateChanged; 
+            }
+
+            if (resultUI != null) 
+            {
+                resultUI.Hide(); 
             }
 
             var interactionUI = UIManager.Singleton.GetUI<InteractionUI>(UIList.InteractionUI); 
@@ -82,7 +93,6 @@ namespace TEC
 
             UIManager.Hide<MainHUD>(UIList.MainHUD);
             UIManager.Hide<CrossHairUI>(UIList.CrossHairUI);
-            // UIManager.Hide<InteractionUI>(UIList.InteractionUI);
         }
 
         private void OnPlayerDeadStateChanged(bool isDead) 
@@ -95,7 +105,7 @@ namespace TEC
 
             isReturning = true;
 
-            Debug.Log("[IngameLevelScene] Player Dead → Return"); 
+            Debug.Log("[IngameLevelScene] Player Dead → Return");
 
             StartCoroutine(ReturnToIngameRoutine()); 
         }
@@ -111,14 +121,12 @@ namespace TEC
             if (isReturning) 
                 return;
 
-            isReturning = true;
+            isReturning = true; 
 
-            Debug.Log("[IngameLevelScene] Quest Complete → Return"); 
-
-            StartCoroutine(ReturnAfterQuestComplete()); 
+            ShowResultUI(); 
         }
 
-        private IEnumerator ReturnAfterQuestComplete() 
+        private void ShowResultUI() 
         {
             var interactionUI = UIManager.Singleton.GetUI<InteractionUI>(UIList.InteractionUI); 
             if (interactionUI != null) 
@@ -127,15 +135,19 @@ namespace TEC
                 interactionUI.Hide(); 
             }
 
-            if (CharacterPlayerController.Instance != null &&
-                CharacterPlayerController.Instance.InteractionSensor != null) 
+            if (CharacterPlayerController.Instance != null) 
             {
-                CharacterPlayerController.Instance.InteractionSensor.PulseManuallyNextFrame(); 
+                CharacterPlayerController.Instance.SetSequenceControl(true); 
             }
 
-            yield return new WaitForSecondsRealtime(1.5f); 
+            resultUI = UIManager.Show<ResultUI>(UIList.ResultUI); 
+            if (resultUI != null)
+            {
+                resultUI.ShowResult(); 
+            }
 
-            yield return StartCoroutine(ReturnToIngameRoutine()); 
+            Time.timeScale = 0f; 
+            Time.fixedDeltaTime = 0.02f * Time.timeScale; 
         }
 
         private IEnumerator ReturnToIngameRoutine() 
