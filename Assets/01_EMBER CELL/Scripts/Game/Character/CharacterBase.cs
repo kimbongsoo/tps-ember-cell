@@ -291,6 +291,8 @@ namespace TEC
 
             if (isAiming)
             {
+                //TODO1 : Fire 입력을 받았음을 Queue로 쌓아두자.
+                //TODO2 : LateUpdate에서 Fire 입력이 Queue에 쌓여있는게 있으면 실제 발사 로직 수행 
                 if (PrimaryWeapon.Shoot(out int remain, out int max))
                 {
                     onFireEvent?.Invoke(remain, max);
@@ -310,6 +312,29 @@ namespace TEC
                 }
             }
         }
+
+
+
+        // void LateUpdate()
+        // {
+        //     if (PrimaryWeapon.Shoot(out int remain, out int max))
+        //         {
+        //             onFireEvent?.Invoke(remain, max);
+
+        //             // jam 기능 추가
+        //             if (Time.time - lastJamTime >= jamCooldown && UnityEngine.Random.value < jamChance)
+        //             {
+        //                 StartUnjam();
+        //             }
+        //         }
+        //         else
+        //         {
+        //             if (PrimaryWeapon.RemainAmmo <= 0 && PrimaryWeapon.MaxAmmo > 0)
+        //             {
+        //                 Reload();
+        //             }
+        //         }
+        // }
 
         public void Reload()
         {
