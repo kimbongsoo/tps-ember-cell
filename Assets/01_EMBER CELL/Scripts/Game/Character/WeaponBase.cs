@@ -11,7 +11,7 @@ namespace TEC
     public class WeaponBase : MonoBehaviour
     {
         public int RemainAmmo => clipAmmo;
-        public int MaxAmmo => GetReserveAmmoFromInventory();
+        public int MaxAmmo => GetReserveAmmo(); // [CHANGED]
         public int MaxClipAmmo => maxClipAmmo;
 
         [Header("Ammo Setting")]
@@ -28,8 +28,8 @@ namespace TEC
 
         [SerializeField] private int reserveAmmo = 90;
 
-        [SerializeField] private int maxClipAmmo = 30; // 탄창 용량
-        [SerializeField] private int clipAmmo = 30;    // 현재 탄창 수
+        [SerializeField] private int maxClipAmmo = 30;
+        [SerializeField] private int clipAmmo = 30;
 
         [Header("Fire Setting")]
         [SerializeField] private float damage = 30f;
@@ -37,6 +37,8 @@ namespace TEC
         private WeaponRecoil weaponRecoil;
         private IObjectPool<Projectile> projectilePool;
         private CharacterBase ownerCharacter;
+
+        private int pendingReloadAmmo = 0; // [CHANGED]
 
         private void Awake()
         {
@@ -50,27 +52,13 @@ namespace TEC
                 true,
                 30,
                 100
-            ); //10, 50
+            );
         }
 
         public void Initialize(CharacterBase owner)
         {
             ownerCharacter = owner;
-
         }
-    
-        //지워
-        // public void InitializeReserveAmmoToInventory()
-        // {
-        //     if (string.IsNullOrEmpty(ammoItemID) || UserDataModel.Singleton == null)
-        //         return;
-
-        //     if (reserveAmmo <= 0)
-        //         return;
-
-        //     UserDataModel.Singleton.AddItem(ammoItemID, reserveAmmo);
-        //     reserveAmmo = 0;
-        // }
 
         private Projectile CreateProjectile()
         {
@@ -103,11 +91,9 @@ namespace TEC
             if (isShootable)
             {
                 var projectile = projectilePool.Get();
-                // projectile.transform.position = fireStartPoint.position;
-                // projectile.transform.forward = fireStartPoint.forward;
                 projectile.Initialize(Owner.gameObject, damage);
 
-                if(ownerCharacter.IsPlayerCharacter)
+                if (ownerCharacter.IsPlayerCharacter)
                 {
                     weaponRecoil?.GenerateRecoil();
                 }
@@ -116,62 +102,103 @@ namespace TEC
 
                 EffectManager.Instance.SpawnMuzzleEffect(fireStartPoint);
 
-                // [추가] 발사가 성공한 시점에 총 소리 재생
                 SoundManager.Singleton.PlaySound("gun_rifle_shot_01", fireStartPoint.position);
-                
+
                 lastFireTime = Time.time;
-                // Debug.DrawLine(fireStartPoint.position, fireStartPoint.position + fireStartPoint * 10f, Color.yellow, 1f);
             }
 
             remain = clipAmmo;
-            max = GetReserveAmmoFromInventory();
+            max = GetReserveAmmo(); 
 
             return isShootable;
+        }
+
+        public void PrepareReloadAmmo(int ammoAmount) 
+        {
+            if (ammoAmount <= 0)
+            {
+                pendingReloadAmmo = 0;
+                return;
+            }
+
+            int need = maxClipAmmo - clipAmmo;
+            pendingReloadAmmo = Mathf.Clamp(ammoAmount, 0, need);
         }
 
         public int SetFullAmmo()
         {
             if (clipAmmo >= maxClipAmmo)
+            {
+                pendingReloadAmmo = 0; 
                 return clipAmmo;
+            }
 
-            if (string.IsNullOrEmpty(ammoItemID) || UserDataModel.Singleton == null)
-                return clipAmmo;
+            int need = maxClipAmmo - clipAmmo; 
+            if (need <= 0) 
+            {
+                pendingReloadAmmo = 0; 
+                return clipAmmo; 
+            }
 
-            int need = maxClipAmmo - clipAmmo;
-            if (need <= 0)
-                return clipAmmo;
+            if (ownerCharacter != null && ownerCharacter.IsPlayerCharacter) 
+            {
+                if (pendingReloadAmmo <= 0) 
+                    return clipAmmo; 
 
-            int pulled = UserDataModel.Singleton.ConsumeItem(ammoItemID, need);
-            if (pulled <= 0)
-                return clipAmmo;
+                int addAmount = Mathf.Min(need, pendingReloadAmmo); 
+                clipAmmo += addAmount; 
+                pendingReloadAmmo = 0; 
+                return clipAmmo; 
+            }
 
-            clipAmmo += pulled;
+            // AI는 내부 reserveAmmo를 사용
+            int aiPulled = Mathf.Min(need, reserveAmmo); 
+            if (aiPulled <= 0) 
+                return clipAmmo; 
+
+            clipAmmo += aiPulled; 
+            reserveAmmo -= aiPulled; 
+
             return clipAmmo;
         }
 
         public bool IsEmpty()
         {
-            return clipAmmo <= 0 && GetReserveAmmoFromInventory() <= 0;
+            return clipAmmo <= 0 && GetReserveAmmo() <= 0; 
         }
 
         public void AddAmmo(int amount, out int current, out int max)
         {
-            if (!string.IsNullOrEmpty(ammoItemID) && UserDataModel.Singleton != null && amount > 0)
+            if (amount > 0) 
             {
-                UserDataModel.Singleton.AddItem(ammoItemID, amount);
+                if (ownerCharacter != null && ownerCharacter.IsPlayerCharacter) 
+                {
+                    if (!string.IsNullOrEmpty(ammoItemID) && UserDataModel.Singleton != null) 
+                    {
+                        UserDataModel.Singleton.AddItem(ammoItemID, amount); 
+                    }
+                }
+                else 
+                {
+                    reserveAmmo += amount; 
+                }
             }
 
             current = clipAmmo;
-            max = GetReserveAmmoFromInventory();
+            max = GetReserveAmmo(); 
         }
 
-        private int GetReserveAmmoFromInventory()
+        private int GetReserveAmmo() 
         {
-            if (string.IsNullOrEmpty(ammoItemID) || UserDataModel.Singleton == null)
-                return 0;
+            if (ownerCharacter != null && ownerCharacter.IsPlayerCharacter) 
+            {
+                if (string.IsNullOrEmpty(ammoItemID) || UserDataModel.Singleton == null) 
+                    return 0; 
 
-            return UserDataModel.Singleton.GetTotalItemCount(ammoItemID);
+                return UserDataModel.Singleton.GetTotalItemCount(ammoItemID); 
+            }
+
+            return reserveAmmo; 
         }
     }
 }
-

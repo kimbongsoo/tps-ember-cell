@@ -460,7 +460,34 @@ namespace TEC
             if (IsDialogueUIOpen())
                 return;
 
-            characterBase.Reload();
+            if (characterBase == null) 
+                return;
+
+            if (characterBase.PrimaryWeapon == null) 
+                return; 
+
+            WeaponBase weapon = characterBase.PrimaryWeapon;
+
+            if (string.IsNullOrEmpty(weapon.AmmoItemID)) 
+                return; 
+
+            int need = weapon.MaxClipAmmo - weapon.RemainAmmo; 
+            if (need <= 0)
+                return; 
+
+            characterBase.Reload(); 
+
+            if (characterBase.IsReloading == false) 
+                return; 
+
+            if (UserDataModel.Singleton == null) 
+            {
+                weapon.PrepareReloadAmmo(0); 
+                return; 
+            }
+
+            int pulled = UserDataModel.Singleton.ConsumeItem(weapon.AmmoItemID, need); 
+            weapon.PrepareReloadAmmo(pulled); 
         }
 
 
