@@ -13,7 +13,7 @@ namespace TEC
         [SerializeField] private string actionMessage;
 
         [Header("Dialogue Data")]
-        [SerializeField] private NPCDialogueDataSO dialogueData;
+        [SerializeField] private NpcDialogueDataSO dialogueData;
 
         [Header("Dialogue Camera")]
         [SerializeField] private Transform dialogueCameraFollowPoint;
@@ -244,9 +244,9 @@ namespace TEC
             }
         }
 
-        private NPCDialogueDataSO CreateTempDialogue(List<DialogueLineData> lines)
+        private NpcDialogueDataSO CreateTempDialogue(List<DialogueLineData> lines)
         {
-            var tempDialogueData = ScriptableObject.CreateInstance<NPCDialogueDataSO>();
+            var tempDialogueData = ScriptableObject.CreateInstance<NpcDialogueDataSO>();
             tempDialogueData.lines = lines;
             return tempDialogueData;
         }

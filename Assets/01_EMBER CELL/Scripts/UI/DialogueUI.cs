@@ -20,7 +20,7 @@ namespace TEC
         [Header("TypeWriter Effect")] 
         [SerializeField] private float typeWriterInterval = 0.03f; 
 
-        private NPCDialogueDataSO currentDialogueData;
+        private NpcDialogueDataSO currentDialogueData;
         private int currentLineIndex = -1;
         private Action onDialogueFinished;
 
@@ -38,7 +38,7 @@ namespace TEC
             gameObject.SetActive(false); 
         }
 
-        public void ShowDialogue(NPCDialogueDataSO dialogueData, Action onFinished = null)
+        public void ShowDialogue(NpcDialogueDataSO dialogueData, Action onFinished = null)
         {
             if (dialogueData == null)
                 return;

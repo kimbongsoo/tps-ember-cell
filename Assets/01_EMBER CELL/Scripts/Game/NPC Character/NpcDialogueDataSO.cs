@@ -15,7 +15,7 @@ namespace TEC
 
     // NPC 대화 데이터 SO
     [CreateAssetMenu(fileName = "NPCDialogueDataSO", menuName = "PROJECT TEC/NPC/Dialogue Data")]
-    public class NPCDialogueDataSO : ScriptableObject
+    public class NpcDialogueDataSO : ScriptableObject
     {
         [Header("Dialogue Info")]
         public string dialogueID;
