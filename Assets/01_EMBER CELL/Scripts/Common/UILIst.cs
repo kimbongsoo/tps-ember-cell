@@ -34,6 +34,7 @@ namespace TEC
         // DialogueUI,
         // QuestAcceptUI,
         ResultUI,
+        MissionFailUI,
 
         //인벤토리
         InventoryRenewalUI,

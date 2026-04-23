@@ -201,7 +201,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actionIcon: {fileID: 21300048, guid: 5163ae49a0de665458bba61cd20c99b1, type: 3}
   actionMessage: Talk
-  dialogueData: {fileID: 11400000, guid: df4157f87e98d45b2b9a5f8f64e72718, type: 2}
+  dialogueData: {fileID: 11400000, guid: 5eed738276cd142fb998b2fa0d9a373c, type: 2}
   dialogueCameraFollowPoint: {fileID: 3514195307767382377}
   dialogueCameraLookPoint: {fileID: 1319190183160378834}
   dialogueUI: {fileID: 0}

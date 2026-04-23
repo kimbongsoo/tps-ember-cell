@@ -146,7 +146,7 @@ GameObject:
   - component: {fileID: 2935894558287349813}
   - component: {fileID: 309287904256184675}
   m_Layer: 5
-  m_Name: Text (TMP) (3)
+  m_Name: HitRate
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -803,6 +803,8 @@ GameObject:
   - component: {fileID: 4873481290169332377}
   - component: {fileID: 3097921274799556300}
   - component: {fileID: 3843785076338632928}
+  - component: {fileID: 6878803971331222189}
+  - component: {fileID: 3679305087999711189}
   m_Layer: 5
   m_Name: UI.MissionFailUI
   m_TagString: Untagged
@@ -898,6 +900,35 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &6878803971331222189
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5816112848179056756}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4916a7db60fc49ddbb4111129d0cee2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playtimeText: {fileID: 3082992088846917406}
+  hitRateText: {fileID: 309287904256184675}
+  retryButton: {fileID: 5081136050735977069}
+  canvasGroup: {fileID: 3679305087999711189}
+  showDuration: 1
+--- !u!225 &3679305087999711189
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5816112848179056756}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
 --- !u!1 &6915715109647532533
 GameObject:
   m_ObjectHideFlags: 0
