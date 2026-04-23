@@ -804,6 +804,7 @@ GameObject:
   - component: {fileID: 3097921274799556300}
   - component: {fileID: 3843785076338632928}
   - component: {fileID: 4353279938780116244}
+  - component: {fileID: 2157645103689342166}
   m_Layer: 5
   m_Name: UI.ResultUI
   m_TagString: Untagged
@@ -914,6 +915,20 @@ MonoBehaviour:
   playtimeText: {fileID: 3082992088846917406}
   hitRateText: {fileID: 309287904256184675}
   continueButton: {fileID: 5081136050735977069}
+  canvasGroup: {fileID: 2157645103689342166}
+  showDuration: 1
+--- !u!225 &2157645103689342166
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5816112848179056756}
+  m_Enabled: 1
+  m_Alpha: 0
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
 --- !u!1 &6915715109647532533
 GameObject:
   m_ObjectHideFlags: 0
