@@ -104,7 +104,7 @@ namespace TEC
 
             //스코프
             // InputManager.Singleton.OnRightClickDouble += ToggleRedDotUI;
-            InputManager.Singleton.OnRightClickDouble += OnRightClickDouble;
+            // InputManager.Singleton.OnRightClickDouble += OnRightClickDouble;
 
             InputManager.Singleton.OnQuickSlot1 += ExecuteQuickSlot1;
             InputManager.Singleton.OnQuickSlot2 += ExecuteQuickSlot2;
@@ -147,7 +147,7 @@ namespace TEC
 
             //스코프
             // InputManager.Singleton.OnRightClickDouble -= ToggleRedDotUI;
-            InputManager.Singleton.OnRightClickDouble -= OnRightClickDouble;
+            // InputManager.Singleton.OnRightClickDouble -= OnRightClickDouble;
 
             InputManager.Singleton.OnQuickSlot1 -= ExecuteQuickSlot1;
             InputManager.Singleton.OnQuickSlot2 -= ExecuteQuickSlot2;
@@ -254,8 +254,8 @@ namespace TEC
                 characterBase.IsRunning = false;
                 characterBase.IsAiming = false;
 
-                if (isScoped)
-                    ExitScopeMode();
+                // if (isScoped)
+                //     ExitScopeMode();
 
                 crosshairCurrentSpread = Mathf.Clamp(
                     crosshairCurrentSpread - (crosshairRecoverySpeed * Time.deltaTime),
@@ -272,8 +272,8 @@ namespace TEC
             {
                 characterBase.IsAiming = false;
 
-                if (isScoped)
-                    ExitScopeMode();
+                // if (isScoped)
+                //     ExitScopeMode();
 
                 if (Input.GetMouseButtonDown(1) && IsContextMenuOpen())
                 {
@@ -327,8 +327,8 @@ namespace TEC
                 characterBase.IsRunning = false;
                 characterBase.IsAiming = false;
 
-                if (isScoped)
-                    ExitScopeMode();
+                // if (isScoped)
+                //     ExitScopeMode();
 
                 characterBase.Move(Vector2.zero, Camera.main.transform.eulerAngles.y);
 
@@ -348,10 +348,10 @@ namespace TEC
             bool isAimingInput = !isInventoryOpen && InputManager.Singleton.InputAim;
             characterBase.IsAiming = isAimingInput;
             // 스코프 해제 
-            if (!InputManager.Singleton.InputAim && isScoped)
-            {
-                ExitScopeMode();
-            }
+            // if (!InputManager.Singleton.InputAim && isScoped)
+            // {
+            //     ExitScopeMode();
+            // }
 
             if (!isInventoryOpen && InputManager.Singleton.InputFire)
             {
@@ -533,46 +533,46 @@ namespace TEC
         }
         
         //스코프
-        private void OnRightClickDouble()
-        {
-            if (IsDialogueUIOpen())
-                return;
+        // private void OnRightClickDouble()
+        // {
+        //     if (IsDialogueUIOpen())
+        //         return;
 
-            // 우클릭 더블탭 직후, 버튼이 눌린 상태면 스코프 진입
-            if (IsInventoryUIOpen())
-                return;
+        //     // 우클릭 더블탭 직후, 버튼이 눌린 상태면 스코프 진입
+        //     if (IsInventoryUIOpen())
+        //         return;
 
-            if (InputManager.Singleton.InputAim && !isScoped)
-            {
-                EnterScopeMode();
-            }
-        }
+        //     if (InputManager.Singleton.InputAim && !isScoped)
+        //     {
+        //         EnterScopeMode();
+        //     }
+        // }
 
-        private void EnterScopeMode()
-        {
-            isScoped = true;
+        // private void EnterScopeMode()
+        // {
+        //     isScoped = true;
 
-            // 카메라 전환
-            CameraSystem.Instance.EnterScopeMode();
+        //     // 카메라 전환
+        //     CameraSystem.Instance.EnterScopeMode();
 
-            // UI 전환
-            CrossHairUI.Instance?.gameObject.SetActive(false);
-            RedDotUI.Instance?.gameObject.SetActive(true);
-        }
+        //     // UI 전환
+        //     CrossHairUI.Instance?.gameObject.SetActive(false);
+        //     RedDotUI.Instance?.gameObject.SetActive(true);
+        // }
 
-        private void ExitScopeMode()
-        {
-            isScoped = false;
+        // private void ExitScopeMode()
+        // {
+        //     isScoped = false;
 
-            // 카메라 복귀
-            CameraSystem.Instance.ExitScopeMode();
+        //     // 카메라 복귀
+        //     CameraSystem.Instance.ExitScopeMode();
 
-            // UI 복귀
-            CrossHairUI.Instance?.gameObject.SetActive(true);
-            RedDotUI.Instance?.gameObject.SetActive(false);
+        //     // UI 복귀
+        //     CrossHairUI.Instance?.gameObject.SetActive(true);
+        //     RedDotUI.Instance?.gameObject.SetActive(false);
 
-            Debug.Log("⬅ ExitScopeMode()");
-        }
+        //     Debug.Log("⬅ ExitScopeMode()");
+        // }
 
         void ExecuteInventory()
         {

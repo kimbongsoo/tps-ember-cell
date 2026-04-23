@@ -29,7 +29,7 @@ namespace TEC
         TitleUI,
         MainHUD,
         InteractionUI,
-        RedDotUI,
+        // RedDotUI,
         DialogueRoot,
         // DialogueUI,
         // QuestAcceptUI,
