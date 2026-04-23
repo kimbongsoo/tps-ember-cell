@@ -8,7 +8,7 @@ namespace TEC
     {
         public void OnClickGameStart()
         {
-            Main.Singleton.ChangeScene(SceneType.Ingame);
+            Main.Singleton.ChangeScene(SceneType.Camp); //Ingame->Camp
         }
         public void OnClickSetting()
         {

@@ -9,7 +9,8 @@ namespace TEC
         None,
         Empty,
         Title,
-        Ingame,
+        // Ingame,
+        Camp,
         IngameLevel, //추가
     }
     public class Main : SingletonBase<Main>
@@ -71,9 +72,14 @@ namespace TEC
                     }
                 break;
 
-                case SceneType.Ingame:
+                // case SceneType.Ingame:
+                //     {
+                //         ChangeScene<IngameScene>(sceneType);
+                //     }
+                // break;
+                case SceneType.Camp:
                     {
-                        ChangeScene<IngameScene>(sceneType);
+                        ChangeScene<CampScene>(sceneType);
                     }
                 break;
 

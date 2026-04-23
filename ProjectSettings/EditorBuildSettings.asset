@@ -18,9 +18,9 @@ EditorBuildSettings:
     path: Assets/01_EMBER CELL/Scenes/Ingame.unity
     guid: e16f5449e2f2c4edd8b20f635c93dc59
   - enabled: 1
-    path: Assets/01_EMBER CELL/Scenes/IngameLevel.unity
-    guid: c7220f82a6e0f394bbd8a4dcbdabb560
-  - enabled: 1
     path: Assets/01_EMBER CELL/Scenes/Camp.unity
     guid: 163cb588e0d40724e86ca54ee75406a4
+  - enabled: 1
+    path: Assets/01_EMBER CELL/Scenes/IngameLevel.unity
+    guid: c7220f82a6e0f394bbd8a4dcbdabb560
   m_configObjects: {}
