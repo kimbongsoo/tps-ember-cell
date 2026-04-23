@@ -1,0 +1,49 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 0}
+  m_Name: NPCDialogueDataSO 5
+  m_EditorClassIdentifier: Assembly-CSharp:TEC:NPCDialogueDataSO
+  dialogueID: get_Military_map
+  npcName: NPC
+  lines:
+  - speakerName: NPC
+    message: Help me
+    portrait: {fileID: 0}
+  - speakerName: ME
+    message: Why
+    portrait: {fileID: 0}
+  - speakerName: NPC
+    message: Please kill enemies
+    portrait: {fileID: 0}
+  acceptLines:
+  - speakerName: NPC
+    message: THX
+    portrait: {fileID: 0}
+  declineLines:
+  - speakerName: NPC
+    message: Go Away
+    portrait: {fileID: 0}
+  inProgressLines:
+  - speakerName: NPC
+    message: Not Yet?
+    portrait: {fileID: 0}
+  completedLines:
+  - speakerName: NPC
+    message: THX THX
+    portrait: {fileID: 0}
+  notStartedActionMessage: NotStarted
+  inProgressActionMessage: Inprogress
+  completedActionMessage: Complete
+  showQuestAcceptUIAfterDialogue: 1
+  questID: get_Military_map
+  questTitle: get_Military_map
+  questDescription: get_Military_map
