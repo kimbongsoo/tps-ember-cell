@@ -36,7 +36,8 @@ namespace TEC
 
             var menu = UIManager.Show<InventoryContextMenu>(UIList.InventoryContextMenu);
             if (menu != null)
-                menu.Open(DataID, ItemID, transform as RectTransform);
+                // menu.Open(DataID, ItemID, transform as RectTransform);
+                menu.Open(DataID, ItemID, (RectTransform)transform);
         }
 
     }
