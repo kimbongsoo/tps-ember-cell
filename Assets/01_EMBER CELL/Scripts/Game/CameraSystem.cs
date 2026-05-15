@@ -93,7 +93,6 @@ namespace TEC
         {
             isCameraSideRight = !isCameraSideRight;
             cameraSideBlend = isCameraSideRight ? 1 : 0;
-
         }
 
         //스코프
