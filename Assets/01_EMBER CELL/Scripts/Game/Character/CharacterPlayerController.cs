@@ -143,6 +143,7 @@ namespace TEC
             InputManager.Singleton.OnRoll -= ExecuteRoll;
 
             InputManager.Singleton.OnInteract -= ExecuteInteract;
+            InputManager.Singleton.OnInventory -= ExecuteInventory;
             InputManager.Singleton.OnActionUI -= ExecuteActionUI;
 
             //스코프
