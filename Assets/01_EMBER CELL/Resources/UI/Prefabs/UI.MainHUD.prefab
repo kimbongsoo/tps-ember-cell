@@ -2149,6 +2149,7 @@ MonoBehaviour:
   messageText: {fileID: 6411201385202081241}
   portraitImage: {fileID: 0}
   nextButton: {fileID: 3292294980386832191}
+  typeWriterInterval: 0.03
 --- !u!1 &2136744265691234446
 GameObject:
   m_ObjectHideFlags: 0

@@ -172,7 +172,7 @@ namespace TEC
         }
 
         //인디케이터 추가
-        public void ShowHitDirection(Transform player, Vector3 attackerPosition) // [CHANGED]
+        public void ShowHitDirection(Transform player, Vector3 attackerPosition)
         {
             if (damageDirectionIndicator == null)
                 return;

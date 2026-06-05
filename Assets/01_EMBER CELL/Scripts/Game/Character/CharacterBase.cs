@@ -435,7 +435,6 @@ namespace TEC
         {
             if (isGrounded)
             {
-                Debug.Log("점프점프점프점프");
                 isGrounded = false;
                 verticalVelocity = Mathf.Sqrt(jumpHeight * -2f * gravity);
                 jumpTimeoutDelta = jumpTimeout;

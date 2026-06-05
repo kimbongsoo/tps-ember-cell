@@ -22,11 +22,11 @@ MonoBehaviour:
     message: why
     portrait: {fileID: 0}
   - speakerName: npc
-    message: please kill enemies
+    message: Retrieve the military map from the enemies.
     portrait: {fileID: 0}
   acceptLines:
   - speakerName: npc
-    message: thx
+    message: Good Luck
     portrait: {fileID: 0}
   declineLines:
   - speakerName: npc
@@ -46,4 +46,4 @@ MonoBehaviour:
   showQuestAcceptUIAfterDialogue: 1
   questID: get_Military_map
   questTitle: get_Military_map
-  questDescription: get_Military_map
+  questDescription: '     get_Military_map'
