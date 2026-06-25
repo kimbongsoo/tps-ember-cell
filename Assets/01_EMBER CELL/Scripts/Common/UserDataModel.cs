@@ -18,9 +18,9 @@ namespace TEC
             // TODO : UserData Initialize / Load Logic
             InitializeQuickSlots();
 
-            AddItem("40001", 100);
-            AddItem("50001", 5);
-            AddItem("60001", 5);
+            AddItem("40001", 500);
+            AddItem("50001", 20);
+            AddItem("60001", 20);
         }
 
         private void InitializeQuickSlots()

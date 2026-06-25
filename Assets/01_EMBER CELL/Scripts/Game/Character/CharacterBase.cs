@@ -167,6 +167,10 @@ namespace TEC
 
         private void Update()
         {
+            // if (Input.GetKeyDown(KeyCode.L))
+            // {
+            //     characterAnimator.SetTrigger("Clap Trigger");
+            // }
             if (isDead)
                 return;
 
@@ -557,31 +561,6 @@ namespace TEC
 
             Debug.Log(" 부활이다 ");
         }
-
-        // private IEnumerator PlayerDeathSlowMotion()
-        // {
-        //     float originalTimeScale = Time.timeScale;
-        //     float targetTimeScale = 0.2f;
-        //     float slowDuration = 2f;
-        //     float restoreSpeed = 2f;
-
-        //     Time.timeScale = targetTimeScale;
-        //     Time.fixedDeltaTime = 0.02f * Time.timeScale;
-
-        //     yield return new WaitForSecondsRealtime(slowDuration);
-
-        //     float t = 0f;
-        //     while (t < 1f)
-        //     {
-        //         t += Time.unscaledDeltaTime * restoreSpeed;
-        //         Time.timeScale = Mathf.Lerp(targetTimeScale, originalTimeScale, t);
-        //         Time.fixedDeltaTime = 0.02f * Time.timeScale;
-        //         yield return null;
-        //     }
-
-        //     Time.timeScale = originalTimeScale;
-        //     Time.fixedDeltaTime = 0.02f;
-        // }
         
         //인벤토리
         public void HealHP(float amount)
