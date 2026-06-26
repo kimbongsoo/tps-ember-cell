@@ -86,6 +86,9 @@ namespace TEC
 
                 var data = new DamageData(finalDamage, attacker);
                 receiver.ReceiveDamage(data);
+
+                //추가
+                MissionStatModel.Singleton.AddHitCount();
             }
 
             var physMat = collision.collider.sharedMaterial;

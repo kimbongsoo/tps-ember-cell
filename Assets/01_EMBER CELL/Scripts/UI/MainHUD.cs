@@ -55,6 +55,8 @@ namespace TEC
 
             SetAmmoVisible(false);
 
+            HideHitDirection();
+
             RefreshQuickSlots();
         }
 
@@ -178,6 +180,13 @@ namespace TEC
                 return;
 
             damageDirectionIndicator.ShowFromAttackerPosition(player, attackerPosition);
+        }
+        public void HideHitDirection()
+        {
+            if (damageDirectionIndicator == null)
+                return;
+
+            damageDirectionIndicator.HideIndicator();
         }
 
         public void RefreshQuickSlots()

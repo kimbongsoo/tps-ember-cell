@@ -43,6 +43,17 @@ namespace TEC
             fadeRoutine = StartCoroutine(FadeRoutine());
         }
 
+        public void HideIndicator()
+        {
+            if (fadeRoutine != null)
+            {
+                StopCoroutine(fadeRoutine);
+                fadeRoutine = null;
+            }
+
+            SetAlpha(0f);
+        }
+
         private IEnumerator FadeRoutine()
         {
             SetAlpha(1f);

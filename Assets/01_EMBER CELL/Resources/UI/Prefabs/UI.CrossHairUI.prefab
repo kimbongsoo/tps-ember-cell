@@ -326,7 +326,7 @@ MonoBehaviour:
   crosshairBottom: {fileID: 179200229678250879}
   crosshairLeft: {fileID: 282950060939402568}
   crosshairRight: {fileID: 5522341976805425108}
-  maxSpread: 300
+  maxSpread: 50
 --- !u!1 &8857139127533078090
 GameObject:
   m_ObjectHideFlags: 0

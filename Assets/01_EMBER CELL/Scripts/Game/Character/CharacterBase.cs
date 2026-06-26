@@ -311,6 +311,9 @@ namespace TEC
             {
                 if (PrimaryWeapon.Shoot(out int remain, out int max))
                 {
+                    //추가
+                    MissionStatModel.Singleton.AddFireCount();
+
                     onFireEvent?.Invoke(remain, max);
 
                     if(Time.time - lastJamTime >= jamCooldown && UnityEngine.Random.value < jamChance)

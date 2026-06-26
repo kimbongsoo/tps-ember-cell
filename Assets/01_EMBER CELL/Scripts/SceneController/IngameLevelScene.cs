@@ -30,6 +30,9 @@ namespace TEC
 
             yield return new WaitUntil(() => async.isDone);
 
+            //추가
+            MissionStatModel.Singleton.ResetData();
+
             if (CharacterPlayerController.Instance != null)
             {
                 playerCharacterBase = CharacterPlayerController.Instance.GetComponent<CharacterBase>();
@@ -141,6 +144,31 @@ namespace TEC
             ShowResultUI(); 
         }
 
+        // private void ShowResultUI() 
+        // {
+        //     var interactionUI = UIManager.Singleton.GetUI<InteractionUI>(UIList.InteractionUI);
+        //     if (interactionUI != null)
+        //     {
+        //         interactionUI.ClearData();
+        //         interactionUI.Hide();
+        //     }
+
+        //     if (CharacterPlayerController.Instance != null)
+        //     {
+        //         CharacterPlayerController.Instance.SetSequenceControl(true);
+        //     }
+
+        //     resultUI = UIManager.Show<ResultUI>(UIList.ResultUI);
+        //     if (resultUI != null)
+        //     {
+        //         resultUI.ShowResult();
+        //     }
+
+        //     Time.timeScale = 0f;
+        //     Time.fixedDeltaTime = 0.02f * Time.timeScale;
+        // }
+
+        //추가
         private void ShowResultUI() 
         {
             var interactionUI = UIManager.Singleton.GetUI<InteractionUI>(UIList.InteractionUI);
@@ -158,7 +186,10 @@ namespace TEC
             resultUI = UIManager.Show<ResultUI>(UIList.ResultUI);
             if (resultUI != null)
             {
-                resultUI.ShowResult();
+                string playtime = MissionStatModel.Singleton.GetPlaytimeText();
+                string hitRate = MissionStatModel.Singleton.GetHitRateText();
+
+                resultUI.ShowResult(playtime, hitRate);
             }
 
             Time.timeScale = 0f;

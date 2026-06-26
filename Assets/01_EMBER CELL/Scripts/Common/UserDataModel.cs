@@ -9,6 +9,8 @@ namespace TEC
 
 
         public System.Action OnInventoryChanged;
+        //추가
+        public System.Action OnAmmoChanged;
 
         //아이템효과 적용
         public System.Action<ItemUseEffectType, float> OnItemEffectRequested;
@@ -18,9 +20,9 @@ namespace TEC
             // TODO : UserData Initialize / Load Logic
             InitializeQuickSlots();
 
-            AddItem("40001", 500);
-            AddItem("50001", 20);
-            AddItem("60001", 20);
+            AddItem("40001", 120);
+            // AddItem("50001", 0);
+            // AddItem("60001", 0);
         }
 
         private void InitializeQuickSlots()
@@ -129,6 +131,12 @@ namespace TEC
             }
 
             OnInventoryChanged?.Invoke();
+
+            //추가
+            if (itemID == "40001")
+            {
+                OnAmmoChanged?.Invoke();
+            }
             return true;
         }
 
