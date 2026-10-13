@@ -46,6 +46,11 @@ namespace TEC
                 return;
 
             var interactionUI = UIManager.Singleton.GetUI<InteractionUI>(UIList.InteractionUI);
+            if (interactionUI == null)
+            {
+                Debug.LogError("[InteractionSensor] InteractionUI is unavailable. Check UI initialization and prefab settings.");
+                return;
+            }
 
             interactionUI.ClearData();
 
@@ -74,6 +79,11 @@ namespace TEC
             if (interactionProvider != null)
             {
                 var interactionUI = UIManager.Singleton.GetUI<InteractionUI>(UIList.InteractionUI);
+                if (interactionUI == null)
+                {
+                    Debug.LogError("[InteractionSensor] InteractionUI is unavailable. Check UI initialization and prefab settings.");
+                    return;
+                }
                 foreach (var data in interactionProvider.Interactions)
                 {
                     var context = new InteractionDataContext(data, interactionProvider);
@@ -92,6 +102,11 @@ namespace TEC
             if (interactionProvider != null)
             {
                 var interactionUI = UIManager.Singleton.GetUI<InteractionUI>(UIList.InteractionUI);
+                if (interactionUI == null)
+                {
+                    Debug.LogError("[InteractionSensor] InteractionUI is unavailable. Check UI initialization and prefab settings.");
+                    return;
+                }
                 foreach (var data in interactionProvider.Interactions)
                 {
                     var context = new InteractionDataContext(data, interactionProvider);
