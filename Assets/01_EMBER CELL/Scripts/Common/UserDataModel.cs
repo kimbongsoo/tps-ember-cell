@@ -99,6 +99,11 @@ namespace TEC
                 return false;
 
             int maxStack = itemDataSO.MaxStack;
+            if (maxStack <= 0)
+            {
+                Debug.LogError($"[UserDataModel] Invalid MaxStack : {itemID} ({maxStack})");
+                return false;
+            }
 
             for (int i = 0; i < PlayerItemData.itemDataContainer.Count && amount > 0; i++)
             {

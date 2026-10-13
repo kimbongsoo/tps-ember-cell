@@ -3,7 +3,6 @@ using System.Collections.Generic;
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
-using UnityEditorInternal;
 using UnityEngine;
 
 namespace TEC
