@@ -88,7 +88,8 @@ namespace TEC
                 receiver.ReceiveDamage(data);
 
                 //추가
-                MissionStatModel.Singleton.AddHitCount();
+                if (attacker != null && attacker.TryGetComponent<CharacterBase>(out var attackerCharacter) && attackerCharacter.IsPlayerCharacter)
+                    MissionStatModel.Singleton.AddHitCount();
             }
 
             var physMat = collision.collider.sharedMaterial;
