@@ -327,12 +327,28 @@ namespace TEC
 
         public void Reload()
         {
-            if (IsReloading || !isArmed || isRolling)
+            if (IsReloading || !isArmed || isRolling || IsDead)
                 return;
-            if (PrimaryWeapon != null && PrimaryWeapon.RemainAmmo >= PrimaryWeapon.MaxClipAmmo)
+            if (PrimaryWeapon == null || PrimaryWeapon.RemainAmmo >= PrimaryWeapon.MaxClipAmmo)
                 return;
 
+            if (IsPlayerCharacter)
+            {
+                if (string.IsNullOrEmpty(PrimaryWeapon.AmmoItemID))
+                    return;
+                if (UserDataModel.Singleton == null)
+                    return;
+            }
+
             IsReloading = true;
+
+            if (IsPlayerCharacter)
+            {
+                int need = PrimaryWeapon.MaxClipAmmo - PrimaryWeapon.RemainAmmo;
+                int pulled = UserDataModel.Singleton.ConsumeItem(PrimaryWeapon.AmmoItemID, need);
+                PrimaryWeapon.PrepareReloadAmmo(pulled);
+            }
+
             characterAnimator.SetTrigger("Reload Trigger");
             leftHandIk.weight = 0f;
             characterAnimator.SetLayerWeight(2, 0);
