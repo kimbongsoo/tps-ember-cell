@@ -205,6 +205,7 @@ namespace TEC
                     continue;
 
                 c.RemoveAt(i);
+                CleanupQuickSlotsByInventory();
                 OnInventoryChanged?.Invoke();
                 return true;
             }
