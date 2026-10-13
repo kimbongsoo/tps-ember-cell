@@ -80,7 +80,11 @@ namespace TEC
 
         public void RemoveInteractionData(InteractionDataContext context)
         {
-            dataContexts.Remove(context);
+            int contextIndex = dataContexts.FindIndex(x => ReferenceEquals(x.Provider, context.Provider) && x.ID == context.ID);
+            if (contextIndex < 0)
+                return;
+
+            dataContexts.RemoveAt(contextIndex);
 
             string id = context.ID;
             if (stackedUIMap.TryGetValue(id, out var listData))
