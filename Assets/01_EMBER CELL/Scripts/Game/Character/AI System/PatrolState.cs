@@ -35,6 +35,9 @@ namespace TEC
         }
         public void Update()
         {
+            if (patrolPoints == null || patrolPoints.Length == 0)
+                return;
+
             if(isWaiting == false) 
                 return;
 
@@ -53,7 +56,13 @@ namespace TEC
         void ExecutePatrolPlan(int index)
         {
             isWaiting = false; //대기 상태 해제
-            patrolIndex = index; // Patrol 시작 인덱스 초기화       
+            if (patrolPoints == null || patrolPoints.Length == 0)
+            {
+                brain.AIController.Stop();
+                return;
+            }
+
+            patrolIndex = Mathf.Clamp(index, 0, patrolPoints.Length - 1);
             randomWaitTime = Random.Range(3f, 5f); //랜덤시간 대기
             brain.AIController.SetDestination(patrolPoints[patrolIndex]); //첫 번째 목적지 설정
         }

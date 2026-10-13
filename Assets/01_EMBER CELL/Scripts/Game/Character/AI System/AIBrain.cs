@@ -34,7 +34,14 @@ namespace TEC
 
         private void Awake()
         {
-            patrolPositions = patrolPoints.Select(p => p.position).ToArray();
+            patrolPositions = patrolPoints == null
+                ? Array.Empty<Vector3>()
+                : patrolPoints.Where(p => p != null).Select(p => p.position).ToArray();
+
+            if (patrolPositions.Length == 0)
+                Debug.LogError("[AIBrain] No valid patrol points are assigned.");
+            else if (patrolPositions.Length != patrolPoints.Length)
+                Debug.LogWarning("[AIBrain] Null patrol points were excluded.");
 
             controller = GetComponent<AIController>();
             combatState = new CombatState(this);
