@@ -26,5 +26,10 @@ namespace TEC
         {
             base.Hide();
         }
+        private void OnDestroy()
+        {
+            if (ReferenceEquals(Instance, this))
+                Instance = null;
+        }
     }
 }

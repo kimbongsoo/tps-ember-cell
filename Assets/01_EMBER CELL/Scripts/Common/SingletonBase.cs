@@ -1,46 +1,45 @@
-using System.Collections;
-using System.Collections.Generic;
-#if UNITY_EDITOR
-using UnityEditor;
-#endif
 using UnityEngine;
 
 namespace TEC
 {
-    public class SingletonBase<T> : MonoBehaviour where T : class
+    public class SingletonBase<T> : MonoBehaviour where T : MonoBehaviour
     {
+        private static T _instance;
+
         public static T Singleton
         {
             get
             {
-                return _instance.Value;
+                if (_instance == null)
+                {
+                    _instance = UnityEngine.Object.FindObjectOfType<T>();
+                    if (_instance == null)
+                    {
+                        GameObject obj = new GameObject(typeof(T).Name);
+                        _instance = obj.AddComponent<T>();
+                    }
+                }
+
+                return _instance;
             }
         }
 
-        private static readonly System.Lazy<T> _instance = new System.Lazy<T>(() =>
-        {
-            T instance = UnityEngine.Object.FindObjectOfType(typeof(T)) as T;
-
-            if (instance == null)
-            {
-                GameObject obj = new GameObject(typeof(T).Name);
-                instance = obj.AddComponent(typeof(T)) as T;
-#if UNITY_EDITOR
-                if (EditorApplication.isPlaying)
-                {
-                    DontDestroyOnLoad(obj);
-                }
-#else
-                DontDestroyOnLoad(obj);
-#endif
-            }
-
-            return instance;
-        });
-
         protected virtual void Awake()
         {
+            if (_instance != null && _instance != this)
+            {
+                Destroy(gameObject);
+                return;
+            }
+
+            _instance = this as T;
             DontDestroyOnLoad(gameObject);
+        }
+
+        protected virtual void OnDestroy()
+        {
+            if (ReferenceEquals(_instance, this))
+                _instance = null;
         }
     }
 }

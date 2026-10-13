@@ -149,6 +149,11 @@ namespace TEC
             Camera.main.fieldOfView = to;
         }
 
+        private void OnDestroy()
+        {
+            if (ReferenceEquals(Instance, this))
+                Instance = null;
+        }
     }
     
 

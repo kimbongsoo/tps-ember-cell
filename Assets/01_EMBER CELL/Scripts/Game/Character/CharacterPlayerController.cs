@@ -134,6 +134,9 @@ namespace TEC
 
         private void OnDestroy()
         {
+            if (ReferenceEquals(Instance, this))
+                Instance = null;
+
             InputManager.Singleton.OnTab -= CameraTab;
             InputManager.Singleton.OnCrouch -= ToggleCrouch;
             InputManager.Singleton.OnReload -= ExecuteReload;

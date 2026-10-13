@@ -83,5 +83,10 @@ namespace TEC
             yield return new WaitForSeconds(delay);
             pool.Release(effect);
         }
+        private void OnDestroy()
+        {
+            if (ReferenceEquals(Instance, this))
+                Instance = null;
+        }
     }
 }
