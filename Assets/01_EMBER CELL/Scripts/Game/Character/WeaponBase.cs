@@ -38,7 +38,7 @@ namespace TEC
         private IObjectPool<Projectile> projectilePool;
         private CharacterBase ownerCharacter;
 
-        private int pendingReloadAmmo = 0; // [CHANGED]
+        private int pendingReloadAmmo = 0;
 
         private void Awake()
         {
@@ -146,12 +146,12 @@ namespace TEC
                     return clipAmmo; 
 
                 int addAmount = Mathf.Min(need, pendingReloadAmmo); 
-                clipAmmo += addAmount; 
-                pendingReloadAmmo = 0; 
+                pendingReloadAmmo = 0;
+                int pulled = UserDataModel.Singleton.ConsumeItem(ammoItemID, addAmount);
+                clipAmmo += pulled;
                 return clipAmmo; 
             }
 
-            // AI는 내부 reserveAmmo를 사용
             int aiPulled = Mathf.Min(need, reserveAmmo); 
             if (aiPulled <= 0) 
                 return clipAmmo; 

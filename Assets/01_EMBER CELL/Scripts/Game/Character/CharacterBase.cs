@@ -345,7 +345,7 @@ namespace TEC
             if (IsPlayerCharacter)
             {
                 int need = PrimaryWeapon.MaxClipAmmo - PrimaryWeapon.RemainAmmo;
-                int pulled = UserDataModel.Singleton.ConsumeItem(PrimaryWeapon.AmmoItemID, need);
+                int pulled = Mathf.Min(need, UserDataModel.Singleton.GetTotalItemCount(PrimaryWeapon.AmmoItemID));
                 PrimaryWeapon.PrepareReloadAmmo(pulled);
             }
 
@@ -356,16 +356,32 @@ namespace TEC
 
         public void ReloadComplete()
         {
+            if (!IsReloading || IsDead)
+                return;
+
             IsReloading = false;
-            // int fullAmmo = PrimaryWeapon.SetFullAmmo();
-            // onReloadCompleteEvent?.Invoke(fullAmmo, fullAmmo);
             PrimaryWeapon.SetFullAmmo();
-            // 🔹 현재 탄창 / 예비탄을 이벤트로 전달
             onReloadCompleteEvent?.Invoke(PrimaryWeapon.RemainAmmo, PrimaryWeapon.MaxAmmo);
 
             characterAnimator.SetLayerWeight(2, 1);
         }
 
+
+        public void CancelReload()
+        {
+            if (!IsReloading)
+                return;
+
+            IsReloading = false;
+            PrimaryWeapon?.PrepareReloadAmmo(0);
+            characterAnimator.ResetTrigger("Reload Trigger");
+            characterAnimator.SetLayerWeight(2, 1);
+        }
+
+        private void OnDisable()
+        {
+            CancelReload();
+        }
 
         public void EquipWeapon()
         {
@@ -514,6 +530,7 @@ namespace TEC
         {
             if (isDead) return;
             isDead = true;
+            CancelReload();
 
             // 슬로우모션 제거
             // if(isPlayerCharacter)
