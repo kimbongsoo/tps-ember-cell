@@ -54,7 +54,7 @@ namespace TEC
             RefreshInteractionData();
         }
 
-        private void Start()
+        private void OnEnable()
         {
             QuestManager.Singleton.OnQuestStateChanged += OnQuestStateChanged;
             RefreshInteractionData();

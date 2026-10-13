@@ -50,8 +50,12 @@ namespace TEC
                 questAcceptUI = DialogueRoot.Instance.QuestAcceptUI;
             }
 
-            QuestManager.Singleton.OnQuestStateChanged += OnQuestStateChanged;
+            RefreshInteractionData();
+        }
 
+        private void OnEnable()
+        {
+            QuestManager.Singleton.OnQuestStateChanged += OnQuestStateChanged;
             RefreshInteractionData();
         }
 
