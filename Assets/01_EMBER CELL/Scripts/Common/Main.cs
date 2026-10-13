@@ -19,6 +19,7 @@ namespace TEC
         private SceneType currentSceneType;
 
         private bool isInitialized = false;
+        private bool isChangingScene = false;
 
 
         private void Start()
@@ -93,38 +94,49 @@ namespace TEC
 
         private void ChangeScene<T>(SceneType sceneType) where T : SceneBase
         {
+            if (isChangingScene)
+                return;
+
             StartCoroutine(InternalChangeScene<T>(sceneType));
         }
 
         private IEnumerator InternalChangeScene<T>(SceneType sceneType) where T : SceneBase
         {
-            var loadingUI = UIManager.Show<LoadingUI>(UIList.LoadingUI);
-            loadingUI.LoadingPercentage = 0f;
-
-            if (currentScene != null)
+            isChangingScene = true;
+            try
             {
-                yield return StartCoroutine(currentScene.OnEnd());
-                Destroy(currentScene.gameObject);
+                var loadingUI = UIManager.Show<LoadingUI>(UIList.LoadingUI);
+                loadingUI.LoadingPercentage = 0f;
+
+                if (currentScene != null)
+                {
+                    yield return StartCoroutine(currentScene.OnEnd());
+                    Destroy(currentScene.gameObject);
+                }
+                loadingUI.LoadingPercentage = 0.45f;
+                yield return new WaitForEndOfFrame();
+
+
+                GameObject newSceneInstance = new GameObject(typeof(T).Name);
+                newSceneInstance.transform.SetParent(this.transform);
+                currentScene = newSceneInstance.AddComponent<T>();
+                yield return StartCoroutine(currentScene.OnStart());
+                loadingUI.LoadingPercentage = 0.8f;
+                yield return new WaitForEndOfFrame();
+
+                yield return new WaitForSeconds(0.3f);
+                loadingUI.LoadingPercentage = 1f;
+                yield return new WaitForSeconds(0.3f);
+                UIManager.Hide<LoadingUI>(UIList.LoadingUI);
+
+                currentSceneType = sceneType;
             }
-            loadingUI.LoadingPercentage = 0.45f;
-            yield return new WaitForEndOfFrame();
-
-
-            GameObject newSceneInstance = new GameObject(typeof(T).Name);
-            newSceneInstance.transform.SetParent(this.transform);
-            currentScene = newSceneInstance.AddComponent<T>();
-            yield return StartCoroutine(currentScene.OnStart());
-            loadingUI.LoadingPercentage = 0.8f;
-            yield return new WaitForEndOfFrame();
-
-            yield return new WaitForSeconds(0.3f);
-            loadingUI.LoadingPercentage = 1f;
-            yield return new WaitForSeconds(0.3f);
-            UIManager.Hide<LoadingUI>(UIList.LoadingUI);
-            
-            currentSceneType = sceneType;               
+            finally
+            {
+                isChangingScene = false;
+            }
         }
 
-    
+
     }
 }
